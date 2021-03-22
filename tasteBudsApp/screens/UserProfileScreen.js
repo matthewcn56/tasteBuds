@@ -25,12 +25,12 @@ export default function UserProfileScreen() {
     setDisplayedItems(
       Object.keys(list).map((section) => {
         console.log("current section is " + section);
-        db.ref('users/' + section + '/displayName').on('value', (snapshot) => {
-          console.log(snapshot.val());
-          return (
-            <Text>{snapshot.val()}</Text>
-          )
+        let name = db.ref('users/' + section + '/displayName').once('value').then((snapshot) => {
+          return snapshot.val();
         });
+        return (
+          <Text>{section}</Text> // try changing to name
+        )
       })
     )
   }, [list])
