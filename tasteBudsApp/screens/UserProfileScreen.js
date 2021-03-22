@@ -11,6 +11,7 @@ export default function UserProfileScreen() {
   const [list, setList] = React.useState({});
   const [displayedItems, setDisplayedItems] = React.useState([]);
   const [uid, setUid] = React.useState("");
+  const [friendNames, setFriendNames] = useState([]);
 
   useEffect( () => {
     setUid(user.uid);
@@ -25,11 +26,14 @@ export default function UserProfileScreen() {
     setDisplayedItems(
       Object.keys(list).map((section) => {
         console.log("current section is " + section);
-        let name = db.ref('users/' + section + '/displayName').once('value').then((snapshot) => {
-          return snapshot.val();
+        db.ref('users/' + section + '/displayName').once('value').then((snapshot) => {
+          setFriendNames((friendNames) => {
+            return [...friendNames, snapshot.val()];
+          });
         });
+        console.log(friendNames);
         return (
-          <Text>{section}</Text> // try changing to name
+          <Text>{friendNames}</Text> // try changing to name
         )
       })
     )
