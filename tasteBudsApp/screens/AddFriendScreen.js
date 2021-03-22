@@ -28,6 +28,9 @@ export default function AddFriendScreen() {
         if (snapshot.exists()) {
           alert(`${snapshot.val()} has been added to your friends list!`);
           // add to database
+          var updates = {};
+          updates["friends/" + user.uid + "/" + data] = true;
+          return db.ref().update(updates);
         } else {
           alert("Invalid QR Code");
         }
@@ -46,7 +49,7 @@ export default function AddFriendScreen() {
 
   return (
     <View style={styles.container}>
-      <Text>This is our QR Reader Screen!</Text>
+      <Text style={StyleSheet.absoluteFillObject}>This is our QR Reader Screen!</Text>
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
