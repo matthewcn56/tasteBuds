@@ -1,50 +1,36 @@
 import React, { useState, useContext, useEffect } from "react";
 import {AuthContext} from "../navigation/AuthProvider";
-import {db, addToList} from "../firebase/firebaseFunctions" 
+import {db} from "../firebase/firebaseFunctions" 
 import styles from "../styles.js";
 import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity } from 'react-native';
+import QRCode from 'react-native-qrcode-svg';
 
 export default function UserProfileScreen() {
 
   const {user} = useContext(AuthContext);
   const [list, setList] = React.useState({});
-  const [listItems, setListItems] = React.useState([]);
   const [displayedItems, setDisplayedItems] = React.useState([]);
   const [uid, setUid] = React.useState("");
-  const [item, setItem] = useState("");
 
   useEffect( () => {
     setUid(user.uid);
-    db.ref("list/" + uid).on("value", (querySnapshot) => {
-      setList(querySnapshot.val())
+    db.ref("friends/" + uid).on("value", (querySnapshot) => {
+      if (querySnapshot.exists())
+        setList(querySnapshot.val())
     })
   }, []);
 
-  function removeItem(key){
-    let removed = db.ref("list/" + uid +"/" +key);
-    removed.remove()
-    .then(function() {
-      console.log("Remove succeeded of " + key)
-      console.log(list)
-    })
-  }
-
   //Change items List whenever the db value changes
   useEffect( () => {
-    setListItems(Object.keys(list));
-
     setDisplayedItems(
-      listItems.map((section) => {
-        console.log("current section is " + section)
-        return (
-            <TouchableOpacity
-              onPress ={() => removeItem(section)}
-              key = {section}
-            >
-              <Text>{section}</Text>
-            </TouchableOpacity>
-        
-        )
+      Object.keys(list).map((section) => {
+        console.log("current section is " + section);
+        db.ref('users/' + section + '/displayName').on('value', (snapshot) => {
+          console.log(snapshot.val());
+          return (
+            <Text>{snapshot.val()}</Text>
+          )
+        });
       })
     )
   }, [list])
@@ -52,6 +38,9 @@ export default function UserProfileScreen() {
 
   return (
     <View style={styles.container}>
+      <QRCode 
+        value = {user.uid}
+      />
       <Text>Your List</Text>
       <Text>{displayedItems} </Text>
     </View>
