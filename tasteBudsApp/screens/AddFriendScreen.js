@@ -46,7 +46,7 @@ export default function AddFriendScreen() {
 
   return (
     <View style={styles.container}>
-      <Text>This is our QR Reader Screen!</Text>
+      <Text style={StyleSheet.absoluteFillObject}>This is our QR Reader Screen!</Text>
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
