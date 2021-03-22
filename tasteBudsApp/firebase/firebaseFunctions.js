@@ -73,6 +73,8 @@ function setProfile(result) {
     uid: result.user.uid,
     profilePic: result.user.photoURL,
     displayName: result.user.displayName,
+    currHall: false,
+    rfidTag: false,
   });
 }
 
