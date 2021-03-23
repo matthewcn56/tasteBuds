@@ -30,6 +30,7 @@ export default function AddFriendScreen() {
             // add to database
             var updates = {};
             updates["friends/" + user.uid + "/" + data] = true; //adds the uid to the friends tree
+            updates["friends/" + data + "/" + user.uid] = true;
             return db.ref().update(updates);
           } else {
             alert("Invalid QR Code");
