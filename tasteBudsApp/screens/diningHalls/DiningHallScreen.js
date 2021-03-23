@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import styles from "../../styles.js";
 import { Text, View, TouchableOpacity } from "react-native";
 import { db } from "../../firebase/firebaseFunctions.js";
@@ -6,13 +6,13 @@ import { db } from "../../firebase/firebaseFunctions.js";
 export default function DiningHallScreen(props) {
   const [renderFriendImages, setRenderFriendImages] = useState([]);
   const [renderFriendNames, setRenderFriendNames] = useState([]);
-  const { hallName } = props.route.params;
+  const { hallName, friendsInHall } = props.route.params;
 
   // FIX ALL VARIABLES/PROPS SO THAT WE ONLY RELY ON hallName
 
   useEffect(() => {
     setRenderFriendImages([]);
-    props.friendsInHall.map((section) => {
+    friendsInHall.map((section) => {
       console.log("current section is " + section);
       db.ref("users/" + section + "/profilePic")
         .once("value")
