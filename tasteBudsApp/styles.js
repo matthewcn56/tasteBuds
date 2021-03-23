@@ -18,4 +18,9 @@ export default StyleSheet.create({
     height: 250,
     width: 250,
   },
+  friendImage: {
+    height: 100,
+    width: 100,
+    borderRadius: 50,
+  }
 });
