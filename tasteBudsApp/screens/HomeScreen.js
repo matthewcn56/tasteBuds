@@ -48,7 +48,7 @@ export default function HomeScreen(props) {
       if (querySnapshot.exists()) {
         setDiningHalls(querySnapshot.val());
       } else {
-        setDiningHalls(null); 
+        setDiningHalls(null);
       }
     };
     db.ref("capacities/").on("value", onCapacityChange);
@@ -65,12 +65,12 @@ export default function HomeScreen(props) {
         let currentNum = Object.keys(value[1]).length - 1;
         setCapacities((capacities) => {
           return [...capacities, currentNum];
-        })
+        });
       });
     } else {
       setCapacities([]);
     }
-  }, [diningHalls])
+  }, [diningHalls]);
 
   // render dining hall components
   useEffect(() => {
@@ -78,43 +78,51 @@ export default function HomeScreen(props) {
     if (diningHalls) {
       Object.entries(diningHalls).map((value, key) => {
         // create friendsInHall array
-        let friendsInHall = []
+        let friendsInHall = [];
         // map through all the people in value (except dummyNode)
         Object.keys(value[1]).map((person) => {
           // see if that person is a friend
-          if (person !== "dummyNode" && Object.keys(friendList).includes(person)) { 
+          if (
+            person !== "dummyNode" &&
+            Object.keys(friendList).includes(person)
+          ) {
             // add to friendsInHall array
             friendsInHall.push(person);
           }
-        })
+        });
         console.log(value[0]);
         console.log(friendsInHall);
         // update diningHalls
         setRenderDiningHalls((renderDiningHalls) => {
           return [
             ...renderDiningHalls,
-            <TouchableOpacity key={value[0]}>
+            <TouchableOpacity
+              key={value[0]}
+              onPress={() => {
+                props.navigation.navigate("IndividualHall", {
+                  hallName: key,
+                  friendsInHall: friendsInHall,
+                });
+              }}
+            >
               <DiningHallBar
                 title={value[0]}
                 waitTime={15}
                 friendsInHall={friendsInHall}
                 capacity={capacities[key]}
               />
-            </TouchableOpacity>
+            </TouchableOpacity>,
           ];
         });
-      })
-    }          
+      });
+    }
   }, [diningHalls, capacities]);
-  
 
   return (
     <View style={styles.container}>
       <Text>Welcome {userName}</Text>
       <Image style={styles.profileImage} source={{ uri: profilePic }} />
 
-
-      
       {renderDiningHalls}
 
       <Button onPress={logout} title="Log Out" />
