@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import HomeScreen from "../screens/HomeScreen";
 import AddFriendScreen from "../screens/AddFriendScreen";
@@ -6,11 +6,32 @@ import UserProfileScreen from "../screens/UserProfileScreen";
 import DiningHallStack from "./DiningHallStack.js";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { AuthContext } from "./AuthProvider";
+import { db } from "../firebase/firebaseFunctions";
+import RfidScannedScreen from "../screens/RfidScannedScreen";
 
 export default function HomeStack() {
+  const { user } = useContext(AuthContext);
+  const [rfidScanned, setRfidScanned] = useState(false);
+
+  // //handle user changes
+  useEffect(() => {
+    let onRfidChanged = function (snapshot) {
+      if (snapshot.val()) setRfidScanned(true);
+      else setRfidScanned(false);
+    };
+
+    db.ref("rfidTags" + "/" + user.uid).on("value", onRfidChanged);
+
+    return db.ref("rfidTags" + "/" + user.uid).off("value", onRfidChanged);
+  }, []);
+
+  useEffect(() => {
+    console.log("rfidScanned changed!");
+  }, [rfidScanned]);
   const Tab = createMaterialBottomTabNavigator();
   return (
-    <Tab.Navigator initialRouteName="Home">
+    <Tab.Navigator initialRouteName={rfidScanned ? "Home" : "RfidScanned"}>
       <Tab.Screen
         name="AddFriend"
         component={AddFriendScreen}
@@ -24,16 +45,31 @@ export default function HomeStack() {
           ),
         }}
       />
-
-      <Tab.Screen
-        name="Dining Halls"
-        component={DiningHallStack}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="local-dining" color={color} size={26} />
-          ),
-        }}
-      />
+      {rfidScanned ? (
+        <Tab.Screen
+          name="Dining Halls"
+          component={DiningHallStack}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <MaterialIcons name="local-dining" color={color} size={26} />
+            ),
+          }}
+        />
+      ) : (
+        <Tab.Screen
+          name="RfidScanned"
+          component={RfidScannedScreen}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <MaterialCommunityIcons
+                name="scan-helper"
+                color={color}
+                size={26}
+              />
+            ),
+          }}
+        />
+      )}
 
       <Tab.Screen
         name="UserProfile"
