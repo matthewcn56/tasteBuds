@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "../../styles";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import {db} from "../../firebase/firebaseFunctions" 
 export default function DiningHallBar(props) {
 
@@ -22,10 +22,12 @@ export default function DiningHallBar(props) {
   }, []);
 
   return (
-    <View>
+    <View key={props.title}>
+      <TouchableOpacity /*onpress={props.navigation.navigate("DSFDS", {key})}*/>
         <Text> {props.title}</Text>
         <Text> {props.waitTime} minutes </Text>
         {renderFriendImages}
+      </TouchableOpacity>
     </View>
   );
 }

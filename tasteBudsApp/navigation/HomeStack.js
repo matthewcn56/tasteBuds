@@ -3,6 +3,7 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import HomeScreen from "../screens/HomeScreen";
 import AddFriendScreen from "../screens/AddFriendScreen";
 import UserProfileScreen from "../screens/UserProfileScreen";
+import DiningHallStack from "./DiningHallStack.js";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
@@ -25,11 +26,11 @@ export default function HomeStack() {
       />
 
       <Tab.Screen
-        name="Home"
-        component={HomeScreen}
+        name="Dining Halls"
+        component={DiningHallStack}
         options={{
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="home" color={color} size={26} />
+            <MaterialIcons name="local-dining" color={color} size={26} />
           ),
         }}
       />

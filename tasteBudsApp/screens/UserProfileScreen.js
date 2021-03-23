@@ -15,7 +15,7 @@ import QRCode from "react-native-qrcode-svg";
 export default function UserProfileScreen() {
   const { user } = useContext(AuthContext);
   const [list, setList] = React.useState(null);
-  const [displayedItems, setDisplayedItems] = React.useState(null);
+  const [displayedItems, setDisplayedItems] = React.useState([]);
 
   useEffect(() => {
     console.log("user's uid is " + user.uid);
@@ -44,33 +44,30 @@ export default function UserProfileScreen() {
   useEffect(() => {
     console.log("The list changed!");
     if (list) {
-      setDisplayedItems(
-        Object.keys(list).map((section) => {
-          let friendName;
-          console.log("current section is " + section);
-          db.ref("users/" + section + "/displayName").on(
-            "value",
-            (snapshot) => {
-              friendName = snapshot.val();
-              console.log(snapshot.val());
-            }
-          );
-
-          console.log("the friend's name is " + friendName);
-
-          return (
-            <Text key={friendName}>{friendName}</Text> // try changing to name
-          );
-        })
-      );
+      Object.keys(list).map((section) => {
+        let friendName;
+        console.log("current section is " + section);
+        db.ref("users/" + section + "/displayName").once("value").then((snapshot) => {
+          if (snapshot.exists()) {
+            console.log("snapshot exists!");
+            friendName = snapshot.val();
+            console.log(snapshot.val());
+            setDisplayedItems( (displayedItems) => {
+              return [...displayedItems, <Text key={section}>{friendName}</Text>]
+            });
+          } else {
+            console.log("snapshot doesn't exist?");
+            setList(null); //IS THIS CORRECT
+          }
+        });
+      })
     } else {
       console.log("list is null");
-      setDisplayedItems(null);
+      setDisplayedItems([]);
     }
   }, [list]);
 
   //let displayedItems = null;
-
   return (
     <View style={styles.container}>
       <QRCode value={user.uid} />
