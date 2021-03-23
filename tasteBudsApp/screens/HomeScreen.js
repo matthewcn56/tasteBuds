@@ -82,11 +82,13 @@ export default function HomeScreen(props) {
         // map through all the people in value (except dummyNode)
         Object.keys(value[1]).map((person) => {
           // see if that person is a friend
+          console.log(person);
           if (person !== "dummyNode" && Object.keys(friendList).includes(person)) { 
             // add to friendsInHall array
             friendsInHall.push(person);
           }
         })
+
         console.log(value[0]);
         console.log(friendsInHall);
         // update diningHalls
