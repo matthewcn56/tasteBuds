@@ -9,6 +9,8 @@ export default function DiningHallScreen(props) {
   const [renderFriendNames, setRenderFriendNames] = useState([]);
   const { hallName } = props.route.params;
 
+  // FIX ALL VARIABLES/PROPS SO THAT WE ONLY RELY ON hallName
+
   useEffect( () => {
     setRenderFriendImages([]);
     props.friendsInHall.map((section) => {
