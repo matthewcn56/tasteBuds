@@ -15,6 +15,7 @@ import QRCode from "react-native-qrcode-svg";
 export default function UserProfileScreen() {
   const { user } = useContext(AuthContext);
   const [list, setList] = React.useState(null);
+  const [displayedItems, setDisplayedItems] = React.useState(null);
 
   useEffect(() => {
     console.log("user's uid is " + user.uid);
@@ -40,26 +41,32 @@ export default function UserProfileScreen() {
 
   useEffect(() => {
     console.log("The list changed!");
+    if (list) {
+      //let friendNames = [];
+      //displayedItems =
+      setDisplayedItems(
+        Object.keys(list).map((section) => {
+          let friendName;
+          console.log("current section is " + section);
+          db.ref("users/" + section + "/displayName").on(
+            "value",
+            (snapshot) => {
+              friendName = snapshot.val();
+              console.log(snapshot.val());
+            }
+          );
+
+          console.log("the friend's name is " + friendName);
+
+          return (
+            <Text key={friendName}>{friendName}</Text> // try changing to name
+          );
+        })
+      );
+    } else console.log("list is null");
   }, [list]);
 
-  let displayedItems = null;
-  if (list) {
-    //let friendNames = [];
-    displayedItems = Object.keys(list).map((section) => {
-      let friendName;
-      console.log("current section is " + section);
-      db.ref("users/" + section + "/displayName").on("value", (snapshot) => {
-        friendName = snapshot.val();
-        console.log(snapshot.val());
-      });
-
-      console.log("the friend's name is " + friendName);
-
-      return (
-        <Text>{friendName}</Text> // try changing to name
-      );
-    });
-  } else console.log("list is null");
+  //let displayedItems = null;
 
   return (
     <View style={styles.container}>
