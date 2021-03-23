@@ -23,11 +23,9 @@ export default function DiningHallBar(props) {
 
   return (
     <View key={props.title}>
-      <TouchableOpacity /*onpress={props.navigation.navigate("DSFDS", {key})}*/>
-        <Text> {props.title}</Text>
-        <Text> {props.waitTime} minutes </Text>
-        {renderFriendImages}
-      </TouchableOpacity>
+      <Text> {props.title}</Text>
+      <Text> {props.waitTime} minutes </Text>
+      {renderFriendImages}  
     </View>
   );
 }
