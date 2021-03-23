@@ -47,20 +47,25 @@ export default function UserProfileScreen() {
       Object.keys(list).map((section) => {
         let friendName;
         console.log("current section is " + section);
-        db.ref("users/" + section + "/displayName").once("value").then((snapshot) => {
-          if (snapshot.exists()) {
-            console.log("snapshot exists!");
-            friendName = snapshot.val();
-            console.log(snapshot.val());
-            setDisplayedItems( (displayedItems) => {
-              return [...displayedItems, <Text key={section}>{friendName}</Text>]
-            });
-          } else {
-            console.log("snapshot doesn't exist?");
-            setList(null); //IS THIS CORRECT
-          }
-        });
-      })
+        db.ref("users/" + section + "/displayName")
+          .once("value")
+          .then((snapshot) => {
+            if (snapshot.exists()) {
+              console.log("snapshot exists!");
+              friendName = snapshot.val();
+              console.log(snapshot.val());
+              setDisplayedItems((displayedItems) => {
+                return [
+                  ...displayedItems,
+                  <Text key={section}>{friendName}</Text>,
+                ];
+              });
+            } else {
+              console.log("snapshot doesn't exist?");
+              setList(null); //IS THIS CORRECT
+            }
+          });
+      });
     } else {
       console.log("list is null");
       setDisplayedItems([]);

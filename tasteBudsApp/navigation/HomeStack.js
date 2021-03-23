@@ -23,7 +23,7 @@ export default function HomeStack() {
 
     db.ref("rfidTags" + "/" + user.uid).on("value", onRfidChanged);
 
-    return db.ref("rfidTags" + "/" + user.uid).off("value", onRfidChanged);
+    //return db.ref("rfidTags" + "/" + user.uid).off("value", onRfidChanged);
   }, []);
 
   useEffect(() => {
