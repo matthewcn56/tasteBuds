@@ -10,6 +10,7 @@ export default function AddFriendScreen() {
   //const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [renderScanner, setRenderScanner] = useState(false);
+
   const {
     user,
     setUser,

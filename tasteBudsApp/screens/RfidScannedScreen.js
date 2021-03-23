@@ -1,10 +1,13 @@
+
 import React, { useContext, useState, useEffect, useCallback } from "react";
+
 import styles from "../styles";
 import { View, Text, Button, StyleSheet } from "react-native";
 import { AuthContext } from "../navigation/AuthProvider";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { db } from "../firebase/firebaseFunctions";
 import { useFocusEffect } from "@react-navigation/native";
+
 
 export default function RfidScannedScreen(props) {
   const {
@@ -14,6 +17,7 @@ export default function RfidScannedScreen(props) {
     setHasCameraPermission,
   } = useContext(AuthContext);
   const [scanned, setScanned] = useState(false);
+
   const [renderScanner, setRenderScanner] = useState(false);
 
   //Activate rendering scanner when the screen is focused
@@ -27,6 +31,7 @@ export default function RfidScannedScreen(props) {
       };
     }, [])
   );
+
 
   useEffect(() => {
     (async () => {
@@ -68,12 +73,14 @@ export default function RfidScannedScreen(props) {
       <Text style={StyleSheet.absoluteFillObject}>
         This is our QR Reader Screen!
       </Text>
+
       {renderScanner ? (
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
           style={StyleSheet.absoluteFillObject}
         />
       ) : null}
+
 
       {scanned && (
         <Button title={"Tap to Scan Again"} onPress={() => setScanned(false)} />
