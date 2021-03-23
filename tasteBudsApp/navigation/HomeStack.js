@@ -35,10 +35,10 @@ export default function HomeStack() {
       initialRouteName={rfidScanned ? "Dining Halls" : "Account Pairing"}
       barStyle={styles.navBar}
       activeColor="#ffffff"
-      inactiveColor="#151057"
+      inactiveColor={styles.signinButton.borderColor}
     >
       <Tab.Screen
-        name="AddFriend"
+        name="Add Friend"
         component={AddFriendScreen}
         options={{
           tabBarIcon: ({ color }) => (
@@ -77,7 +77,7 @@ export default function HomeStack() {
       )}
 
       <Tab.Screen
-        name="UserProfile"
+        name="User Profile"
         component={UserProfileScreen}
         options={{
           tabBarIcon: ({ color }) => (

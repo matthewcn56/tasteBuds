@@ -2,6 +2,9 @@ import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../navigation/AuthProvider";
 import { db } from "../firebase/firebaseFunctions";
 import styles from "../styles.js";
+import { Image } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
 import {
   StyleSheet,
   Text,
@@ -72,12 +75,38 @@ export default function UserProfileScreen() {
       setDisplayedItems([]);
     }
   }, [list]);
-
   //let displayedItems = null;
+
+  const { logout } = useContext(AuthContext);
+
   return (
     <View style={styles.container}>
-      <QRCode value={user.uid} />
-      <Text>Your List</Text>
+      <View style = {styles.profileContainerUpper}>
+        <View style={styles.emptyWrapper}/>
+
+        <View style={styles.profileContainer}>
+          <Image style = {styles.profileImage} source = {{ uri: user.photoURL }}/>
+        </View>
+
+        <View style={styles.logOutContainer}>
+          <View style = {styles.emptyWrapper}/>
+          <View style = {{flex: 2, justifyContent: "center"}}>
+            <TouchableOpacity onPress={() => logout()} style={styles.signOutButton}>
+              <MaterialCommunityIcons
+                    name="logout"
+                    color={styles.signinButton.borderColor}
+                    size={2*styles.signOutButton.width/3}
+                  />
+            </TouchableOpacity>
+          </View>
+          <Text style = {styles.regText, styles.emptyWrapper}>Log Out</Text>
+        </View>
+      </View>
+
+      <Text style = {styles.profileName}>{user.displayName}</Text>
+
+      <QRCode size = {styles.QRCode.width} style = {styles.QRCode} value={user.uid} />
+
       <Text>{displayedItems ? displayedItems : "null"} </Text>
     </View>
   );

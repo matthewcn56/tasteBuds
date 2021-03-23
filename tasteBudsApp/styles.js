@@ -18,7 +18,16 @@ export default StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+    flexDirection: "column",
   },
+  regText:{
+    fontFamily: textFont,
+    fontSize: 15,
+  },
+  emptyWrapper:{
+    flex: 1,
+  },
+  //Log in page CSS
   logo: {
     height: 5*windowWidth/8.4,
     width: 5*windowWidth/7,
@@ -32,7 +41,7 @@ export default StyleSheet.create({
     marginBottom: 20,
     marginTop: windowHeight/5,
   },
-  //Log in page CSS
+  
   signinButton: {
     fontFamily: textFont,
     alignItems: "center",
@@ -44,20 +53,61 @@ export default StyleSheet.create({
     borderStyle: "solid",
     borderColor: dark,
     borderWidth: 4,
-
   },
+
   //Navigation bar
   navBar: {
     backgroundColor:mid,
   },
-  //everything else
+
+  //User Profile
+  profileContainerUpper:{
+    width: windowWidth,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    height: windowWidth/3,
+  },
+  profileContainer: {
+    flexDirection: "column",
+    justifyContent: "center",
+    flex: 1,
+  },
   profileImage: {
-    height: 250,
-    width: 250,
+    height: windowWidth/3,
+    width: windowWidth/3,
+    borderRadius: windowWidth/3,
+  },
+  logOutContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  signOutButton: {
+    height: windowWidth/7,
+    width: windowWidth/7,
+    borderRadius: windowWidth/6,
+    borderColor: dark,
+    borderWidth: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: mid,
+  },
+  //end of upper profile container
+  profileName: {
+    color: dark,
+    fontFamily: headerFont,
+    textAlign: "center",
+    fontSize: 20,
+    marginTop: windowWidth/20,
+    marginBottom: windowWidth/5,
+  },
+  QRCode: {
+    flex: 1,
+    width: 3*windowWidth/5,
   },
   friendImage: {
     height: 250,
     width: 250,
-    borderRadius: 50,
+    borderRadius: 250,
   },
 });
