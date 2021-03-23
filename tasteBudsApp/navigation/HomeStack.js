@@ -9,6 +9,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { AuthContext } from "./AuthProvider";
 import { db } from "../firebase/firebaseFunctions";
 import RfidScannedScreen from "../screens/RfidScannedScreen";
+import styles from "../styles.js";
 
 export default function HomeStack() {
   const { user } = useContext(AuthContext);
@@ -31,7 +32,7 @@ export default function HomeStack() {
   }, [rfidScanned]);
   const Tab = createMaterialBottomTabNavigator();
   return (
-    <Tab.Navigator initialRouteName={rfidScanned ? "Home" : "RfidScanned"}>
+    <Tab.Navigator initialRouteName={rfidScanned ? "Home" : "RfidScanned"} barStyle={styles.navBar} activeColor="#ffffff" inactiveColor="#151057">
       <Tab.Screen
         name="AddFriend"
         component={AddFriendScreen}
@@ -40,7 +41,7 @@ export default function HomeStack() {
             <MaterialCommunityIcons
               name="qrcode-scan"
               color={color}
-              size={26}
+              size={24}
             />
           ),
         }}
@@ -51,7 +52,7 @@ export default function HomeStack() {
           component={DiningHallStack}
           options={{
             tabBarIcon: ({ color }) => (
-              <MaterialIcons name="local-dining" color={color} size={26} />
+              <MaterialIcons name="local-dining" color={color} size={24} />
             ),
           }}
         />
@@ -64,7 +65,7 @@ export default function HomeStack() {
               <MaterialCommunityIcons
                 name="scan-helper"
                 color={color}
-                size={26}
+                size={24}
               />
             ),
           }}

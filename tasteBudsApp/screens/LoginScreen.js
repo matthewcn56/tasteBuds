@@ -8,7 +8,7 @@ export default function LoginScreen() {
   const { login } = useContext(AuthContext);
   return (
       <View style={styles.container}>
-        <Text style ={styles.appName}>why yea no work now? work</Text>
+        <Text style ={styles.appName}>TasteBuds</Text>
         <Image style ={styles.logo} source={require("../assets/TasteBuds.png")}/>
         <TouchableOpacity onPress={() => login()} style={styles.signinButton}>
           <Text>Sign In or Register With Google</Text>
