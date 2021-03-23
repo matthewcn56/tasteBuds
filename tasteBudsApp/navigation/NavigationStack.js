@@ -6,12 +6,16 @@ import AuthStack from "./AuthStack";
 import { AuthContext } from "./AuthProvider";
 import { ActivityIndicator } from "react-native";
 import firebase from "firebase";
+import {
+  useFonts,
+  FredokaOne_400Regular ,
+} from '@expo-google-fonts/fredoka-one';
+
 
 export default function NavigationStack() {
   const { user, setUser } = useContext(AuthContext);
   const [initializing, setInitializing] = useState(true);
   const [loading, setLoading] = useState(true);
-
   //handle user state changes
   useEffect(() => {
     const subscriber = firebase.auth().onAuthStateChanged(function (user) {
