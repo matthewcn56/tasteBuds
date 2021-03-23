@@ -55,7 +55,7 @@ export default function AddFriendScreen() {
             updates["friends/" + data + "/" + user.uid] = true;
             return db.ref().update(updates);
           } else {
-            alert("Invalid QR Code");
+            alert("Invalid Friend Code!");
           }
         })
         .catch(function (error) {
