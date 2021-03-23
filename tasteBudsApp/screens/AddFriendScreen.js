@@ -1,21 +1,18 @@
-import React, { useState, useEffect, useContext } from 'react';
-import {AuthContext} from "../navigation/AuthProvider";
-import { StyleSheet, Text, View, Button } from 'react-native';
-import { BarCodeScanner } from 'expo-barcode-scanner';
-import { db } from '../firebase/firebaseFunctions.js';
-
-
+import React, { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../navigation/AuthProvider";
+import { StyleSheet, Text, View, Button } from "react-native";
+import { BarCodeScanner } from "expo-barcode-scanner";
+import { db } from "../firebase/firebaseFunctions.js";
 
 export default function AddFriendScreen() {
-
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
-  const {user, setUser, logout, } = useContext(AuthContext);
+  const { user, setUser, logout } = useContext(AuthContext);
 
   useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
+      setHasPermission(status === "granted");
     })();
   }, []);
 
@@ -24,19 +21,23 @@ export default function AddFriendScreen() {
     if (data === "" || data.includes(".", "#", "$", "[", "]"))
       alert("Invalid QR Code");
     else {
-      db.ref('users/' + data + '/displayName').once('value').then((snapshot) => {
-        if (snapshot.exists()) {
-          alert(`${snapshot.val()} has been added to your friends list!`);
-          // add to database
-          var updates = {};
-          updates["friends/" + user.uid + "/" + data] = true;
-          return db.ref().update(updates);
-        } else {
-          alert("Invalid QR Code");
-        }
-      }).catch(function(error) {
-        console.error(error);
-      });
+      db.ref("users/" + data + "/displayName")
+        .once("value")
+        .then((snapshot) => {
+          // user/uid/displayname
+          if (snapshot.exists()) {
+            alert(`${snapshot.val()} has been added to your friends list!`);
+            // add to database
+            var updates = {};
+            updates["friends/" + user.uid + "/" + data] = true; //adds the uid to the friends tree
+            return db.ref().update(updates);
+          } else {
+            alert("Invalid QR Code");
+          }
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
     }
   };
 
@@ -49,12 +50,16 @@ export default function AddFriendScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={StyleSheet.absoluteFillObject}>This is our QR Reader Screen!</Text>
+      <Text style={StyleSheet.absoluteFillObject}>
+        This is our QR Reader Screen!
+      </Text>
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
-      {scanned && (<Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />)}
+      {scanned && (
+        <Button title={"Tap to Scan Again"} onPress={() => setScanned(false)} />
+      )}
     </View>
   );
 }
@@ -62,8 +67,8 @@ export default function AddFriendScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
