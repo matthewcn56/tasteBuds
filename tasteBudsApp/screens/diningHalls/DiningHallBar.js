@@ -27,7 +27,7 @@ export default function DiningHallBar(props) {
           }
         });
     });
-  }, []);
+  }, [props.friendsInHall]);
 
   return (
     <View key={props.title}>
