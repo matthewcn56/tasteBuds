@@ -74,9 +74,7 @@ function setProfile(result) {
     profilePic: result.user.photoURL,
     displayName: result.user.displayName,
     currHall: false,
-    rfidTag: false,
   });
-  db.ref("rfidTags/" + result.user.uid).set(false);
 }
 
 export async function login() {
