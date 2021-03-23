@@ -1,12 +1,16 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import { AuthContext } from "../navigation/AuthProvider";
 import { StyleSheet, Text, View, Button } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { db } from "../firebase/firebaseFunctions.js";
+import { useFocusEffect } from "@react-navigation/native";
+import { render } from "react-dom";
 
 export default function AddFriendScreen() {
   //const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+  const [renderScanner, setRenderScanner] = useState(false);
+
   const {
     user,
     setUser,
@@ -21,6 +25,18 @@ export default function AddFriendScreen() {
       setHasCameraPermission(status === "granted");
     })();
   }, []);
+
+  //Activate render scanner when screen is focused
+  useFocusEffect(
+    React.useCallback(() => {
+      // Do something when the screen is focused
+      setRenderScanner(true);
+      return () => {
+        //when screen is not focused
+        setRenderScanner(false);
+      };
+    }, [])
+  );
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
@@ -60,10 +76,14 @@ export default function AddFriendScreen() {
       <Text style={StyleSheet.absoluteFillObject}>
         This is our QR Reader Screen!
       </Text>
-      <BarCodeScanner
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={StyleSheet.absoluteFillObject}
-      />
+
+      {renderScanner ? (
+        <BarCodeScanner
+          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+          style={StyleSheet.absoluteFillObject}
+        />
+      ) : null}
+
       {scanned && (
         <Button title={"Tap to Scan Again"} onPress={() => setScanned(false)} />
       )}
