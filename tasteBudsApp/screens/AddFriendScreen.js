@@ -5,14 +5,20 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 import { db } from "../firebase/firebaseFunctions.js";
 
 export default function AddFriendScreen() {
-  const [hasPermission, setHasPermission] = useState(null);
+  //const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
-  const { user, setUser, logout } = useContext(AuthContext);
+  const {
+    user,
+    setUser,
+    logout,
+    hasCameraPermission,
+    setHasCameraPermission,
+  } = useContext(AuthContext);
 
   useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status === "granted");
+      setHasCameraPermission(status === "granted");
     })();
   }, []);
 
@@ -42,10 +48,10 @@ export default function AddFriendScreen() {
     }
   };
 
-  if (hasPermission === null) {
+  if (hasCameraPermission === null) {
     return <Text>Requesting for camera permission</Text>;
   }
-  if (hasPermission === false) {
+  if (hasCameraPermission === false) {
     return <Text>No access to camera</Text>;
   }
 
