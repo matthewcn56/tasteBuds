@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-import HomeScreen from "../screens/HomeScreen";
 import AddFriendScreen from "../screens/AddFriendScreen";
 import UserProfileScreen from "../screens/UserProfileScreen";
 import DiningHallStack from "./DiningHallStack.js";
@@ -32,7 +31,12 @@ export default function HomeStack() {
   }, [rfidScanned]);
   const Tab = createMaterialBottomTabNavigator();
   return (
-    <Tab.Navigator initialRouteName={rfidScanned ? "Home" : "RfidScanned"} barStyle={styles.navBar} activeColor="#ffffff" inactiveColor="#151057">
+    <Tab.Navigator
+      initialRouteName={rfidScanned ? "Dining Halls" : "Account Pairing"}
+      barStyle={styles.navBar}
+      activeColor="#ffffff"
+      inactiveColor="#151057"
+    >
       <Tab.Screen
         name="AddFriend"
         component={AddFriendScreen}
@@ -58,7 +62,7 @@ export default function HomeStack() {
         />
       ) : (
         <Tab.Screen
-          name="RfidScanned"
+          name="Account Pairing"
           component={RfidScannedScreen}
           options={{
             tabBarIcon: ({ color }) => (

@@ -15,9 +15,9 @@ export default function DiningHallStack() {
         options={{ header: () => null }}
       />
       <Stack.Screen
-        name="DiningHallScreen"
+        name="IndividualHall"
         component={DiningHallScreen}
-        options={{ header: () => null }}
+        //options={{ header: () => null }}
       />
     </Stack.Navigator>
   );
