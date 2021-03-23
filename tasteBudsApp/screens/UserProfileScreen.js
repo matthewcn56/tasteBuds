@@ -24,13 +24,15 @@ export default function UserProfileScreen() {
         console.log("snapshot exists!");
         console.log(querySnapshot.val());
         setList(querySnapshot.val());
-      } else console.log("snapshot doesn't exist?");
+      } else {
+        console.log("snapshot doesn't exist?");
+        setList(null); //IS THIS CORRECT
+      }
     };
     db.ref("friends/" + user.uid).on("value", onValueChange);
 
     return () => {
       db.ref("friends/" + user.uid).off("value", onValueChange);
-      //setDisplayedItems([]);
     };
   }, []);
 
@@ -42,8 +44,6 @@ export default function UserProfileScreen() {
   useEffect(() => {
     console.log("The list changed!");
     if (list) {
-      //let friendNames = [];
-      //displayedItems =
       setDisplayedItems(
         Object.keys(list).map((section) => {
           let friendName;
@@ -63,7 +63,10 @@ export default function UserProfileScreen() {
           );
         })
       );
-    } else console.log("list is null");
+    } else {
+      console.log("list is null");
+      setDisplayedItems(null);
+    }
   }, [list]);
 
   //let displayedItems = null;
