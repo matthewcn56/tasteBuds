@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import styles from "../../styles.js";
-import { Text, View, TouchableOpacity } from "react-native";
+import { Text, View, TouchableOpacity, Image } from "react-native";
 import { db } from "../../firebase/firebaseFunctions.js";
 
 export default function DiningHallScreen(props) {
