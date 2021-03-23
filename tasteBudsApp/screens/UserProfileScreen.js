@@ -43,6 +43,7 @@ export default function UserProfileScreen() {
 
   useEffect(() => {
     console.log("The list changed!");
+    setDisplayedItems([]);
     if (list) {
       Object.keys(list).map((section) => {
         let friendName;
