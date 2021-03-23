@@ -1,4 +1,3 @@
-
 import React, { useContext, useState, useEffect, useCallback } from "react";
 
 import styles from "../styles";
@@ -7,7 +6,6 @@ import { AuthContext } from "../navigation/AuthProvider";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { db } from "../firebase/firebaseFunctions";
 import { useFocusEffect } from "@react-navigation/native";
-
 
 export default function RfidScannedScreen(props) {
   const {
@@ -32,7 +30,6 @@ export default function RfidScannedScreen(props) {
     }, [])
   );
 
-
   useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -45,27 +42,43 @@ export default function RfidScannedScreen(props) {
     if (data === "" || data.includes(".", "#", "$", "[", "]"))
       alert("Invalid QR Code");
     else {
-      db.ref("rfidTags/" + user.uid).set(data);
-      alert("Paired With Your Bruin Card!");
-      // db.ref("rfidTags/" + user.uid)
-      //   .once("value")
-      //   .then((snapshot) => {
-      //     // user/uid/displayname
-      //     if (snapshot.exists()) {
-      //       alert(`${snapshot.val()} has been added to your friends list!`);
-      //       // add to database
-      //       var updates = {};
-      //       updates["friends/" + user.uid + "/" + data] = true; //adds the uid to the friends tree
-      //       updates["friends/" + data + "/" + user.uid] = true;
-      //       return db.ref().update(updates);
-      //     } else {
-      //       alert("Invalid QR Code");
-      //     }
-      //   })
-      //   .catch(function (error) {
-      //     console.error(error);
-      //   });
+      db.ref("users/" + data)
+        .once("value")
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            alert("Invalid Bruin Card, You Scanned A User!");
+          } else {
+            db.ref("rfidTags/" + user.uid).set(data);
+            alert("Paired With Your Bruin Card!");
+            props.navigation.navigate("Dining Halls");
+          }
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
     }
+
+    // db.ref("rfidTags/" + user.uid).set(data);
+    // alert("Paired With Your Bruin Card!");
+    // db.ref("rfidTags/" + user.uid)
+    //   .once("value")
+    //   .then((snapshot) => {
+    //     // user/uid/displayname
+    //     if (snapshot.exists()) {
+    //       alert(`${snapshot.val()} has been added to your friends list!`);
+    //       // add to database
+    //       var updates = {};
+    //       updates["friends/" + user.uid + "/" + data] = true; //adds the uid to the friends tree
+    //       updates["friends/" + data + "/" + user.uid] = true;
+    //       return db.ref().update(updates);
+    //     } else {
+    //       alert("Invalid QR Code");
+    //     }
+    //   })
+    //   .catch(function (error) {
+    //     console.error(error);
+    //   });
+    //}
   };
 
   return (
@@ -80,7 +93,6 @@ export default function RfidScannedScreen(props) {
           style={StyleSheet.absoluteFillObject}
         />
       ) : null}
-
 
       {scanned && (
         <Button title={"Tap to Scan Again"} onPress={() => setScanned(false)} />
