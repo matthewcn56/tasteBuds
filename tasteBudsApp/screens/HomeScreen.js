@@ -24,26 +24,6 @@ export default function HomeScreen(props) {
     });
   }, []);
 
-  useEffect(() => {
-    console.log("user's uid is " + user.uid);
-    let onValueChange = function (querySnapshot) {
-      if (querySnapshot.exists()) {
-        console.log("snapshot exists!");
-        console.log(querySnapshot.val());
-        setList(querySnapshot.val());
-      } else {
-        console.log("snapshot doesn't exist?");
-        setList(null); //IS THIS CORRECT
-      }
-    };
-    db.ref("friends/" + user.uid).on("value", onValueChange);
-
-    return () => {
-      db.ref("friends/" + user.uid).off("value", onValueChange);
-    };
-  }, []);
-
-
   return (
     <View style={styles.container}>
       <Text>Welcome {userName}</Text>
