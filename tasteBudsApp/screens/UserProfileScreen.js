@@ -133,9 +133,40 @@ export default function UserProfileScreen() {
   // }
   return (
     <View style={styles.container}>
-      <QRCode value={user.uid} />
-      <Text>Your List</Text>
-      <Text>{displayedItems} </Text>
+      <View style={styles.profileContainerUpper}>
+        <View style={styles.emptyWrapper} />
+
+        <View style={styles.profileContainer}>
+          <Image style={styles.profileImage} source={{ uri: user.photoURL }} />
+        </View>
+
+        <View style={styles.logOutContainer}>
+          <View style={styles.emptyWrapper} />
+          <View style={{ flex: 2, justifyContent: "center" }}>
+            <TouchableOpacity
+              onPress={() => logout()}
+              style={styles.signOutButton}
+            >
+              <MaterialCommunityIcons
+                name="logout"
+                color={styles.signinButton.borderColor}
+                size={(2 * styles.signOutButton.width) / 3}
+              />
+            </TouchableOpacity>
+          </View>
+          <Text style={(styles.regText, styles.emptyWrapper)}>Log Out</Text>
+        </View>
+      </View>
+
+      <Text style={styles.profileName}>{user.displayName}</Text>
+
+      <QRCode
+        size={styles.QRCode.width}
+        style={styles.QRCode}
+        value={user.uid}
+      />
+
+      <Text>{displayedItems ? displayedItems : "null"} </Text>
     </View>
   );
 }
