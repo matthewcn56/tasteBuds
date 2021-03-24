@@ -13,7 +13,6 @@ def get_menu_items_from_time_and_hall(meal_time, desired_hall):
     items = results.find_all("div", class_="menu-block")
 
     hallMenuItems = []
-
     for item in items:
         currentMeal = item.find("h3", class_="col-header")
         if currentMeal.text == MEAL_TIME:
@@ -42,7 +41,6 @@ returnValue = json.dumps(items)
 #return the returnValue which is a JSON Object
 
 #For Testing Purposes
-tester = json.loads(returnValue)
-for test in tester:
-    print (test)
-                
+# tester = json.loads(returnValue)
+# for test in tester:
+#     print (test)
