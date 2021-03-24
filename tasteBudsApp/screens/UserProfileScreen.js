@@ -3,6 +3,7 @@ import { AuthContext } from "../navigation/AuthProvider";
 import { db } from "../firebase/firebaseFunctions";
 import styles from "../styles.js";
 import { Image } from "react-native";
+import FriendsListBar from "./userBars/FriendsListBar";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import {
@@ -17,7 +18,7 @@ import { ActivityIndicator } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 
 export default function UserProfileScreen() {
-  const { user } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
   const [list, setList] = React.useState(null);
   const [displayedItems, setDisplayedItems] = React.useState([]);
   const [loading, setLoading] = useState(true);
@@ -61,7 +62,11 @@ export default function UserProfileScreen() {
           snapshotVals.map((snapshot, index) => {
             if (snapshot.exists()) {
               return (
-                <Text key={Object.keys(list)[index]}> {snapshot.val()} </Text>
+                <FriendsListBar
+                  key={Object.keys(list)[index]}
+                  name={snapshot.val()}
+                  uid={Object.keys(list)[index]}
+                />
               );
             }
           })

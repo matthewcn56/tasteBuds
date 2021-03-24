@@ -1,13 +1,12 @@
 import { StyleSheet } from "react-native";
-import { Dimensions } from 'react-native';
-
+import { Dimensions } from "react-native";
 
 //global styling variables
 const dark = "#151057";
-const mid =  "#edb7e3";
+const mid = "#edb7e3";
 const light = "#f9e4f8";
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 const titleFont = "FredokaOne_400Regular";
 const headerFont = "Poppins_600SemiBold";
 const textFont = "Poppins_400Regular";
@@ -20,18 +19,18 @@ export default StyleSheet.create({
     justifyContent: "center",
     flexDirection: "column",
   },
-  regText:{
+  regText: {
     fontFamily: textFont,
     fontSize: 15,
   },
-  emptyWrapper:{
+  emptyWrapper: {
     flex: 1,
   },
   //Log in page CSS
   logo: {
-    height: 5*windowWidth/8.4,
-    width: 5*windowWidth/7,
-    
+    height: (5 * windowWidth) / 8.4,
+    width: (5 * windowWidth) / 7,
+
     marginBottom: 100,
   },
   appName: {
@@ -39,9 +38,9 @@ export default StyleSheet.create({
     fontFamily: titleFont,
     color: dark,
     marginBottom: 20,
-    marginTop: windowHeight/5,
+    marginTop: windowHeight / 5,
   },
-  
+
   signinButton: {
     fontFamily: textFont,
     alignItems: "center",
@@ -57,15 +56,15 @@ export default StyleSheet.create({
 
   //Navigation bar
   navBar: {
-    backgroundColor:mid,
+    backgroundColor: mid,
   },
 
   //User Profile
-  profileContainerUpper:{
+  profileContainerUpper: {
     width: windowWidth,
     flexDirection: "row",
     justifyContent: "flex-end",
-    height: windowWidth/3,
+    height: windowWidth / 3,
   },
   profileContainer: {
     flexDirection: "column",
@@ -73,9 +72,9 @@ export default StyleSheet.create({
     flex: 1,
   },
   profileImage: {
-    height: windowWidth/3,
-    width: windowWidth/3,
-    borderRadius: windowWidth/3,
+    height: windowWidth / 3,
+    width: windowWidth / 3,
+    borderRadius: windowWidth / 3,
   },
   logOutContainer: {
     flex: 1,
@@ -83,9 +82,9 @@ export default StyleSheet.create({
     justifyContent: "center",
   },
   signOutButton: {
-    height: windowWidth/7,
-    width: windowWidth/7,
-    borderRadius: windowWidth/6,
+    height: windowWidth / 7,
+    width: windowWidth / 7,
+    borderRadius: windowWidth / 6,
     borderColor: dark,
     borderWidth: 1,
     justifyContent: "center",
@@ -98,16 +97,21 @@ export default StyleSheet.create({
     fontFamily: headerFont,
     textAlign: "center",
     fontSize: 20,
-    marginTop: windowWidth/20,
-    marginBottom: windowWidth/5,
+    marginTop: windowWidth / 20,
+    marginBottom: windowWidth / 5,
   },
   QRCode: {
     flex: 1,
-    width: 3*windowWidth/5,
+    width: (3 * windowWidth) / 5,
   },
   friendImage: {
     height: 250,
     width: 250,
     borderRadius: 250,
+  },
+  friendBarImage: {
+    height: windowWidth / 5,
+    width: windowWidth / 5,
+    borderRadius: windowWidth / 10,
   },
 });
