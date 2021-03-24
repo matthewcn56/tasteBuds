@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styles from "../../styles";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import { db } from "../../firebase/firebaseFunctions";
+import Entypo from "react-native-vector-icons/Entypo";
 
 export default function FriendsListBar(props) {
   const [currHall, setCurrHall] = useState("");
@@ -27,7 +28,7 @@ export default function FriendsListBar(props) {
   return (
     <View>
       <Text>{props.name} </Text>
-      <Text>{currHall}</Text>
+      <Text> {currHall ? "currently in " + currHall : ""}</Text>
       <Image style={styles.friendBarImage} source={{ uri: userImage }} />
     </View>
   );

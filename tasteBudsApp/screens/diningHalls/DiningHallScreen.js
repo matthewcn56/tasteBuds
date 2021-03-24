@@ -46,21 +46,21 @@ export default function DiningHallScreen(props) {
   return (
     <View style={styles.container}>
       <View key={hallName}>
-          <Text>{hallName}</Text>
-          <Text>{waitTime} minutes </Text>
-          <Text>{friendsInHall.length} friends</Text>
-          <Text>{capacity} / 900</Text>
-          {renderFriendImages}
-          {renderFriendNames}
-          <Slider
-            value={capacity}
-            minimumValue={0}
-            maximumValue={900}
-            disabled={true}
-            minimumTrackTintColor="#E7A7D5"
-            maximumTrackTintColor="#000000"
-            thumbStyle={{display: 'none'}}
-          />
+        <Text>{hallName}</Text>
+        <Text>{waitTime} minutes </Text>
+        <Text>{friendsInHall.length} friends</Text>
+        <Text>{capacity} / 900</Text>
+        {renderFriendImages}
+        {renderFriendNames}
+        <Slider
+          value={capacity}
+          minimumValue={0}
+          maximumValue={900}
+          disabled={true}
+          minimumTrackTintColor="#E7A7D5"
+          maximumTrackTintColor="#000000"
+          thumbStyle={{ display: "none" }}
+        />
       </View>
     </View>
   );
