@@ -46,8 +46,10 @@ export default function DiningHallScreen(props) {
   return (
     <View style={styles.container}>
       <View key={hallName}>
-          <Text> {hallName}</Text>
-          <Text> {waitTime} minutes </Text>
+          <Text>{hallName}</Text>
+          <Text>{waitTime} minutes </Text>
+          <Text>{friendsInHall.length} friends</Text>
+          <Text>{capacity} / 900</Text>
           {renderFriendImages}
           {renderFriendNames}
           <Slider

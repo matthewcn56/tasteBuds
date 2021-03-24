@@ -28,8 +28,9 @@ export default function DiningHallBar(props) {
 
   return (
     <View key={props.title}>
-      <Text> {props.title}</Text>
-      <Text> {props.waitTime} minutes </Text>
+      <Text>{props.title}</Text>
+      <Text>{props.waitTime} minutes </Text>
+      <Text>{props.friendsInHall.length} friends</Text>
       {renderFriendImages}
       <Slider
         value={props.capacity}
