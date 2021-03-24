@@ -90,8 +90,6 @@ export default function HomeScreen(props) {
             friendsInHall.push(person);
           }
         });
-        console.log(value[0]);
-        console.log(friendsInHall);
         // update diningHalls
         setRenderDiningHalls((renderDiningHalls) => {
           return [
@@ -100,8 +98,10 @@ export default function HomeScreen(props) {
               key={value[0]}
               onPress={() => {
                 props.navigation.navigate("IndividualHall", {
-                  hallName: key,
+                  hallName: value[0],
                   friendsInHall: friendsInHall,
+                  capacity: capacities[key],
+                  waitTime: 15, 
                 });
               }}
             >
