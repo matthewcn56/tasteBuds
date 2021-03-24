@@ -110,6 +110,7 @@ export default function HomeScreen(props) {
                 waitTime={15}
                 friendsInHall={friendsInHall}
                 capacity={capacities[key]}
+                style = {styles.DHCard}
               />
             </TouchableOpacity>,
           ];

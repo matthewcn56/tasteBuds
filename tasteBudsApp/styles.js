@@ -21,6 +21,7 @@ export default StyleSheet.create({
   regText: {
     fontFamily: textFont,
     fontSize: 15,
+    color: dark,
   },
   emptyWrapper: {
     flex: 1,
@@ -147,5 +148,43 @@ export default StyleSheet.create({
   scannerLogo: {
     height: ((7 / 8.4) * windowWidth) / 10,
     width: windowWidth / 10,
+  },
+  //Dining hall home page
+  DHCard: {
+    width: windowWidth - windowWidth/15,
+    marginBottom: windowWidth/60,
+    padding: windowWidth/60,
+    paddingBottom: 0,
+    backgroundColor: light,
+    borderColor: dark,
+    borderWidth: 2,
+    borderRadius: windowWidth/30,
+    flexDirection: "column",
+  },
+  DHCardRow1: {
+    flexDirection: "row",
+  },
+  DHCardHeader:{
+    flex: 1,
+    fontSize: windowWidth/20,
+    fontFamily: headerFont,
+    color: dark,
+    marginBottom: -windowWidth/20,
+  },
+  DHCardRow2:{
+
+  },
+  DHCardRow3:{
+    flexDirection:"row",
+    marginBottom: -windowWidth/60
+  },
+  DHCardPic:{
+    marginRight: windowWidth/60,
+    height: windowWidth/12,
+    width: windowWidth/12,
+    borderRadius: windowWidth/12,
+  },
+  DHCardSlider:{
+
   },
 });
