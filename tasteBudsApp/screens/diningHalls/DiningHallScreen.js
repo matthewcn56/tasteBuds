@@ -2,60 +2,63 @@ import React, { useContext, useState, useEffect } from "react";
 import styles from "../../styles.js";
 import { Text, View, TouchableOpacity, Image } from "react-native";
 import { db } from "../../firebase/firebaseFunctions.js";
+import Slider from "react-native-slider";
 
 export default function DiningHallScreen(props) {
   const [renderFriendImages, setRenderFriendImages] = useState([]);
   const [renderFriendNames, setRenderFriendNames] = useState([]);
-  const { hallName, friendsInHall } = props.route.params;
+  const { hallName, friendsInHall, capacity, waitTime } = props.route.params;
 
-  // FIX ALL VARIABLES/PROPS SO THAT WE ONLY RELY ON hallName
-
+  //render friend images
   useEffect(() => {
-    setRenderFriendImages([]);
-    friendsInHall.map((section) => {
-      console.log("current section is " + section);
-      db.ref("users/" + section + "/profilePic")
-        .once("value")
-        .then((snapshot) => {
-          if (snapshot.exists()) {
-            console.log("current url is " + snapshot.val());
-            setRenderFriendImages((renderFriendImages) => {
-              return [
-                ...renderFriendImages,
-                <Image
-                  style={styles.friendImage}
-                  source={{ uri: snapshot.val() }}
-                  key={snapshot.val()}
-                />,
-              ];
-            });
-          }
-        });
-      db.ref("users/" + section + "/displayName")
-        .once("value")
-        .then((snapshot) => {
-          if (snapshot.exists()) {
-            console.log("current name is " + snapshot.val());
-            setRenderFriendNames((renderFriendNames) => {
-              return [
-                ...renderFriendNames,
-                <Text key={section}>{snapshot.val()}</Text>,
-              ];
-            });
-          }
-        });
+    Promise.all(
+      friendsInHall.map((session) =>
+        db.ref("users/" + session + "/profilePic").once("value")
+      )
+    ).then((snapshotVals) => {
+      setRenderFriendImages(
+        snapshotVals.map((snapshot) => (
+          <Image
+            style={styles.friendImage}
+            source={{ uri: snapshot.val() }}
+            key={snapshot.val()}
+          />
+        ))
+      );
     });
-  }, []);
+  }, [friendsInHall]);
+
+  // render friend names
+  useEffect(() => {
+    Promise.all(
+      friendsInHall.map((session) =>
+        db.ref("users/" + session + "/displayName").once("value")
+      )
+    ).then((snapshotVals) => {
+      setRenderFriendNames(
+        snapshotVals.map((snapshot, index) => (
+          <Text key={friendsInHall[index]}>{snapshot.val()}</Text>
+        ))
+      );
+    });
+  }, [friendsInHall]);
 
   return (
     <View style={styles.container}>
       <View key={hallName}>
-        <TouchableOpacity /*onPress={props.navigation.navigate("DSFDS", {key})}*/
-        >
           <Text> {hallName}</Text>
-          <Text> {props.waitTime} minutes </Text>
+          <Text> {waitTime} minutes </Text>
           {renderFriendImages}
-        </TouchableOpacity>
+          {renderFriendNames}
+          <Slider
+            value={capacity}
+            minimumValue={0}
+            maximumValue={900}
+            disabled={true}
+            minimumTrackTintColor="#E7A7D5"
+            maximumTrackTintColor="#000000"
+            thumbStyle={{display: 'none'}}
+          />
       </View>
     </View>
   );
