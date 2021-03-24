@@ -38,11 +38,18 @@ export default function DiningHallMenu(props) {
     useEffect(() => {
         if (menu) {
             setRenderMenuItems(
-                Object.entries(menu).map((item, key) => (
-                    <TouchableOpacity onPress={() => openURL(item[1])}>
-                        <Text>{item[0]}</Text>
-                    </TouchableOpacity>
-                ))
+                Object.entries(menu).map((item, key) => {
+                    return (
+                        <View>
+                            <Text>{item[0]}</Text>
+                            {Object.entries(item[1]).map((dish, key) => (
+                                <TouchableOpacity onPress={() => openURL(dish[1])}>
+                                    <Text>{dish[0]}</Text>
+                                </TouchableOpacity>
+                            ))}
+                        </View>
+                    )
+                })
             );
         }
     }, [menu]);

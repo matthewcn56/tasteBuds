@@ -66,7 +66,7 @@ export default function DiningHallScreen(props) {
           <DiningHallMenu 
             hallName={hallName}
           />
-          <WebView source={{ uri: 'https://web.archive.org/web/20200219143919/http://menu.dining.ucla.edu/Menus/Today' }} />
+          {/* <WebView source={{ uri: 'https://web.archive.org/web/20200219143919/http://menu.dining.ucla.edu/Menus/Today' }} /> */}
       </View>
     </View>
   );
