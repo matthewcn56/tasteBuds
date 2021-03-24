@@ -1,21 +1,23 @@
 import requests
 from bs4 import BeautifulSoup
 
-url = 'https://web.archive.org/web/20200219143919/http://menu.dining.ucla.edu/Menus/Today'
+MEAL_TIME = "Brunch"
+REQUESTED_HALL = "BruinPlate"
+url = 'https://web.archive.org/web/20200219143919/http://menu.dining.ucla.edu/Menus/' + REQUESTED_HALL + '/Today'
 page = requests.get(url)
-REQUESTED_HALL = "Bruin Plate"
+
 text = page.content
 
 soup = BeautifulSoup(page.content, 'html.parser')
 
 results = soup.find(id="main-content")
 
-items = results.find_all("div", class_="menu-block half-col")
+items = results.find_all("div", class_="menu-block")
 
 for item in items:
-     hall = item.find("h3", class_="col-header")
-     hallName = hall.text
-     if hall.text == REQUESTED_HALL:
+     currentMeal = item.find("h3", class_="col-header")
+     if currentMeal.text == MEAL_TIME:
+            print("Found " + MEAL_TIME)
             menuBars=item.find_all("ul", class_ = "sect-list")
             for menuBar in menuBars:
                 itemSections = menuBar.find_all("li", class_ = "sect-item")
@@ -30,5 +32,5 @@ for item in items:
                                 for menuItem in menuItems:
                                     print(menuItem.text) #SHOULD BE STORED IN A VALUE TO BE RETURNED IN API
                                     print(menuItem['href'])
-                                    #TODO: Create JSON object with both Text & Link that gets passed in to front-end
+                                    #TODO: Create JSON object with both Text & Link that gets passed in to front-e
                 
