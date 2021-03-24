@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, useCallback } from "react";
 
 import styles from "../styles";
-import { View, Text, Button, StyleSheet, Image } from "react-native";
+import { SafeAreaView, View, Text, Button, StyleSheet, Image } from "react-native";
 import { AuthContext } from "../navigation/AuthProvider";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { db } from "../firebase/firebaseFunctions";
@@ -82,7 +82,7 @@ export default function RfidScannedScreen(props) {
   };
 
   return (
-    <View>
+    <SafeAreaView>
       
       <Text style={StyleSheet.absoluteFillObject}>
         This is our QR Reader Screen!
@@ -107,6 +107,6 @@ export default function RfidScannedScreen(props) {
         <View style = {styles.headerImg}/>
       </View>
 
-    </View>
+    </SafeAreaView>
   );
 }

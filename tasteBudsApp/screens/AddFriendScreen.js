@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useCallback } from "react";
 import { AuthContext } from "../navigation/AuthProvider";
-import { StyleSheet, Text, View, Button, Image } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View, Button, Image } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { db } from "../firebase/firebaseFunctions.js";
 import { useFocusEffect } from "@react-navigation/native";
@@ -73,7 +73,7 @@ export default function AddFriendScreen() {
   }
 
   return (
-    <View>
+    <SafeAreaView>
       <View style = {styles.scanner}>
       {renderScanner ? (
         <BarCodeScanner
@@ -93,7 +93,7 @@ export default function AddFriendScreen() {
         <View style = {styles.headerImg}/>
       </View>
 
-    </View>
+    </SafeAreaView>
   );
 }
 

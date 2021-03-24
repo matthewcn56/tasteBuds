@@ -13,8 +13,11 @@ const textFont = "Poppins_400Regular";
 
 export default StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: "#fff",
+    alignItems: "center",
+    flexDirection: "column",
+  },
+  scroll: {
     alignItems: "center",
     flexDirection: "column",
   },

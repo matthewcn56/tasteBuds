@@ -8,7 +8,7 @@ import AuthContext from "../../navigation/AuthProvider";
 export default function FriendsListBar(props) {
   const [friend, setFriend] = useState(null)
   const [currHall, setCurrHall] = useState("");
-  const [userImage, setUserImage] = useState("");
+  const [userImage, setUserImage] = useState(null);
   //const { user } = useContext(AuthContext);
   //set the value of currHall when the component mounts
 

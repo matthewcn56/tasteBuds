@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "../../styles";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { SafeAreaView, View, Text, Image, TouchableOpacity } from "react-native";
 import { db } from "../../firebase/firebaseFunctions";
 import Slider from "react-native-slider";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -51,6 +51,7 @@ export default function DiningHallBar(props) {
         minimumTrackTintColor="#E7A7D5"
         maximumTrackTintColor="#000000"
         thumbStyle={{ display: "none" }}
+        thumbImage={{ display: "none" }}
       />
     </View>
   );

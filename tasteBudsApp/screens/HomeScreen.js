@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../navigation/AuthProvider";
 import styles from "../styles.js";
-import { Text, View, Button, Image, TouchableOpacity } from "react-native";
+import { SafeAreaView, Text, View, Button, Image, TouchableOpacity } from "react-native";
 import { db } from "../firebase/firebaseFunctions";
 import DiningHallBar from "./diningHalls/DiningHallBar.js";
 import { render } from "react-dom";
@@ -120,7 +120,7 @@ export default function HomeScreen(props) {
   }, [diningHalls, capacities]);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Image style ={styles.headerImg} source={require("../assets/TasteBuds.png")}/>
         <Text style = {styles.headerTxt}>TasteBuds</Text>
@@ -128,6 +128,6 @@ export default function HomeScreen(props) {
       </View>
 
       {renderDiningHalls}
-    </View>
+    </SafeAreaView>
   );
 }

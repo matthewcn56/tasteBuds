@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../navigation/AuthProvider";
 import { db } from "../firebase/firebaseFunctions";
 import styles from "../styles.js";
-import { Image, Alert } from "react-native";
+import { SafeAreaView, ScrollView, Image, Alert } from "react-native";
 import FriendsListBar from "./userBars/FriendsListBar";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -150,7 +150,8 @@ export default function UserProfileScreen() {
   // }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style = {styles.container}>
+      <ScrollView contentContainerStyle={styles.scroll}>
       <View style={styles.profileContainerUpper}>
         <View style={styles.emptyWrapper} />
 
@@ -185,6 +186,7 @@ export default function UserProfileScreen() {
       />
 
       <Text>{displayedItems ? displayedItems : "null"} </Text>
-    </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
