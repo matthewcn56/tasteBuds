@@ -2,15 +2,16 @@ import requests
 from bs4 import BeautifulSoup
 import json
 
-MEAL_TIME = "Brunch"
-REQUESTED_HALL = "BruinPlate"
+# MEAL_TIME = "Brunch"
+# REQUESTED_HALL = "BruinPlate"
 
 def get_menu_items_from_time_and_hall(meal_time, desired_hall):
-    url = 'https://web.archive.org/web/20200219143919/http://menu.dining.ucla.edu/Menus/' + desired_hall + '/Today'
+    url = 'https://web.archive.org/web/http://menu.dining.ucla.edu/Menus/' + desired_hall + '/Today'
     page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
     results = soup.find(id="main-content")
     items = results.find_all("div", class_="menu-block")
+    MEAL_TIME = meal_time
 
     hallMenuItems = []
     for item in items:
@@ -36,8 +37,9 @@ def get_menu_items_from_time_and_hall(meal_time, desired_hall):
                                         
     return hallMenuItems
 
-items = get_menu_items_from_time_and_hall(MEAL_TIME, REQUESTED_HALL)
-returnValue = json.dumps(items)
+
+# items = get_menu_items_from_time_and_hall(MEAL_TIME, REQUESTED_HALL)
+# returnValue = json.dumps(items)
 #return the returnValue which is a JSON Object
 
 #For Testing Purposes

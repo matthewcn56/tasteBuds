@@ -8,9 +8,6 @@ from menuScraper import get_menu_items_from_time_and_hall
 mealTimes = ["Breakfast", "Brunch", "Lunch", "Dinner", "LateNight"]
 halls = ["Covel", "DeNeve", "FeastAtRieber", "BruinPlate"]
 
-MEAL_TIME = "Brunch"
-DESIGNATED_HALL = "BruinPlate"
-
 cred =credentials.Certificate("/Users/matthewdev/CodingProjects/Hackathons/LAHacks2021/tasteBuds/web_scraping/tastebuds.json")
 
 default_app = firebase_admin.initialize_app(cred, {
@@ -28,9 +25,27 @@ for mealTime in mealTimes:
         #add new menu items
 
         for menuItem in menuItems:
+            #taking care of invalid tokens
             menuItem["itemName"]=  menuItem["itemName"].replace("/", "")
-            firebase_admin.db.reference("menus/" + DESIGNATED_HALL + "/" + MEAL_TIME + "/"
-            +menuItem["itemName"]).set(menuItem["recipeLink"])
+            menuItem["itemName"] = menuItem["itemName"].replace("-", "")
+            menuItem["itemName"] = menuItem["itemName"].replace("#", "")
+            menuItem["itemName"] = menuItem["itemName"].replace("$", "")
+            menuItem["itemName"] = menuItem["itemName"].replace("[", "")
+            menuItem["itemName"] = menuItem["itemName"].replace("]", "")
+            menuItem["itemName"] = menuItem["itemName"].replace(".", "")
+            try:  
+                path = firebase_admin.db.reference("menus/" + DESIGNATED_HALL + "/" + MEAL_TIME + "/"
+                +menuItem["itemName"])
+                path.set(menuItem["recipeLink"])
+            except ValueError:
+                print("Invalid Path!")
+            except TypeError:
+                print("Invalid Path!")
+            except firebase_admin.exceptions.FirebaseError:
+                print("Invalid Path!")
+       
+            # firebase_admin.db.reference("menus/" + DESIGNATED_HALL + "/" + MEAL_TIME + "/"
+            # +menuItem["itemName"]).set(menuItem["recipeLink"])
         
 
 
