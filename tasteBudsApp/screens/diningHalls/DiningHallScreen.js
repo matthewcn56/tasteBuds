@@ -3,6 +3,7 @@ import styles from "../../styles.js";
 import { Text, View, TouchableOpacity, Image } from "react-native";
 import { db } from "../../firebase/firebaseFunctions.js";
 import Slider from "react-native-slider";
+import { WebView } from 'react-native-webview';
 
 export default function DiningHallScreen(props) {
   const [renderFriendImages, setRenderFriendImages] = useState([]);
@@ -61,6 +62,7 @@ export default function DiningHallScreen(props) {
             maximumTrackTintColor="#000000"
             thumbStyle={{display: 'none'}}
           />
+          <WebView source={{ uri: 'https://web.archive.org/web/20200219143919/http://menu.dining.ucla.edu/Menus/Today' }} />
       </View>
     </View>
   );

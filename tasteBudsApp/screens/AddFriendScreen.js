@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useContext, useCallback } from "react";
 import { AuthContext } from "../navigation/AuthProvider";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View, Button, Image } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { db } from "../firebase/firebaseFunctions.js";
 import { useFocusEffect } from "@react-navigation/native";
 import { render } from "react-dom";
+import styles from "../styles";
 
 export default function AddFriendScreen() {
   //const [hasPermission, setHasPermission] = useState(null);
@@ -72,11 +73,8 @@ export default function AddFriendScreen() {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={StyleSheet.absoluteFillObject}>
-        This is our QR Reader Screen!
-      </Text>
-
+    <SafeAreaView>
+      <View style = {styles.scanner}>
       {renderScanner ? (
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
@@ -87,15 +85,15 @@ export default function AddFriendScreen() {
       {scanned && (
         <Button title={"Tap to Scan Again"} onPress={() => setScanned(false)} />
       )}
-    </View>
+      </View>
+      
+      <View style={styles.scannerHeader}>
+        <Image style ={styles.headerImg} source={require("../assets/TasteBuds.png")}/>
+        <Text style = {styles.headerTxt}>TasteBuds</Text>
+        <View style = {styles.headerImg}/>
+      </View>
+
+    </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
