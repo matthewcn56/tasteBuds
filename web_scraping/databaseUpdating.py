@@ -15,13 +15,23 @@ default_app = firebase_admin.initialize_app(cred, {
 })
 print(default_app.name)
 
+def hall_path_switcher(pathName):
+    translatedPath = {
+        "Covel" : "Covel",
+        "DeNeve" : "De Neve",
+        "FeastAtRieber" : "Feast",
+        "BruinPlate" : "BPlate"
+    }
+    return translatedPath.get(pathName, "ERROR")
+
+
 for mealTime in mealTimes:
     for designatedHall in halls:
         MEAL_TIME = mealTime
         DESIGNATED_HALL = designatedHall
         menuItems = get_menu_items_from_time_and_hall(MEAL_TIME, DESIGNATED_HALL)
         #delete previous menu
-        firebase_admin.db.reference("menus/" + DESIGNATED_HALL + "/" + MEAL_TIME).delete()
+        firebase_admin.db.reference("menus/" + hall_path_switcher(DESIGNATED_HALL) + "/" + MEAL_TIME).delete()
         #add new menu items
 
         for menuItem in menuItems:
@@ -29,8 +39,9 @@ for mealTime in mealTimes:
             for c in ["/", "-", "#", "$", "[", "]", "."]:
                 menuItem["itemName"]=  menuItem["itemName"].replace(c, "")
             try:  
-                path = firebase_admin.db.reference("menus/" + DESIGNATED_HALL + "/" + MEAL_TIME + "/" + menuItem["itemName"])
-                path.set(menuItem["recipeLink"]) # what is .set? what is the path object?
+                path = firebase_admin.db.reference("menus/" +  hall_path_switcher(DESIGNATED_HALL) + "/" + MEAL_TIME + "/"
+                +menuItem["itemName"])
+                path.set(menuItem["recipeLink"])
             except ValueError:
                 print("Invalid Path!")
             except TypeError:
