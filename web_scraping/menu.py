@@ -29,4 +29,6 @@ for item in items:
                                 menuItems = menuSubLink.find_all("a", class_="recipelink")
                                 for menuItem in menuItems:
                                     print(menuItem.text) #SHOULD BE STORED IN A VALUE TO BE RETURNED IN API
+                                    print(menuItem['href'])
+                                    #TODO: Create JSON object with both Text & Link that gets passed in to front-end
                 
