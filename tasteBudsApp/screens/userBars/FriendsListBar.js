@@ -6,6 +6,7 @@ import Entypo from "react-native-vector-icons/Entypo";
 import AuthContext from "../../navigation/AuthProvider";
 
 export default function FriendsListBar(props) {
+  const [friend, setFriend] = useState(null)
   const [currHall, setCurrHall] = useState("");
   const [userImage, setUserImage] = useState("");
   //const { user } = useContext(AuthContext);
@@ -33,23 +34,32 @@ export default function FriendsListBar(props) {
       ]
     );
 
-  useEffect(() => {
-    db.ref("users/" + props.uid + "/currHall")
-      .once("value")
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          setCurrHall(snapshot.val());
+    useEffect(() => {
+      let onValueChange = function (querySnapshot) {
+        if (querySnapshot.exists()) {
+          setFriend(querySnapshot.val());
+        } else {
+          setFriend(null);
         }
-      });
+      };
+      db.ref("users/" + props.uid).on("value", onValueChange);
 
-    db.ref("users/" + props.uid + "/profilePic")
-      .once("value")
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          setUserImage(snapshot.val());
-        }
-      });
-  }, [props.uid]);
+      return () => {
+        db.ref("users/" + props.uid).off("value", onValueChange);
+      };
+    }, []);
+
+  useEffect(() => {
+    console.log(friend);
+    if (friend) {
+      setCurrHall(friend["currHall"]);
+      setUserImage(friend["profilePic"]);
+    } else {
+      setCurrHall("");
+      setUserImage("");
+    }
+  }, [friend]);
+  
   return (
     <View>
       <Text>{props.name} </Text>
