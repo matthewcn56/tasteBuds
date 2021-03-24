@@ -89,66 +89,6 @@ export default function UserProfileScreen() {
       { text: "OK", onPress: logout },
     ]);
 
-  // useEffect(() => {
-  //   console.log("The list changed!");
-  //   setDisplayedItems([]);
-  //   if (list) {
-  //     Object.keys(list).map((section) => {
-  //       let friendName;
-  //       console.log("current section is " + section);
-  //       db.ref("users/" + section + "/displayName")
-  //         .once("value")
-  //         .then((snapshot) => {
-  //           if (snapshot.exists()) {
-  //             console.log("snapshot exists!");
-  //             friendName = snapshot.val();
-  //             console.log(snapshot.val());
-  //             setDisplayedItems((displayedItems) => {
-  //               return [
-  //                 ...displayedItems,
-  //                 <Text key={section}>{friendName}</Text>,
-  //               ];
-  //             });
-  //           } else {
-  //             console.log("snapshot doesn't exist?");
-  //             setList(null); //IS THIS CORRECT
-  //           }
-  //         });
-  //     });
-  //   } else {
-  //     console.log("list is null");
-  //     setDisplayedItems([]);
-  //   }
-  // }, [list]);
-
-  // if (loading) {
-  //   return <ActivityIndicator />;
-  // }
-
-  // let displayedItems = [];
-  // if (list) {
-  //   Object.keys(list).map((section) => {
-  //     let friendName;
-  //     console.log("current section is " + section);
-  //     db.ref("users/" + section + "/displayName")
-  //       .once("value")
-  //       .then((snapshot) => {
-  //         if (snapshot.exists()) {
-  //           console.log("snapshot exists!");
-  //           friendName = snapshot.val();
-  //           console.log(snapshot.val());
-  //           displayedItems = [
-  //             ...displayedItems,
-  //             <Text key={section}>{friendName}</Text>,
-  //           ];
-  //         } else {
-  //           console.log("snapshot doesn't exist?");
-  //           setList(null); //IS THIS CORRECT
-  //         }
-  //       });
-  //   });
-  // }
-
   return (
     <SafeAreaView style = {styles.containerscroll}>
       <ScrollView contentContainerStyle={styles.scroll}>
@@ -184,7 +124,7 @@ export default function UserProfileScreen() {
         style={styles.QRCode}
         value={user.uid}
       />
-      <Text style = {styles.FBnum}>Number of Friends Placeholder</Text>
+      <Text style = {styles.FBnum}>{displayedItems.length} {displayedItems.length > 1 ? "Friends" : "Friend"}</Text>
       <View style ={styles.FBContainer}>{displayedItems}</View>
       </ScrollView>
     </SafeAreaView>
