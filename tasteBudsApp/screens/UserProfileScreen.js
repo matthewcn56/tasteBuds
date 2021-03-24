@@ -2,7 +2,8 @@ import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../navigation/AuthProvider";
 import { db } from "../firebase/firebaseFunctions";
 import styles from "../styles.js";
-import { Image } from "react-native";
+import { Image, Alert } from "react-native";
+import FriendsListBar from "./userBars/FriendsListBar";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import {
@@ -17,7 +18,7 @@ import { ActivityIndicator } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 
 export default function UserProfileScreen() {
-  const { user } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
   const [list, setList] = React.useState(null);
   const [displayedItems, setDisplayedItems] = React.useState([]);
   const [loading, setLoading] = useState(true);
@@ -61,7 +62,12 @@ export default function UserProfileScreen() {
           snapshotVals.map((snapshot, index) => {
             if (snapshot.exists()) {
               return (
-                <Text key={Object.keys(list)[index]}> {snapshot.val()} </Text>
+                <FriendsListBar
+                  key={Object.keys(list)[index]}
+                  name={snapshot.val()}
+                  uid={Object.keys(list)[index]}
+                  currentUser={user.uid}
+                />
               );
             }
           })
@@ -72,6 +78,17 @@ export default function UserProfileScreen() {
       });
     }
   }, [list]);
+
+  const createConfirmLogoutAlert = () =>
+    Alert.alert("Confirm Logout", "Are You Sure You Want To Log Out?", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      { text: "OK", onPress: logout },
+    ]);
+
   // useEffect(() => {
   //   console.log("The list changed!");
   //   setDisplayedItems([]);
@@ -131,6 +148,7 @@ export default function UserProfileScreen() {
   //       });
   //   });
   // }
+
   return (
     <View style={styles.container}>
       <View style={styles.profileContainerUpper}>
@@ -144,7 +162,7 @@ export default function UserProfileScreen() {
           <View style={styles.emptyWrapper} />
           <View style={{ flex: 2, justifyContent: "center" }}>
             <TouchableOpacity
-              onPress={() => logout()}
+              onPress={createConfirmLogoutAlert}
               style={styles.signOutButton}
             >
               <MaterialCommunityIcons

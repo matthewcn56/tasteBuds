@@ -39,7 +39,7 @@ export default function DiningHallBar(props) {
         disabled={true}
         minimumTrackTintColor="#E7A7D5"
         maximumTrackTintColor="#000000"
-        thumbStyle={{display: 'none'}}
+        thumbStyle={{ display: "none" }}
       />
     </View>
   );

@@ -120,12 +120,13 @@ export default function HomeScreen(props) {
 
   return (
     <View style={styles.container}>
-      <Text>Welcome {userName}</Text>
-      <Image style={styles.profileImage} source={{ uri: profilePic }} />
+      <View style={styles.header}>
+        <Image style ={styles.headerImg} source={require("../assets/TasteBuds.png")}/>
+        <Text style = {styles.headerTxt}>TasteBuds</Text>
+        <View style = {styles.headerImg}/>
+      </View>
 
       {renderDiningHalls}
-
-      <Button onPress={logout} title="Log Out" />
     </View>
   );
 }
