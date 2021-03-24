@@ -26,6 +26,7 @@ export default StyleSheet.create({
   scroll: {
     alignItems: "center",
     flexDirection: "column",
+    height: "100%",
   },
   regText: {
     fontFamily: textFont,
