@@ -150,18 +150,18 @@ export default function UserProfileScreen() {
   // }
 
   return (
-    <SafeAreaView style = {styles.container}>
+    <SafeAreaView style = {styles.containerscroll}>
       <ScrollView contentContainerStyle={styles.scroll}>
       <View style={styles.profileContainerUpper}>
-        <View style={styles.emptyWrapper} />
+        <View style={styles.logOutContainer} />
 
         <View style={styles.profileContainer}>
           <Image style={styles.profileImage} source={{ uri: user.photoURL }} />
         </View>
 
         <View style={styles.logOutContainer}>
-          <View style={styles.emptyWrapper} />
-          <View style={{ flex: 2, justifyContent: "center" }}>
+          <View style={styles.logOut} />
+          <View style={{ flex: 1}}>
             <TouchableOpacity
               onPress={createConfirmLogoutAlert}
               style={styles.signOutButton}
@@ -173,7 +173,7 @@ export default function UserProfileScreen() {
               />
             </TouchableOpacity>
           </View>
-          <Text style={(styles.regText, styles.emptyWrapper)}>Log Out</Text>
+          <Text style={styles.logOut}>Log Out</Text>
         </View>
       </View>
 
@@ -184,8 +184,8 @@ export default function UserProfileScreen() {
         style={styles.QRCode}
         value={user.uid}
       />
-
-      <Text>{displayedItems ? displayedItems : "null"} </Text>
+      <Text style = {styles.FBnum}>Number of Friends Placeholder</Text>
+      <View style ={styles.FBContainer}>{displayedItems}</View>
       </ScrollView>
     </SafeAreaView>
   );

@@ -61,11 +61,13 @@ export default function FriendsListBar(props) {
   }, [friend]);
   
   return (
-    <View>
-      <Text>{props.name} </Text>
-      <Text> {currHall ? "currently in " + currHall : ""}</Text>
-      <Image style={styles.friendBarImage} source={{ uri: userImage }} />
-      <TouchableOpacity onPress={createConfirmDeletionAlert}>
+    <View style = {styles.FBCard}>
+      <Image style={styles.FBCardPic} source={{ uri: userImage }} />
+      <View style = {styles.FBCardMidCol}>
+        <Text style = {styles.FBCardName}>{props.name} </Text>
+        <Text style = {styles.FBCardHall}>{currHall ? "currently in " + currHall : ""}</Text>
+      </View>
+      <TouchableOpacity style = {styles.FBCardX} onPress={createConfirmDeletionAlert}>
         <Entypo name="cross" size={40} />
       </TouchableOpacity>
     </View>

@@ -48,8 +48,8 @@ export default function DiningHallBar(props) {
         minimumValue={0}
         maximumValue={900}
         disabled={true}
-        minimumTrackTintColor="#E7A7D5"
-        maximumTrackTintColor="#000000"
+        minimumTrackTintColor={styles.DHCardSlider.color}
+        maximumTrackTintColor= {styles.DHCardSlider.backgroundColor}
         thumbStyle={{ display: "none" }}
         thumbImage={{ display: "none" }}
       />

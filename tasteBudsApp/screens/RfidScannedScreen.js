@@ -83,11 +83,6 @@ export default function RfidScannedScreen(props) {
 
   return (
     <SafeAreaView>
-      
-      <Text style={StyleSheet.absoluteFillObject}>
-        This is our QR Reader Screen!
-      </Text>
-      
       <View style ={styles.scanner}>
       {renderScanner ? (
         <BarCodeScanner

@@ -16,6 +16,12 @@ export default StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     flexDirection: "column",
+    height: windowHeight,
+  },
+  containerscroll: {
+    backgroundColor: "#fff",
+    alignItems: "center",
+    flexDirection: "column",
   },
   scroll: {
     alignItems: "center",
@@ -23,7 +29,7 @@ export default StyleSheet.create({
   },
   regText: {
     fontFamily: textFont,
-    fontSize: 15,
+    fontSize: windowWidth/24,
     color: dark,
   },
   emptyWrapper: {
@@ -82,7 +88,8 @@ export default StyleSheet.create({
   },
   //User Profile
   profileContainerUpper: {
-    marginTop: windowWidth / 3,
+    marginTop: windowWidth / 6,
+    marginBottom: -windowWidth/30,
     width: windowWidth,
     flexDirection: "row",
     justifyContent: "flex-end",
@@ -91,50 +98,90 @@ export default StyleSheet.create({
   profileContainer: {
     flexDirection: "column",
     justifyContent: "center",
-    flex: 1,
+    flex: 2,
   },
   profileImage: {
-    height: windowWidth / 3,
-    width: windowWidth / 3,
-    borderRadius: windowWidth / 3,
+    height: windowWidth / 4,
+    width: windowWidth / 4,
+    borderRadius: windowWidth / 4,
   },
   logOutContainer: {
-    flex: 1,
-    alignItems: "center",
+    flex: 3,
     justifyContent: "center",
   },
   signOutButton: {
-    height: windowWidth / 7,
-    width: windowWidth / 7,
-    borderRadius: windowWidth / 6,
+    marginLeft: windowWidth/14,
+    height: windowWidth / 9,
+    width: windowWidth / 9,
+    borderRadius: windowWidth / 9,
     borderColor: dark,
-    borderWidth: 2,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: mid,
+    backgroundColor: light,
+  },
+  logOut: {
+    fontFamily: textFont,
+    fontSize: windowWidth/34,
+    color: dark,
+    marginLeft: windowWidth/14,
+    flex:1,
   },
   //end of upper profile container
   profileName: {
     color: dark,
     fontFamily: headerFont,
     textAlign: "center",
-    fontSize: 20,
-    marginTop: windowWidth / 20,
-    marginBottom: windowWidth / 5,
+    fontSize: windowWidth/20,
+    marginBottom: windowWidth / 6,
   },
   QRCode: {
+    margin: windowWidth / 5,
     flex: 1,
     width: (3 * windowWidth) / 5,
   },
-  friendImage: {
-    height: 250,
-    width: 250,
-    borderRadius: 250,
+  //Friends List on User Profile
+  FBnum:{
+    marginTop: windowWidth/6,
+    fontFamily: textFont,
+    fontSize: windowWidth/24,
+    width: windowWidth - windowWidth/6,
+    textAlign: "left",
+    color: dark,
+    paddingBottom: windowWidth/40,
   },
-  friendBarImage: {
-    height: windowWidth / 5,
-    width: windowWidth / 5,
-    borderRadius: windowWidth / 10,
+  FBContainer: {
+    flexDirection: "column",
+  },
+  FBCard:{
+    flexDirection: "row",
+    alignItems: "center",
+    width: windowWidth - windowWidth/6,
+    paddingBottom: windowWidth/40,
+    
+  },
+  FBCardPic:{
+    height: windowWidth/10,
+    width: windowWidth/10,
+    borderRadius: windowWidth/10,
+    marginRight: windowWidth/20,
+  },
+  FBCardMidCol:{
+    flex: 1,
+    flexDirection: "column",
+  },
+  FBCardName:{
+    fontFamily: headerFont,
+    fontSize: windowWidth/20,
+    color: dark,
+    marginBottom: -windowWidth/40,
+  },
+  FBCardHall:{
+    fontFamily: textFont,
+    fontSize: windowWidth/24,
+    color: dark,
+  },
+  FBCardX:{
+
   },
 
   //Scannerstuff
@@ -149,6 +196,7 @@ export default StyleSheet.create({
     marginTop: windowWidth / 20,
   },
   scannerLogo: {
+    position: "relative",
     height: ((7 / 8.4) * windowWidth) / 10,
     width: windowWidth / 10,
   },
@@ -188,6 +236,7 @@ export default StyleSheet.create({
     borderRadius: windowWidth/12,
   },
   DHCardSlider:{
-
+    color: dark,
+    backgroundColor: mid,
   },
 });
