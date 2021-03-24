@@ -26,17 +26,11 @@ for mealTime in mealTimes:
 
         for menuItem in menuItems:
             #taking care of invalid tokens
-            menuItem["itemName"]=  menuItem["itemName"].replace("/", "")
-            menuItem["itemName"] = menuItem["itemName"].replace("-", "")
-            menuItem["itemName"] = menuItem["itemName"].replace("#", "")
-            menuItem["itemName"] = menuItem["itemName"].replace("$", "")
-            menuItem["itemName"] = menuItem["itemName"].replace("[", "")
-            menuItem["itemName"] = menuItem["itemName"].replace("]", "")
-            menuItem["itemName"] = menuItem["itemName"].replace(".", "")
+            for c in ["/", "-", "#", "$", "[", "]", "."]:
+                menuItem["itemName"]=  menuItem["itemName"].replace(c, "")
             try:  
-                path = firebase_admin.db.reference("menus/" + DESIGNATED_HALL + "/" + MEAL_TIME + "/"
-                +menuItem["itemName"])
-                path.set(menuItem["recipeLink"])
+                path = firebase_admin.db.reference("menus/" + DESIGNATED_HALL + "/" + MEAL_TIME + "/" + menuItem["itemName"])
+                path.set(menuItem["recipeLink"]) # what is .set? what is the path object?
             except ValueError:
                 print("Invalid Path!")
             except TypeError:
