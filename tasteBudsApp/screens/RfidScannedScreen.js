@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, useCallback } from "react";
 
 import styles from "../styles";
-import { View, Text, Button, StyleSheet } from "react-native";
+import { View, Text, Button, StyleSheet, Image } from "react-native";
 import { AuthContext } from "../navigation/AuthProvider";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { db } from "../firebase/firebaseFunctions";
@@ -82,11 +82,13 @@ export default function RfidScannedScreen(props) {
   };
 
   return (
-    <View style={styles.container}>
+    <View>
+      
       <Text style={StyleSheet.absoluteFillObject}>
         This is our QR Reader Screen!
       </Text>
-
+      
+      <View style ={styles.scanner}>
       {renderScanner ? (
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
@@ -97,6 +99,14 @@ export default function RfidScannedScreen(props) {
       {scanned && (
         <Button title={"Tap to Scan Again"} onPress={() => setScanned(false)} />
       )}
+      </View>
+
+      <View style={styles.scannerHeader}>
+        <Image style ={styles.headerImg} source={require("../assets/TasteBuds.png")}/>
+        <Text style = {styles.headerTxt}>TasteBuds</Text>
+        <View style = {styles.headerImg}/>
+      </View>
+
     </View>
   );
 }
