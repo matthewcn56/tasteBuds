@@ -8,11 +8,13 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { AuthContext } from "./AuthProvider";
 import { db } from "../firebase/firebaseFunctions";
 import RfidScannedScreen from "../screens/RfidScannedScreen";
+import { ActivityIndicator } from "react-native";
 import styles from "../styles.js";
 
 export default function HomeStack() {
   const { user } = useContext(AuthContext);
   const [rfidScanned, setRfidScanned] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // //handle user changes
   useEffect(() => {
@@ -22,7 +24,7 @@ export default function HomeStack() {
     };
 
     db.ref("rfidTags" + "/" + user.uid).on("value", onRfidChanged);
-
+    setLoading(false);
     //return db.ref("rfidTags" + "/" + user.uid).off("value", onRfidChanged);
   }, []);
 
@@ -30,6 +32,10 @@ export default function HomeStack() {
     console.log("rfidScanned changed!");
   }, [rfidScanned]);
   const Tab = createMaterialBottomTabNavigator();
+  if (loading) {
+    return <ActivityIndicator />;
+  }
+
   return (
     <Tab.Navigator
       initialRouteName={rfidScanned ? "Dining Halls" : "Account Pairing"}
