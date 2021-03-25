@@ -99,6 +99,14 @@ export default StyleSheet.create({
     fontSize: windowWidth / 14,
     flex: 1,
   },
+  headerTxtBubble: {
+    marginTop: windowWidth/8,
+    marginLeft: -windowWidth/3.6,
+  },
+  headerTxtBubbleRFID: {
+    marginTop: windowWidth/8.5,
+    marginLeft: -windowWidth/3.4,
+  },
   //User Profile
   profileContainerUpper: {
     marginTop: windowWidth / 8,
@@ -211,7 +219,7 @@ export default StyleSheet.create({
     position: "absolute",
     height: windowWidth / 10,
     flexDirection: "row",
-    marginTop: windowWidth / 20,
+    marginTop: windowWidth/6,
   },
   scannerLogo: {
     position: "relative",

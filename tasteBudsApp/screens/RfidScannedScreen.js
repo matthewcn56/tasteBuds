@@ -100,6 +100,7 @@ export default function RfidScannedScreen(props) {
         <Image style ={styles.headerImg} source={require("../assets/TasteBuds.png")}/>
         <Text style = {styles.headerTxt}>TasteBuds</Text>
         <View style = {styles.headerImg}/>
+        <Image style={styles.headerTxtBubbleRFID} source={require("../assets/textBubbleRFID.png")}/>
       </View>
 
     </SafeAreaView>

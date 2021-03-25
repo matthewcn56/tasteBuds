@@ -75,24 +75,23 @@ export default function AddFriendScreen() {
   return (
     <SafeAreaView>
       <View style = {styles.scanner}>
-      {renderScanner ? (
-        <BarCodeScanner
-          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-          style={StyleSheet.absoluteFillObject}
-        />
-      ) : null}
+        {renderScanner ? (
+          <BarCodeScanner
+            onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+            style={StyleSheet.absoluteFillObject}
+          />
+        ) : null}
 
-      {scanned && (
-        <Button title={"Tap to Scan Again"} onPress={() => setScanned(false)} />
-      )}
+        {scanned && (
+          <Button title={"Tap to Scan Again"} onPress={() => setScanned(false)} />
+        )}
       </View>
-      
       <View style={styles.scannerHeader}>
         <Image style ={styles.headerImg} source={require("../assets/TasteBuds.png")}/>
         <Text style = {styles.headerTxt}>TasteBuds</Text>
         <View style = {styles.headerImg}/>
+        <Image style={styles.headerTxtBubble} source={require("../assets/textBubbleFriend.png")}/>
       </View>
-
     </SafeAreaView>
   );
 }
