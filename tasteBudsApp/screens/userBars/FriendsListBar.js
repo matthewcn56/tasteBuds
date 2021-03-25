@@ -74,7 +74,10 @@ export default function FriendsListBar(props) {
   }
   return (
     <View style={styles.FBCard}>
-      <Image style={styles.FBCardPic} source={{ uri: userImage }} />
+      <Image
+        style={styles.FBCardPic}
+        source={userImage ? { uri: userImage } : null}
+      />
       <View style={styles.FBCardMidCol}>
         <Text style={styles.FBCardName}>{props.name}</Text>
         <Text style={styles.FBCardHall}>
