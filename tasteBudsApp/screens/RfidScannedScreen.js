@@ -1,11 +1,12 @@
 import React, { useContext, useState, useEffect, useCallback } from "react";
 
 import styles from "../styles";
-import { SafeAreaView, View, Text, Button, StyleSheet, Image } from "react-native";
+import { SafeAreaView, View, StyleSheet, Image, Text } from "react-native";
 import { AuthContext } from "../navigation/AuthProvider";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { db } from "../firebase/firebaseFunctions";
 import { useFocusEffect } from "@react-navigation/native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function RfidScannedScreen(props) {
   const {
@@ -82,27 +83,26 @@ export default function RfidScannedScreen(props) {
   };
 
   return (
-    <SafeAreaView>
+    <View>
       <View style ={styles.scanner}>
-      {renderScanner ? (
-        <BarCodeScanner
-          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-          style={StyleSheet.absoluteFillObject}
-        />
-      ) : null}
+        {renderScanner ? (
+          <BarCodeScanner
+            onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+            style={StyleSheet.absoluteFillObject}
+          />
+        ) : null}
 
-      {scanned && (
-        <Button title={"Tap to Scan Again"} onPress={() => setScanned(false)} />
-      )}
+        {scanned && (
+          <TouchableOpacity onPress={() => setScanned(false)}>
+            <Text style={styles.scanAgainMsg}>Tap to Scan Again</Text>
+          </TouchableOpacity>
+        )}
       </View>
-
       <View style={styles.scannerHeader}>
         <Image style ={styles.headerImg} source={require("../assets/TasteBuds.png")}/>
-        <Text style = {styles.headerTxt}>TasteBuds</Text>
-        <View style = {styles.headerImg}/>
         <Image style={styles.headerTxtBubbleRFID} source={require("../assets/textBubbleRFID.png")}/>
       </View>
 
-    </SafeAreaView>
+    </View>
   );
 }

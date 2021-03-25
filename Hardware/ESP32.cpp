@@ -1,18 +1,28 @@
+#include <qrbits.h>
+#include <qrcode.h>
+#include <qrencode.h>
 #include <WiFi.h>
+#include <Wire.h>
 #include <FirebaseESP32.h>
 #include <SPI.h>
 #include <MFRC522.h>
+#include "Adafruit_SSD1306.h"
+#include <LiquidCrystal.h>
 #include "secrets.h"
-#define RST_PIN         22         // Configurable, see typical pin layout above
-#define SS_PIN          21         // Configurable, see typical pin layout above
+#define RST_PIN         2
+#define SS_PIN          15
+#define OLED_RESET -1 
+#define SCREEN_WIDTH 128 
+#define SCREEN_HEIGHT 64 
 
-MFRC522 mfrc522(SS_PIN, RST_PIN);  // Create MFRC522 instance
+MFRC522 mfrc522(SS_PIN, RST_PIN);
+LiquidCrystal lcd(13, 12, 14, 27, 26, 25);
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+QRcode qrcode (&display);
 FirebaseData fbdo;
 FirebaseJson json;
 String ID;
 String diningHall = "De Neve";
-bool finished1 = false;
-bool finished2 = false;
 bool capSenseTouched = false;
 bool capSenseEnabled = false;
 
@@ -24,7 +34,6 @@ void touched() {
 
 void setup()
 {
-
   Serial.begin(115200);
   delay(1000);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
@@ -38,31 +47,55 @@ void setup()
   Serial.print("Connected with IP: ");
   Serial.println(WiFi.localIP());
   Serial.println();
-    
-    SPI.begin();            // Init SPI bus
-    mfrc522.PCD_Init();     // Init MFRC522
-    delay(4);               // Optional delay. Some board do need more time after init to be ready, see Readme
-
-  //3. Set your Firebase info
-
-  Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
-
-  //4. Enable auto reconnect the WiFi when connection lost
-  Firebase.reconnectWiFi(true);
   
+  SPI.begin(); //Initialize SPI
+  mfrc522.PCD_Init(); //Initialize MFRC
+  delay(4);
+  Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
+  Firebase.reconnectWiFi(true);
   touchAttachInterrupt(T0, touched, 30);
+
+// Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
+
+
+    if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C))
+    {
+      Serial.println(F("SSD1306 allocation failed"));
+      for (;;)
+        ; // Don't proceed, loop forever
+    }
+    display.clearDisplay();
+    display.display();
+
+    // Initialize QRcode display using library
+    //only do once in the run once part
+    qrcode.init();
+    lcd.begin(16, 2);
+    // create qrcode
+    ledcSetup(0, 392, 8);
+    ledcAttachPin(5, 0);
 }
 
-void pushStringToDatabase(void *param) {
-    Firebase.setString(fbdo, (String)("/IDNumbers/" + ID), ID);
-    finished1 = true;
-    vTaskDelete(NULL);
+void pushStringToDatabase() {
+    if (Firebase.setString(fbdo, "/capacities/" + diningHall + "/" + ID + "/", "anonymous")) {
+            
+    }
+    else {
+       Serial.println("ERROR D:");
+    }
+    //vTaskDelete(NULL);
 }
 
-void printToOLED(void *param) {
-    Serial.println(ID);
-    finished2 = true;
-    vTaskDelete(NULL);
+void printToOLED() {
+    qrcode.create(ID);
+    //vTaskDelete(NULL);
+}
+
+void printToLCD() {
+    lcd.print("Scan the QR code");
+    lcd.setCursor(0, 1);
+    lcd.print("Tap when done!");
+    //vTaskDelete(NULL);
 }
 
 String getID(){
@@ -77,13 +110,24 @@ void loop()
 {
     if (capSenseTouched) {
         Serial.println("Sensed!");
-        Firebase.setString(fbdo, "/capacities/" + diningHall + "/" + ID + "/", "anonymous");
-        //Clear Screens
+        display.clearDisplay();
+        display.display();
+        lcd.clear();
         capSenseEnabled = false;
         capSenseTouched = false;
     }
     if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial()) {
+        ledcWriteTone(0, 390);
+        delay(100);
+        ledcWrite(0, 0);
+        ledcWriteTone(0, 523);
+        delay(75);
+        ledcWrite(0, 0);
+        display.clearDisplay();
+        display.display();
+        lcd.clear();
         ID = getID();
+        Serial.println(ID);
         //Check if anonymous user is in dining hall
         if (Firebase.getString(fbdo, "/capacities/" + diningHall + "/" + ID + "/")) {
             Firebase.deleteNode(fbdo, "/capacities/" + diningHall + "/" + ID + "/");
@@ -124,13 +168,25 @@ void loop()
                     }
                 }
                 if (isPresent) {
-                    Firebase.setBool(fbdo, "/users/" + key + "/currHall/", false); //Change current hall to false
+                    Firebase.deleteNode(fbdo, "/users/" + key + "/currHall/"); //Change current hall to false
                     Firebase.deleteNode(fbdo, "/capacities/" + diningHall + "/" + key); //Get rid of person from dining hall
                 }
                 else {
                     //Keep this single threaded for now
                     Firebase.setString(fbdo, "/users/" + key + "/currHall/", diningHall); //Change current hall to De Neve
                     Firebase.setString(fbdo, "/capacities/" + diningHall + "/" + key, value);  //Add user to dining hall
+                    lcd.print("Enjoy your meal");
+                    lcd.setCursor(0, 1);
+                    String name;
+                    Firebase.getString(fbdo, "/users/" + key + "/displayName/", name);
+                    String firstName = "";
+                    for (auto x : name) {
+                        if (x == ' ') {
+                            break;
+                        }
+                        firstName += x;
+                    }
+                    lcd.print(firstName);
                 }
             }
             //Add new user
@@ -138,13 +194,12 @@ void loop()
                 capSenseEnabled = true;
                 /*
                 xTaskCreatePinnedToCore(pushStringToDatabase, "Pushing", 5000, NULL, 1, NULL, 0);
-                xTaskCreatePinnedToCore(printToOLED, "Printing to OLED", 5000, NULL, 1, NULL, 1);
-                while (!finished1 || !finished2) {
-        
-                }
-                finished1 = false;
-                finished2 = false;
+                xTaskCreatePinnedToCore(printToOLED, "Printing to OLED", 10000, NULL, 1, NULL, 1);
+                xTaskCreatePinnedToCore(printToLCD, "Printing to LCD", 10000, NULL, 1, NULL, 0);
                 */
+                pushStringToDatabase();
+                printToOLED();
+                printToLCD();
             }
         }
     }

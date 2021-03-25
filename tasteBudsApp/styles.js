@@ -2,7 +2,7 @@ import { StyleSheet, Platform } from "react-native";
 import { Dimensions } from "react-native";
 
 //global styling variables
-var scrollheight 
+var scrollheight;
 
 if (Platform.OS === "ios") {
   scrollheight = "100%";
@@ -109,12 +109,14 @@ export default StyleSheet.create({
     flex: 1,
   },
   headerTxtBubble: {
-    marginTop: windowWidth / 8,
-    marginLeft: -windowWidth / 3.6,
+    aspectRatio: 303 / 44,
+    width: windowWidth/1.5,
+    marginLeft: windowWidth/18,
   },
   headerTxtBubbleRFID: {
-    marginTop: windowWidth / 8.5,
-    marginLeft: -windowWidth / 3.4,
+    aspectRatio: 295 / 57,
+    width: windowWidth/1.5,
+    marginLeft: windowWidth/18,
   },
   //User Profile
   profileContainerUpper: {
@@ -225,12 +227,24 @@ export default StyleSheet.create({
     position: "absolute",
     height: windowWidth / 10,
     flexDirection: "row",
-    marginTop: windowWidth / 6,
+    marginTop: windowWidth/9,
   },
   scannerLogo: {
     position: "relative",
     height: ((7 / 8.4) * windowWidth) / 10,
     width: windowWidth / 10,
+  },
+  scanAgainMsg: {
+    fontFamily: textFont,
+    color: dark,
+    backgroundColor: "#FFFFFF",
+    alignSelf: "center",
+    padding: windowWidth/50,
+    borderRadius: windowWidth/30,
+    borderColor: dark,
+    borderWidth: 2,
+    overflow: "hidden",
+    marginTop: windowWidth / 1.2,
   },
   //Dining hall home page
   DHCard: {
