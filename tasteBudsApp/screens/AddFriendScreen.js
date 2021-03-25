@@ -46,12 +46,12 @@ export default function AddFriendScreen() {
   useFocusEffect(
     React.useCallback(() => {
       // Do something when the screen is focused
-      setZoom(sliderValue/100);
+      setZoom(sliderValue / 100);
       setRenderScanner(true);
       return () => {
         //when screen is not focused
         setRenderScanner(false);
-        setZoom(sliderValue/100);
+        setZoom(sliderValue / 100);
       };
     }, [sliderValue])
   );

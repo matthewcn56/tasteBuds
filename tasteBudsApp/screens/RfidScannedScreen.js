@@ -1,13 +1,20 @@
 import React, { useContext, useState, useEffect, useCallback } from "react";
 
 import styles from "../styles";
-import { SafeAreaView, View, StyleSheet, Image, Text } from "react-native";
+import {
+  SafeAreaView,
+  View,
+  StyleSheet,
+  Image,
+  Text,
+  Platform,
+} from "react-native";
 import { AuthContext } from "../navigation/AuthProvider";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { db } from "../firebase/firebaseFunctions";
 import { useFocusEffect } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Camera } from 'expo-camera';
+import { Camera } from "expo-camera";
 import VerticalSlider from "rn-vertical-slider";
 
 export default function RfidScannedScreen(props) {
@@ -18,7 +25,6 @@ export default function RfidScannedScreen(props) {
     setHasCameraPermission,
   } = useContext(AuthContext);
   const [scanned, setScanned] = useState(false);
-
   const [renderScanner, setRenderScanner] = useState(false);
   const [sliderValue, setSliderValue] = useState(10);
   const [zoom, setZoom] = useState(0.1);
@@ -28,11 +34,11 @@ export default function RfidScannedScreen(props) {
     React.useCallback(() => {
       // Do something when the screen is focused
       setRenderScanner(true);
-      setZoom(sliderValue/100);
+      setZoom(sliderValue / 100);
       return () => {
         //when screen is not focused
         setRenderScanner(false);
-        setZoom(sliderValue/100);
+        setZoom(sliderValue / 100);
       };
     }, [sliderValue])
   );
@@ -90,7 +96,7 @@ export default function RfidScannedScreen(props) {
 
   return (
     <View>
-      <View style ={styles.scanner}>
+      <View style={styles.scanner}>
         {renderScanner ? (
           <Camera
             onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
@@ -106,8 +112,14 @@ export default function RfidScannedScreen(props) {
         )}
       </View>
       <View style={styles.scannerHeader}>
-        <Image style ={styles.headerImg} source={require("../assets/TasteBuds.png")}/>
-        <Image style={styles.headerTxtBubbleRFID} source={require("../assets/textBubbleRFID.png")}/>
+        <Image
+          style={styles.headerImg}
+          source={require("../assets/TasteBuds.png")}
+        />
+        <Image
+          style={styles.headerTxtBubbleRFID}
+          source={require("../assets/textBubbleRFID.png")}
+        />
         <View style={styles.scannerSliderContainer}>
           <VerticalSlider
             value={sliderValue}
@@ -130,7 +142,6 @@ export default function RfidScannedScreen(props) {
           />
         </View>
       </View>
-
     </View>
   );
 }

@@ -90,42 +90,53 @@ export default function UserProfileScreen() {
     ]);
 
   return (
-    <SafeAreaView style = {styles.containerscroll}>
-      <ScrollView contentContainerStyle={styles.scroll} >
-      <View style={styles.profileContainerUpper}>
-        <View style={styles.logOutContainer} />
+    <SafeAreaView style={styles.containerscroll}>
+      <ScrollView contentContainerStyle={styles.scroll}>
+        <View style={styles.profileContainerUpper}>
+          <View style={styles.logOutContainer} />
 
-        <View style={styles.profileContainer}>
-          <Image style={styles.profileImage} source={{ uri: user.photoURL }} />
-        </View>
-
-        <View style={styles.logOutContainer}>
-          <View style={styles.logOut} />
-          <View style={{ flex: 1}}>
-            <TouchableOpacity
-              onPress={createConfirmLogoutAlert}
-              style={styles.signOutButton}
-            >
-              <MaterialCommunityIcons
-                name="logout"
-                color={styles.signinButton.borderColor}
-                size={(2 * styles.signOutButton.width) / 3}
-              />
-            </TouchableOpacity>
+          <View style={styles.profileContainer}>
+            <Image
+              style={styles.profileImage}
+              source={{ uri: user.photoURL }}
+            />
           </View>
-          <Text style={styles.logOut}>Log Out</Text>
+
+          <View style={styles.logOutContainer}>
+            <View style={styles.logOut} />
+            <View style={{ flex: 1 }}>
+              <TouchableOpacity
+                onPress={createConfirmLogoutAlert}
+                style={styles.signOutButton}
+              >
+                <MaterialCommunityIcons
+                  name="logout"
+                  color={styles.signinButton.borderColor}
+                  size={(2 * styles.signOutButton.width) / 3}
+                />
+              </TouchableOpacity>
+            </View>
+            <Text style={styles.logOut}>Log Out</Text>
+          </View>
         </View>
-      </View>
 
-      <Text style={styles.profileName}>{user.displayName}</Text>
+        <Text style={styles.profileName}>{user.displayName}</Text>
 
-      <QRCode
-        size={styles.QRCode.width}
-        style={styles.QRCode}
-        value={user.uid}
-      />
-      <Text style = {styles.FBnum}>{displayedItems.length} {displayedItems.length > 1 ? "Friends" : "Friend"}</Text>
-      <View style ={styles.FBContainer}>{displayedItems}</View>
+        <QRCode
+          size={styles.QRCode.width}
+          style={styles.QRCode}
+          value={user.uid}
+        />
+        {displayedItems.length < 1 ? (
+          <Text style={styles.profileName}>
+            Scan A Friend's QR Code To Add Them To Your List!
+          </Text>
+        ) : null}
+        <Text style={styles.FBnum}>
+          {displayedItems.length}{" "}
+          {displayedItems.length != 1 ? "Friends" : "Friend"}
+        </Text>
+        <View style={styles.FBContainer}>{displayedItems}</View>
       </ScrollView>
     </SafeAreaView>
   );
