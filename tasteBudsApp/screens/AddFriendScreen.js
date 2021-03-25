@@ -17,11 +17,15 @@ import styles from "../styles";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Camera } from "expo-camera";
 import { PinchGestureHandler } from "react-native-gesture-handler";
+import VerticalSlider from "rn-vertical-slider";
+import Slider from "react-native-slider";
 
 export default function AddFriendScreen() {
   //const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [renderScanner, setRenderScanner] = useState(false);
+  const [sliderValue, setSliderValue] = useState(10);
+  const [zoom, setZoom] = useState(0.1);
 
   const {
     user,
@@ -42,12 +46,14 @@ export default function AddFriendScreen() {
   useFocusEffect(
     React.useCallback(() => {
       // Do something when the screen is focused
+      setZoom(sliderValue/100);
       setRenderScanner(true);
       return () => {
         //when screen is not focused
         setRenderScanner(false);
+        setZoom(sliderValue/100);
       };
-    }, [])
+    }, [sliderValue])
   );
 
   const handleBarCodeScanned = ({ type, data }) => {
@@ -108,7 +114,7 @@ export default function AddFriendScreen() {
           <Camera
             onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
             style={StyleSheet.absoluteFillObject}
-            zoom={Platform.OS === "ios" ? 0.1 : 0.2}
+            zoom={zoom}
           />
         ) : null}
 
@@ -127,6 +133,27 @@ export default function AddFriendScreen() {
           style={styles.headerTxtBubble}
           source={require("../assets/textBubbleFriend.png")}
         />
+        <View style={styles.scannerSliderContainer}>
+          <VerticalSlider
+            value={sliderValue}
+            disabled={false}
+            min={0}
+            max={100}
+            onChange={(value) => {
+              setSliderValue(value);
+            }}
+            onComplete={(value) => {
+              console.log("COMPLETE", value);
+            }}
+            width={styles.scannerSlider.width}
+            height={styles.scannerSlider.height}
+            step={1}
+            borderRadius={5}
+            minimumTrackTintColor={styles.scannerSlider.color}
+            maximumTrackTintColor={styles.scannerSlider.backgroundColor}
+            borderRadius={styles.scannerSlider.borderRadius}
+          />
+        </View>
       </View>
     </View>
   );

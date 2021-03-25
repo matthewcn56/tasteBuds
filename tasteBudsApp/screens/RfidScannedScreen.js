@@ -8,6 +8,7 @@ import { db } from "../firebase/firebaseFunctions";
 import { useFocusEffect } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Camera } from 'expo-camera';
+import VerticalSlider from "rn-vertical-slider";
 
 export default function RfidScannedScreen(props) {
   const {
@@ -19,17 +20,21 @@ export default function RfidScannedScreen(props) {
   const [scanned, setScanned] = useState(false);
 
   const [renderScanner, setRenderScanner] = useState(false);
+  const [sliderValue, setSliderValue] = useState(10);
+  const [zoom, setZoom] = useState(0.1);
 
   //Activate rendering scanner when the screen is focused
   useFocusEffect(
     React.useCallback(() => {
       // Do something when the screen is focused
       setRenderScanner(true);
+      setZoom(sliderValue/100);
       return () => {
         //when screen is not focused
         setRenderScanner(false);
+        setZoom(sliderValue/100);
       };
-    }, [])
+    }, [sliderValue])
   );
 
   useEffect(() => {
@@ -90,7 +95,7 @@ export default function RfidScannedScreen(props) {
           <Camera
             onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
             style={StyleSheet.absoluteFillObject}
-            zoom={0.1}
+            zoom={zoom}
           />
         ) : null}
 
@@ -103,6 +108,27 @@ export default function RfidScannedScreen(props) {
       <View style={styles.scannerHeader}>
         <Image style ={styles.headerImg} source={require("../assets/TasteBuds.png")}/>
         <Image style={styles.headerTxtBubbleRFID} source={require("../assets/textBubbleRFID.png")}/>
+        <View style={styles.scannerSliderContainer}>
+          <VerticalSlider
+            value={sliderValue}
+            disabled={false}
+            min={0}
+            max={100}
+            onChange={(value) => {
+              setSliderValue(value);
+            }}
+            onComplete={(value) => {
+              console.log("COMPLETE", value);
+            }}
+            width={styles.scannerSlider.width}
+            height={styles.scannerSlider.height}
+            step={1}
+            borderRadius={5}
+            minimumTrackTintColor={styles.scannerSlider.color}
+            maximumTrackTintColor={styles.scannerSlider.backgroundColor}
+            borderRadius={styles.scannerSlider.borderRadius}
+          />
+        </View>
       </View>
 
     </View>

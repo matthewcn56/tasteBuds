@@ -225,7 +225,7 @@ export default StyleSheet.create({
   },
   scannerHeader: {
     position: "absolute",
-    height: windowWidth / 10,
+    height: windowWidth,
     flexDirection: "row",
     marginTop: windowWidth/9,
   },
@@ -245,6 +245,21 @@ export default StyleSheet.create({
     borderWidth: 2,
     overflow: "hidden",
     marginTop: windowWidth / 1.2,
+  },
+  scannerSliderContainer: {
+    marginTop: windowWidth/2,
+    borderColor: dark,
+    borderWidth: 2,
+    borderRadius: windowWidth/25,
+    height: windowWidth/1.96
+  },
+  scannerSlider: {
+    color: mid,
+    backgroundColor: "#FFFFFF",
+    width: windowWidth/20,
+    height: windowWidth/2,
+    borderRadius: windowWidth/50,
+    borderColor: dark,
   },
   //Dining hall home page
   DHCard: {

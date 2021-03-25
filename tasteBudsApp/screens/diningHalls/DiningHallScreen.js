@@ -72,7 +72,7 @@ export default function DiningHallScreen(props) {
               color={styles.signinButton.borderColor}
               size={1.4 * styles.regText.fontSize}
             />
-            <Text style={styles.regText}>{activityLevel} Activity </Text>
+            <Text style={styles.regText}> {activityLevel} Activity </Text>
           </View>
 
           <Text style={styles.regText}>{capacity} / 900</Text>
