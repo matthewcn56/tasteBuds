@@ -64,7 +64,6 @@ void setup()
       for (;;)
         ; // Don't proceed, loop forever
     }
-    display.clearDisplay();
     display.display();
 
     // Initialize QRcode display using library
@@ -117,12 +116,14 @@ void loop()
         capSenseTouched = false;
     }
     if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial()) {
+        /*
         ledcWriteTone(0, 390);
         delay(100);
         ledcWrite(0, 0);
         ledcWriteTone(0, 523);
         delay(75);
         ledcWrite(0, 0);
+        */
         display.clearDisplay();
         display.display();
         lcd.clear();
