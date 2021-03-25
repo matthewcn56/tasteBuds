@@ -45,11 +45,11 @@ export default function DiningHallMenu(props) {
       setRenderMenuItems(
         Object.entries(menu).map((item, key) => {
           return (
-            <View key={item[0]}>
-              <Text>{item[0]}</Text>
+            <View  key={item[0]}>
+              <Text style = {styles.IDHMeal}>{item[0]}</Text>
               {Object.entries(item[1]).map((dish, key) => (
                 <TouchableOpacity key={dish[0] + key} onPress={() => openURL(dish[1])}>
-                  <Text>{dish[0]}</Text>
+                  <Text style={styles.IDHMenuItem}>{dish[0]}</Text>
                 </TouchableOpacity>
               ))}
             </View>
@@ -61,7 +61,7 @@ export default function DiningHallMenu(props) {
 
   return (
     <View>
-      <Text>Menu</Text>
+      <Text style = {styles.IDHMenu}>Menu</Text>
       {renderMenuItems}
     </View>
   );
