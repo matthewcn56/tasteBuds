@@ -90,7 +90,8 @@ export default function HomeScreen(props) {
         Object.keys(value[1]).map((person) => {
           // see if that person is a friend
           if (
-            person !== "dummyNode" && friendList &&
+            person !== "dummyNode" &&
+            friendList &&
             Object.keys(friendList).includes(person)
           ) {
             // add to friendsInHall array
@@ -108,7 +109,7 @@ export default function HomeScreen(props) {
                   hallName: value[0],
                   friendsInHall: friendsInHall,
                   capacity: capacities[key],
-                  waitTime: 0, 
+                  waitTime: 0,
                 });
               }}
             >

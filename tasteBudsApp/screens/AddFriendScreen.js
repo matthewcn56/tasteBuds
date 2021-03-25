@@ -7,6 +7,7 @@ import {
   View,
   Button,
   Image,
+  Platform,
 } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { db } from "../firebase/firebaseFunctions.js";
@@ -14,8 +15,8 @@ import { useFocusEffect } from "@react-navigation/native";
 import { render } from "react-dom";
 import styles from "../styles";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Camera } from 'expo-camera';
-import { PinchGestureHandler } from 'react-native-gesture-handler';
+import { Camera } from "expo-camera";
+import { PinchGestureHandler } from "react-native-gesture-handler";
 
 export default function AddFriendScreen() {
   //const [hasPermission, setHasPermission] = useState(null);
@@ -107,7 +108,7 @@ export default function AddFriendScreen() {
           <Camera
             onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
             style={StyleSheet.absoluteFillObject}
-            zoom={0.1}
+            zoom={Platform.OS === "ios" ? 0.1 : 0.2}
           />
         ) : null}
 
