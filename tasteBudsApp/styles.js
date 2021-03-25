@@ -1,7 +1,15 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 import { Dimensions } from "react-native";
 
 //global styling variables
+var scrollheight 
+
+if (Platform.OS === "ios") {
+  scrollheight = "100%";
+} else {
+  scrollheight = null;
+}
+
 const dark = "#151057";
 const mid = "#edb7e3";
 const light = "#f9e4f8";
@@ -26,7 +34,8 @@ export default StyleSheet.create({
   scroll: {
     alignItems: "center",
     flexDirection: "column",
-    //height: "100%",
+    flexGrow: 1,
+    width: windowWidth,
   },
   regText: {
     fontFamily: textFont,
@@ -265,4 +274,64 @@ export default StyleSheet.create({
     color: dark,
     backgroundColor: mid,
   },
+  //Individual Dining Hall Screen
+  IDHContainer: {
+    flexDirection: "column",
+    height: scrollheight,
+    width: windowWidth-windowWidth/6,
+  },
+  IDHNumOfFriends:{
+    color: dark,
+    fontSize: windowWidth/20,
+    fontFamily: headerFont,
+    marginTop: windowWidth/12,
+  },
+  IDHHeader: {
+  
+  },
+  IDHTimeRow: {
+    marginTop: windowWidth/12,
+    marginBottom: windowWidth/24,
+    flexDirection: "row",
+  },
+  IDHSlider: {
+    marginTop: -windowWidth/30,
+  },
+  IDHFriendList: {
+    flexDirection: "row",
+    marginTop: windowWidth/20,
+  },
+  IDHPic: {
+    height: windowWidth/10,
+    width: windowWidth/10,
+    borderRadius: windowWidth/10,
+    marginRight: windowWidth/20,
+    marginBottom: windowWidth/20,
+  },
+  IDHfriends: {
+    height: windowWidth/10,
+    marginBottom: windowWidth/20,
+    paddingTop: windowWidth/80,
+    fontFamily: headerFont,
+    fontSize: windowWidth/20,
+    color: dark,
+  },
+  IDHMenu:{
+    marginTop: windowWidth/6,
+    fontFamily: headerFont,
+    fontSize: windowWidth/10,
+    color: dark,
+  },
+  IDHMeal: {
+    fontFamily: headerFont,
+    fontSize: windowWidth/16,
+    color: dark,
+    marginTop: windowWidth/16,
+  },
+  IDHMenuItem:{
+    fontFamily: textFont,
+    fontSize: windowWidth/20,
+    color: dark,
+  },
+  
 });

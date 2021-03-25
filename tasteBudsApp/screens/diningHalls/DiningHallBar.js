@@ -43,7 +43,7 @@ export default function DiningHallBar(props) {
           size={1.4*(styles.regText.fontSize)}
           style={styles.timeTextIcon}
         />
-        <Text style = {styles.timeText}> {props.waitTime} minutes </Text>
+        <Text style = {styles.timeText}> {props.waitTime} minute wait </Text>
       </View>
 
       <Text style={styles.regText}>{props.friendsInHall.length} friends</Text>
