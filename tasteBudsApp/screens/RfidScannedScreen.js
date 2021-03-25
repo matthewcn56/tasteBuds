@@ -104,12 +104,6 @@ export default function RfidScannedScreen(props) {
             zoom={zoom}
           />
         ) : null}
-
-        {scanned && (
-          <TouchableOpacity onPress={() => setScanned(false)}>
-            <Text style={styles.scanAgainMsg}>Tap to Scan Again</Text>
-          </TouchableOpacity>
-        )}
       </View>
       <View style={styles.scannerHeader}>
         <Image
@@ -141,6 +135,13 @@ export default function RfidScannedScreen(props) {
             borderRadius={styles.scannerSlider.borderRadius}
           />
         </View>
+      </View>
+      <View style={styles.scanAgainMsgContainer}>
+        {scanned && (
+            <TouchableOpacity onPress={() => setScanned(false)}>
+              <Text style={styles.scanAgainMsg}>Tap to Scan Again</Text>
+            </TouchableOpacity>
+        )}
       </View>
     </View>
   );

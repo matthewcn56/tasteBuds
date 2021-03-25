@@ -234,6 +234,11 @@ export default StyleSheet.create({
     height: ((7 / 8.4) * windowWidth) / 10,
     width: windowWidth / 10,
   },
+  scanAgainMsgContainer: {
+    position: "absolute",
+    height: windowWidth,
+    width: windowWidth,
+  },
   scanAgainMsg: {
     fontFamily: textFont,
     color: dark,

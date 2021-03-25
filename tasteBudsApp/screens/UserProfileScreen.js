@@ -134,7 +134,7 @@ export default function UserProfileScreen() {
         ) : null}
         <Text style={styles.FBnum}>
           {displayedItems.length}{" "}
-          {displayedItems.length != 1 ? "Friends" : "Friend"}
+          {displayedItems.length == 1 ? "Friend" : "Friends"}
         </Text>
         <View style={styles.FBContainer}>{displayedItems}</View>
       </ScrollView>
