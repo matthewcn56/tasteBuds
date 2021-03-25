@@ -34,12 +34,8 @@ export default StyleSheet.create({
   scroll: {
     alignItems: "center",
     flexDirection: "column",
-<<<<<<< HEAD
-    flexGrow: 1, 
-=======
     flexGrow: 1,
     width: windowWidth,
->>>>>>> 816f6a22c011cc5868fed40a644def36fa96b058
   },
   regText: {
     fontFamily: textFont,
@@ -113,7 +109,6 @@ export default StyleSheet.create({
     flex: 1,
   },
   headerTxtBubble: {
-<<<<<<< HEAD
     aspectRatio: 303 / 44,
     width: windowWidth/1.5,
     marginLeft: windowWidth/18,
@@ -122,14 +117,6 @@ export default StyleSheet.create({
     aspectRatio: 295 / 57,
     width: windowWidth/1.5,
     marginLeft: windowWidth/18,
-=======
-    marginTop: windowWidth / 8,
-    marginLeft: -windowWidth / 3.6,
-  },
-  headerTxtBubbleRFID: {
-    marginTop: windowWidth / 8.5,
-    marginLeft: -windowWidth / 3.4,
->>>>>>> 816f6a22c011cc5868fed40a644def36fa96b058
   },
   //User Profile
   profileContainerUpper: {
@@ -240,11 +227,7 @@ export default StyleSheet.create({
     position: "absolute",
     height: windowWidth / 10,
     flexDirection: "row",
-<<<<<<< HEAD
     marginTop: windowWidth/9,
-=======
-    marginTop: windowWidth / 6,
->>>>>>> 816f6a22c011cc5868fed40a644def36fa96b058
   },
   scannerLogo: {
     position: "relative",
