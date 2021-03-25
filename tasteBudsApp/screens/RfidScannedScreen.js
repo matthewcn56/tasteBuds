@@ -7,6 +7,7 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 import { db } from "../firebase/firebaseFunctions";
 import { useFocusEffect } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { Camera } from 'expo-camera';
 
 export default function RfidScannedScreen(props) {
   const {
@@ -86,9 +87,10 @@ export default function RfidScannedScreen(props) {
     <View>
       <View style ={styles.scanner}>
         {renderScanner ? (
-          <BarCodeScanner
+          <Camera
             onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
             style={StyleSheet.absoluteFillObject}
+            zoom={0.1}
           />
         ) : null}
 
