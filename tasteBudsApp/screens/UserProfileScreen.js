@@ -91,7 +91,7 @@ export default function UserProfileScreen() {
 
   return (
     <SafeAreaView style = {styles.containerscroll}>
-      <ScrollView contentContainerStyle={styles.scroll}>
+      <ScrollView contentContainerStyle={styles.scroll} >
       <View style={styles.profileContainerUpper}>
         <View style={styles.logOutContainer} />
 

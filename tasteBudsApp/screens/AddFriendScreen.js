@@ -6,6 +6,7 @@ import { db } from "../firebase/firebaseFunctions.js";
 import { useFocusEffect } from "@react-navigation/native";
 import { render } from "react-dom";
 import styles from "../styles";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function AddFriendScreen() {
   //const [hasPermission, setHasPermission] = useState(null);
@@ -73,7 +74,7 @@ export default function AddFriendScreen() {
   }
 
   return (
-    <SafeAreaView>
+    <View>
       <View style = {styles.scanner}>
         {renderScanner ? (
           <BarCodeScanner
@@ -83,16 +84,16 @@ export default function AddFriendScreen() {
         ) : null}
 
         {scanned && (
-          <Button title={"Tap to Scan Again"} onPress={() => setScanned(false)} />
+          <TouchableOpacity onPress={() => setScanned(false)}>
+            <Text style={styles.scanAgainMsg}>Tap to Scan Again</Text>
+          </TouchableOpacity>
         )}
       </View>
       <View style={styles.scannerHeader}>
         <Image style ={styles.headerImg} source={require("../assets/TasteBuds.png")}/>
-        <Text style = {styles.headerTxt}>TasteBuds</Text>
-        <View style = {styles.headerImg}/>
         <Image style={styles.headerTxtBubble} source={require("../assets/textBubbleFriend.png")}/>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
