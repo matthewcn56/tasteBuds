@@ -1,6 +1,13 @@
 import React, { useState, useEffect, useContext, useCallback } from "react";
 import { AuthContext } from "../navigation/AuthProvider";
-import { SafeAreaView, StyleSheet, Text, View, Button, Image } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  Image,
+} from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { db } from "../firebase/firebaseFunctions.js";
 import { useFocusEffect } from "@react-navigation/native";
@@ -42,6 +49,8 @@ export default function AddFriendScreen() {
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
+    //bruh why doesn't js let you leave
+    let isDuplicate = false;
     if (data === "" || data.includes(".", "#", "$", "[", "]"))
       alert("Invalid QR Code");
     else {
@@ -50,12 +59,28 @@ export default function AddFriendScreen() {
         .then((snapshot) => {
           // user/uid/displayname
           if (snapshot.exists()) {
-            alert(`${snapshot.val()} has been added to your friends list!`);
-            // add to database
-            var updates = {};
-            updates["friends/" + user.uid + "/" + data] = true; //adds the uid to the friends tree
-            updates["friends/" + data + "/" + user.uid] = true;
-            return db.ref().update(updates);
+            //Check if already friend
+            db.ref("friends/" + user.uid + "/" + data)
+              .once("value")
+              .then((duplicateFriend) => {
+                if (duplicateFriend.exists()) {
+                  alert(`This person is already your friend!`);
+                  isDuplicate = true;
+                }
+              })
+              //if the user is not a duplicate friend
+              .then(() => {
+                if (!isDuplicate) {
+                  alert(
+                    `${snapshot.val()} has been added to your friends list!`
+                  );
+                  // add to database
+                  var updates = {};
+                  updates["friends/" + user.uid + "/" + data] = true; //adds the uid to the friends tree
+                  updates["friends/" + data + "/" + user.uid] = true;
+                  return db.ref().update(updates);
+                }
+              });
           } else {
             alert("Invalid Friend Code!");
           }
@@ -75,7 +100,7 @@ export default function AddFriendScreen() {
 
   return (
     <View>
-      <View style = {styles.scanner}>
+      <View style={styles.scanner}>
         {renderScanner ? (
           <BarCodeScanner
             onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
@@ -90,10 +115,15 @@ export default function AddFriendScreen() {
         )}
       </View>
       <View style={styles.scannerHeader}>
-        <Image style ={styles.headerImg} source={require("../assets/TasteBuds.png")}/>
-        <Image style={styles.headerTxtBubble} source={require("../assets/textBubbleFriend.png")}/>
+        <Image
+          style={styles.headerImg}
+          source={require("../assets/TasteBuds.png")}
+        />
+        <Image
+          style={styles.headerTxtBubble}
+          source={require("../assets/textBubbleFriend.png")}
+        />
       </View>
     </View>
   );
 }
-

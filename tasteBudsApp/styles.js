@@ -2,7 +2,7 @@ import { StyleSheet, Platform } from "react-native";
 import { Dimensions } from "react-native";
 
 //global styling variables
-var scrollheight 
+var scrollheight;
 
 if (Platform.OS === "ios") {
   scrollheight = "100%";
