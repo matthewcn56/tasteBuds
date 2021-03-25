@@ -35,8 +35,9 @@ export default function DiningHallBar(props) {
           name="clock-time-four"
           color={styles.signinButton.borderColor}
           size={1.4*(styles.regText.fontSize)}
+          style={styles.timeTextIcon}
         />
-        <Text style = {styles.regText}>{props.waitTime} minutes </Text>
+        <Text style = {styles.timeText}> {props.waitTime} minutes </Text>
       </View>
 
       <Text style = {styles.regText}>{props.friendsInHall.length} friends</Text>

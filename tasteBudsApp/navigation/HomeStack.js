@@ -83,7 +83,7 @@ export default function HomeStack() {
       )}
 
       <Tab.Screen
-        name="User Profile"
+        name="Profile"
         component={UserProfileScreen}
         options={{
           tabBarIcon: ({ color }) => (

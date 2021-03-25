@@ -101,13 +101,13 @@ export default function HomeScreen(props) {
                   hallName: value[0],
                   friendsInHall: friendsInHall,
                   capacity: capacities[key],
-                  waitTime: 15, 
+                  waitTime: 0, 
                 });
               }}
             >
               <DiningHallBar
                 title={value[0]}
-                waitTime={15}
+                waitTime={0}
                 friendsInHall={friendsInHall}
                 capacity={capacities[key]}
                 style = {styles.DHCard}

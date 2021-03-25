@@ -33,6 +33,15 @@ export default StyleSheet.create({
     fontSize: windowWidth/24,
     color: dark,
   },
+  timeText: {
+    fontFamily: textFont,
+    fontSize: windowWidth/24,
+    color: dark,
+    marginTop: windowWidth/120,
+  },
+  timeTextIcon: {
+    marginTop: windowWidth/120,
+  },
   emptyWrapper: {
     flex: 1,
   },
@@ -67,6 +76,8 @@ export default StyleSheet.create({
   //Navigation bar
   navBar: {
     backgroundColor: mid,
+    borderTopWidth: 2,
+    borderColor: dark,
   },
 
   //Header Bar
@@ -79,6 +90,7 @@ export default StyleSheet.create({
     marginLeft: windowWidth / 20,
     height: ((7 / 8.4) * windowWidth) / 8,
     width: windowWidth / 8,
+    marginTop: -windowWidth/200,
   },
   headerTxt: {
     textAlign: "center",
@@ -89,7 +101,7 @@ export default StyleSheet.create({
   },
   //User Profile
   profileContainerUpper: {
-    marginTop: windowWidth / 6,
+    marginTop: windowWidth / 8,
     marginBottom: -windowWidth/30,
     width: windowWidth,
     flexDirection: "row",
@@ -111,7 +123,8 @@ export default StyleSheet.create({
     justifyContent: "center",
   },
   signOutButton: {
-    marginLeft: windowWidth/14,
+    marginLeft: windowWidth/12,
+    paddingLeft: windowWidth/75,
     height: windowWidth / 9,
     width: windowWidth / 9,
     borderRadius: windowWidth / 9,
@@ -119,10 +132,12 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: light,
+    borderColor: dark,
+    borderWidth: 2,
   },
   logOut: {
     fontFamily: textFont,
-    fontSize: windowWidth/34,
+    fontSize: windowWidth/28,
     color: dark,
     marginLeft: windowWidth/14,
     flex:1,
@@ -133,7 +148,8 @@ export default StyleSheet.create({
     fontFamily: headerFont,
     textAlign: "center",
     fontSize: windowWidth/20,
-    marginBottom: windowWidth / 6,
+    marginBottom: windowWidth /12,
+    marginTop: windowWidth/20
   },
   QRCode: {
     margin: windowWidth / 5,
@@ -142,7 +158,7 @@ export default StyleSheet.create({
   },
   //Friends List on User Profile
   FBnum:{
-    marginTop: windowWidth/6,
+    marginTop: windowWidth/8,
     fontFamily: textFont,
     fontSize: windowWidth/24,
     width: windowWidth - windowWidth/6,
@@ -180,6 +196,7 @@ export default StyleSheet.create({
     fontFamily: textFont,
     fontSize: windowWidth/24,
     color: dark,
+    marginTop: windowWidth/55
   },
   FBCardX:{
 
@@ -204,7 +221,7 @@ export default StyleSheet.create({
   //Dining hall home page
   DHCard: {
     width: windowWidth - windowWidth/15,
-    marginBottom: windowWidth/60,
+    marginBottom: windowWidth/25,
     padding: windowWidth/60,
     paddingBottom: 0,
     backgroundColor: light,
@@ -212,6 +229,8 @@ export default StyleSheet.create({
     borderWidth: 2,
     borderRadius: windowWidth/30,
     flexDirection: "column",
+    paddingLeft: windowWidth/30,
+    paddingRight: windowWidth/30,
   },
   DHCardRow1: {
     flexDirection: "row",
@@ -224,17 +243,20 @@ export default StyleSheet.create({
     marginBottom: -windowWidth/20,
   },
   DHCardRow2:{
-
+    
   },
   DHCardRow3:{
     flexDirection:"row",
-    marginBottom: -windowWidth/60
+    marginBottom: -windowWidth/60,
+    marginTop: windowWidth/70,
   },
   DHCardPic:{
     marginRight: windowWidth/60,
     height: windowWidth/12,
     width: windowWidth/12,
     borderRadius: windowWidth/12,
+    borderColor: mid,
+    borderWidth: 1,
   },
   DHCardSlider:{
     color: dark,

@@ -64,7 +64,7 @@ export default function FriendsListBar(props) {
     <View style = {styles.FBCard}>
       <Image style={styles.FBCardPic} source={{ uri: userImage }} />
       <View style = {styles.FBCardMidCol}>
-        <Text style = {styles.FBCardName}>{props.name} </Text>
+        <Text style = {styles.FBCardName}>{props.name}</Text>
         <Text style = {styles.FBCardHall}>{currHall ? "currently in " + currHall : ""}</Text>
       </View>
       <TouchableOpacity style = {styles.FBCardX} onPress={createConfirmDeletionAlert}>
