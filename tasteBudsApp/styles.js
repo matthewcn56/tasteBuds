@@ -26,21 +26,21 @@ export default StyleSheet.create({
   scroll: {
     alignItems: "center",
     flexDirection: "column",
-    height: "100%",
+    //height: "100%",
   },
   regText: {
     fontFamily: textFont,
-    fontSize: windowWidth/24,
+    fontSize: windowWidth / 24,
     color: dark,
   },
   timeText: {
     fontFamily: textFont,
-    fontSize: windowWidth/24,
+    fontSize: windowWidth / 24,
     color: dark,
-    marginTop: windowWidth/120,
+    marginTop: windowWidth / 120,
   },
   timeTextIcon: {
-    marginTop: windowWidth/120,
+    marginTop: windowWidth / 120,
   },
   emptyWrapper: {
     flex: 1,
@@ -90,7 +90,7 @@ export default StyleSheet.create({
     marginLeft: windowWidth / 20,
     height: ((7 / 8.4) * windowWidth) / 8,
     width: windowWidth / 8,
-    marginTop: -windowWidth/200,
+    marginTop: -windowWidth / 200,
   },
   headerTxt: {
     textAlign: "center",
@@ -100,17 +100,17 @@ export default StyleSheet.create({
     flex: 1,
   },
   headerTxtBubble: {
-    marginTop: windowWidth/8,
-    marginLeft: -windowWidth/3.6,
+    marginTop: windowWidth / 8,
+    marginLeft: -windowWidth / 3.6,
   },
   headerTxtBubbleRFID: {
-    marginTop: windowWidth/8.5,
-    marginLeft: -windowWidth/3.4,
+    marginTop: windowWidth / 8.5,
+    marginLeft: -windowWidth / 3.4,
   },
   //User Profile
   profileContainerUpper: {
     marginTop: windowWidth / 8,
-    marginBottom: -windowWidth/30,
+    marginBottom: -windowWidth / 30,
     width: windowWidth,
     flexDirection: "row",
     justifyContent: "flex-end",
@@ -131,8 +131,8 @@ export default StyleSheet.create({
     justifyContent: "center",
   },
   signOutButton: {
-    marginLeft: windowWidth/12,
-    paddingLeft: windowWidth/75,
+    marginLeft: windowWidth / 12,
+    paddingLeft: windowWidth / 75,
     height: windowWidth / 9,
     width: windowWidth / 9,
     borderRadius: windowWidth / 9,
@@ -145,19 +145,19 @@ export default StyleSheet.create({
   },
   logOut: {
     fontFamily: textFont,
-    fontSize: windowWidth/28,
+    fontSize: windowWidth / 28,
     color: dark,
-    marginLeft: windowWidth/14,
-    flex:1,
+    marginLeft: windowWidth / 14,
+    flex: 1,
   },
   //end of upper profile container
   profileName: {
     color: dark,
     fontFamily: headerFont,
     textAlign: "center",
-    fontSize: windowWidth/20,
-    marginBottom: windowWidth /12,
-    marginTop: windowWidth/20
+    fontSize: windowWidth / 20,
+    marginBottom: windowWidth / 12,
+    marginTop: windowWidth / 20,
   },
   QRCode: {
     margin: windowWidth / 5,
@@ -165,50 +165,47 @@ export default StyleSheet.create({
     width: (3 * windowWidth) / 5,
   },
   //Friends List on User Profile
-  FBnum:{
-    marginTop: windowWidth/8,
+  FBnum: {
+    marginTop: windowWidth / 8,
     fontFamily: textFont,
-    fontSize: windowWidth/24,
-    width: windowWidth - windowWidth/6,
+    fontSize: windowWidth / 24,
+    width: windowWidth - windowWidth / 6,
     textAlign: "left",
     color: dark,
-    paddingBottom: windowWidth/40,
+    paddingBottom: windowWidth / 40,
   },
   FBContainer: {
     flexDirection: "column",
   },
-  FBCard:{
+  FBCard: {
     flexDirection: "row",
     alignItems: "center",
-    width: windowWidth - windowWidth/6,
-    paddingBottom: windowWidth/40,
-    
+    width: windowWidth - windowWidth / 6,
+    paddingBottom: windowWidth / 40,
   },
-  FBCardPic:{
-    height: windowWidth/10,
-    width: windowWidth/10,
-    borderRadius: windowWidth/10,
-    marginRight: windowWidth/20,
+  FBCardPic: {
+    height: windowWidth / 10,
+    width: windowWidth / 10,
+    borderRadius: windowWidth / 10,
+    marginRight: windowWidth / 20,
   },
-  FBCardMidCol:{
+  FBCardMidCol: {
     flex: 1,
     flexDirection: "column",
   },
-  FBCardName:{
+  FBCardName: {
     fontFamily: headerFont,
-    fontSize: windowWidth/20,
+    fontSize: windowWidth / 20,
     color: dark,
-    marginBottom: -windowWidth/40,
+    marginBottom: -windowWidth / 40,
   },
-  FBCardHall:{
+  FBCardHall: {
     fontFamily: textFont,
-    fontSize: windowWidth/24,
+    fontSize: windowWidth / 24,
     color: dark,
-    marginTop: windowWidth/55
+    marginTop: windowWidth / 55,
   },
-  FBCardX:{
-
-  },
+  FBCardX: {},
 
   //Scannerstuff
   scanner: {
@@ -219,7 +216,7 @@ export default StyleSheet.create({
     position: "absolute",
     height: windowWidth / 10,
     flexDirection: "row",
-    marginTop: windowWidth/6,
+    marginTop: windowWidth / 6,
   },
   scannerLogo: {
     position: "relative",
@@ -228,45 +225,43 @@ export default StyleSheet.create({
   },
   //Dining hall home page
   DHCard: {
-    width: windowWidth - windowWidth/15,
-    marginBottom: windowWidth/25,
-    padding: windowWidth/60,
+    width: windowWidth - windowWidth / 15,
+    marginBottom: windowWidth / 25,
+    padding: windowWidth / 60,
     paddingBottom: 0,
     backgroundColor: light,
     borderColor: dark,
     borderWidth: 2,
-    borderRadius: windowWidth/30,
+    borderRadius: windowWidth / 30,
     flexDirection: "column",
-    paddingLeft: windowWidth/30,
-    paddingRight: windowWidth/30,
+    paddingLeft: windowWidth / 30,
+    paddingRight: windowWidth / 30,
   },
   DHCardRow1: {
     flexDirection: "row",
   },
-  DHCardHeader:{
+  DHCardHeader: {
     flex: 1,
-    fontSize: windowWidth/20,
+    fontSize: windowWidth / 20,
     fontFamily: headerFont,
     color: dark,
-    marginBottom: -windowWidth/20,
+    marginBottom: -windowWidth / 20,
   },
-  DHCardRow2:{
-    
+  DHCardRow2: {},
+  DHCardRow3: {
+    flexDirection: "row",
+    marginBottom: -windowWidth / 60,
+    marginTop: windowWidth / 70,
   },
-  DHCardRow3:{
-    flexDirection:"row",
-    marginBottom: -windowWidth/60,
-    marginTop: windowWidth/70,
-  },
-  DHCardPic:{
-    marginRight: windowWidth/60,
-    height: windowWidth/12,
-    width: windowWidth/12,
-    borderRadius: windowWidth/12,
+  DHCardPic: {
+    marginRight: windowWidth / 60,
+    height: windowWidth / 12,
+    width: windowWidth / 12,
+    borderRadius: windowWidth / 12,
     borderColor: mid,
     borderWidth: 1,
   },
-  DHCardSlider:{
+  DHCardSlider: {
     color: dark,
     backgroundColor: mid,
   },
