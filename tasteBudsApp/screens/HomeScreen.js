@@ -14,7 +14,6 @@ import DiningHallBar from "./diningHalls/DiningHallBar.js";
 import { render } from "react-dom";
 
 export default function HomeScreen(props) {
-  //const axios = require("axios").default; //NIXED DevX API, it's not functioning
   const { user, logout } = useContext(AuthContext);
   const [userName, setUserName] = useState("");
   const [profilePic, setProfilePic] = useState(null);
@@ -23,6 +22,7 @@ export default function HomeScreen(props) {
   const [diningHalls, setDiningHalls] = useState(null);
   const [capacities, setCapacities] = useState([]);
   const [renderDiningHalls, setRenderDiningHalls] = useState([]);
+  const [activityLevels, setActivityLevels] = useState(null);
 
   //set userName on mount
   useEffect(() => {
@@ -49,7 +49,23 @@ export default function HomeScreen(props) {
     };
   }, []);
 
-  // update dining halls
+  //setup listener for activityLevels to update
+  useEffect(() => {
+    let onActivityLevelChange = function (snapshot) {
+      if (snapshot.exists()) {
+        setActivityLevels(snapshot.val());
+      } else {
+        setActivityLevels(null);
+      }
+    };
+    db.ref("activityLevels/").on("value", onActivityLevelChange);
+
+    return () => {
+      db.ref("activityLevels/").off("value", onActivityLevelChange);
+    };
+  }, []);
+
+  // setup listener for diningHalls to update
   useEffect(() => {
     let onCapacityChange = function (querySnapshot) {
       if (querySnapshot.exists()) {
@@ -64,6 +80,29 @@ export default function HomeScreen(props) {
       db.ref("capacities/").off("value", onCapacityChange);
     };
   }, []);
+
+  //function that uses object destructuring rather than arrays
+  function getActivityLevelsFromName(hallName) {
+    let key = hallName;
+    let {
+      BPlate: bPlateActivity,
+      Covel: covelActivity,
+      "De Neve": deNeveActivity,
+      Feast: feastActivity,
+    } = activityLevels;
+    switch (hallName) {
+      case "BPlate":
+        return bPlateActivity;
+      case "Covel":
+        return covelActivity;
+      case "De Neve":
+        return deNeveActivity;
+      case "Feast":
+        return feastActivity;
+      default:
+        return "ERROR";
+    }
+  }
 
   // update capacities
   useEffect(() => {
@@ -109,13 +148,13 @@ export default function HomeScreen(props) {
                   hallName: value[0],
                   friendsInHall: friendsInHall,
                   capacity: capacities[key],
-                  waitTime: 0,
+                  activityLevel: getActivityLevelsFromName(value[0]),
                 });
               }}
             >
               <DiningHallBar
                 title={value[0]}
-                waitTime={0}
+                activityLevel={getActivityLevelsFromName(value[0])}
                 friendsInHall={friendsInHall}
                 capacity={capacities[key]}
                 style={styles.DHCard}

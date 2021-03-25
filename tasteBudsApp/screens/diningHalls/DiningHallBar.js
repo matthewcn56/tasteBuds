@@ -40,10 +40,10 @@ export default function DiningHallBar(props) {
         <MaterialCommunityIcons
           name="clock-time-four"
           color={styles.signinButton.borderColor}
-          size={1.4*(styles.regText.fontSize)}
+          size={1.4 * styles.regText.fontSize}
           style={styles.timeTextIcon}
         />
-        <Text style = {styles.timeText}> {props.waitTime} minute wait </Text>
+        <Text style={styles.timeText}> {props.activityLevel} Activity </Text>
       </View>
 
       <Text style={styles.regText}>{props.friendsInHall.length} friends</Text>
@@ -56,7 +56,7 @@ export default function DiningHallBar(props) {
         maximumValue={900}
         disabled={true}
         minimumTrackTintColor={styles.DHCardSlider.color}
-        maximumTrackTintColor= {styles.DHCardSlider.backgroundColor}
+        maximumTrackTintColor={styles.DHCardSlider.backgroundColor}
         thumbStyle={{ display: "none" }}
         thumbImage={{ display: "none" }}
       />
