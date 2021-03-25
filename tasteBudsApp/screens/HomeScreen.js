@@ -84,24 +84,9 @@ export default function HomeScreen(props) {
   //function that uses object destructuring rather than arrays
   function getActivityLevelsFromName(hallName) {
     let key = hallName;
-    let {
-      BPlate: bPlateActivity,
-      Covel: covelActivity,
-      "De Neve": deNeveActivity,
-      Feast: feastActivity,
-    } = activityLevels;
-    switch (hallName) {
-      case "BPlate":
-        return bPlateActivity;
-      case "Covel":
-        return covelActivity;
-      case "De Neve":
-        return deNeveActivity;
-      case "Feast":
-        return feastActivity;
-      default:
-        return "ERROR";
-    }
+    let value = "ERROR";
+    ({ [key]: value } = activityLevels);
+    return value;
   }
 
   // update capacities
