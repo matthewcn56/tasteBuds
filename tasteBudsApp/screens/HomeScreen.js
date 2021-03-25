@@ -43,10 +43,6 @@ export default function HomeScreen(props) {
       }
     };
     db.ref("friends/" + user.uid).on("value", onValueChange);
-
-    return () => {
-      db.ref("friends/" + user.uid).off("value", onValueChange);
-    };
   }, []);
 
   //setup listener for activityLevels to update
@@ -59,10 +55,6 @@ export default function HomeScreen(props) {
       }
     };
     db.ref("activityLevels/").on("value", onActivityLevelChange);
-
-    return () => {
-      db.ref("activityLevels/").off("value", onActivityLevelChange);
-    };
   }, []);
 
   // setup listener for diningHalls to update
@@ -75,10 +67,6 @@ export default function HomeScreen(props) {
       }
     };
     db.ref("capacities/").on("value", onCapacityChange);
-
-    return () => {
-      db.ref("capacities/").off("value", onCapacityChange);
-    };
   }, []);
 
   //function that uses object destructuring rather than arrays

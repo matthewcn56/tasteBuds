@@ -185,6 +185,12 @@ export default StyleSheet.create({
     color: dark,
     paddingBottom: windowWidth / 40,
   },
+  FBzeroMsg: {
+    fontFamily: headerFont,
+    fontSize: windowWidth / 20,
+    width: windowWidth - windowWidth / 6,
+    textAlign: "center",
+  },
   FBContainer: {
     flexDirection: "column",
   },

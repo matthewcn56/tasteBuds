@@ -39,9 +39,6 @@ export default function UserProfileScreen() {
     db.ref("friends/" + user.uid).on("value", onValueChange);
 
     setLoading(false);
-    return () => {
-      db.ref("friends/" + user.uid).off("value", onValueChange);
-    };
   }, []);
 
   useEffect(() => {
@@ -127,15 +124,15 @@ export default function UserProfileScreen() {
           style={styles.QRCode}
           value={user.uid}
         />
-        {displayedItems.length < 1 ? (
-          <Text style={styles.profileName}>
-            Scan A Friend's QR Code To Add Them To Your List!
-          </Text>
-        ) : null}
         <Text style={styles.FBnum}>
           {displayedItems.length}{" "}
           {displayedItems.length == 1 ? "Friend" : "Friends"}
         </Text>
+        {displayedItems.length < 1 ? (
+          <Text style={styles.FBzeroMsg}>
+            Scan A Friend's QR Code To Add Them To Your List!
+          </Text>
+        ) : null}
         <View style={styles.FBContainer}>{displayedItems}</View>
       </ScrollView>
     </SafeAreaView>

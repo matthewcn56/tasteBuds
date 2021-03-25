@@ -34,9 +34,6 @@ export default function DiningHallMenu(props) {
       }
     };
     db.ref("menus/" + props.hallName).on("value", onValueChange);
-    return () => {
-      db.ref("menus/" + props.hallName).off("value", onValueChange);
-    };
   }, []);
 
   // render menu items
