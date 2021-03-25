@@ -8,16 +8,18 @@ import HomeScreen from "../screens/HomeScreen";
 export default function DiningHallStack() {
   const Stack = createStackNavigator();
   return (
-    <Stack.Navigator initialRouteName="DiningHalls">
+    <Stack.Navigator initialRouteName="Dining Halls">
       <Stack.Screen
-        name="DiningHalls"
+        name="Dining Halls"
         component={HomeScreen}
         options={{ header: () => null }}
       />
       <Stack.Screen
         name="IndividualHall"
         component={DiningHallScreen}
-        //options={{ header: () => null }}
+        //options={{ header: props.route.params }}
+        //options={{ header: hallName }}
+        options={({ route }) => ({ title: route.params.hallName })}
       />
     </Stack.Navigator>
   );

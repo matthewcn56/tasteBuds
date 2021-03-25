@@ -1,7 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../navigation/AuthProvider";
 import styles from "../styles.js";
-import { SafeAreaView, Text, View, Button, Image, TouchableOpacity } from "react-native";
+import {
+  SafeAreaView,
+  Text,
+  View,
+  Button,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 import { db } from "../firebase/firebaseFunctions";
 import DiningHallBar from "./diningHalls/DiningHallBar.js";
 import { render } from "react-dom";
@@ -101,7 +108,7 @@ export default function HomeScreen(props) {
                   hallName: value[0],
                   friendsInHall: friendsInHall,
                   capacity: capacities[key],
-                  waitTime: 15, 
+                  waitTime: 15,
                 });
               }}
             >
@@ -110,7 +117,7 @@ export default function HomeScreen(props) {
                 waitTime={15}
                 friendsInHall={friendsInHall}
                 capacity={capacities[key]}
-                style = {styles.DHCard}
+                style={styles.DHCard}
               />
             </TouchableOpacity>,
           ];
@@ -122,9 +129,12 @@ export default function HomeScreen(props) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Image style ={styles.headerImg} source={require("../assets/TasteBuds.png")}/>
-        <Text style = {styles.headerTxt}>TasteBuds</Text>
-        <View style = {styles.headerImg}/>
+        <Image
+          style={styles.headerImg}
+          source={require("../assets/TasteBuds.png")}
+        />
+        <Text style={styles.headerTxt}>TasteBuds</Text>
+        <View style={styles.headerImg} />
       </View>
 
       {renderDiningHalls}

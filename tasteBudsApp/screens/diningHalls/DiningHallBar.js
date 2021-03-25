@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styles from "../../styles";
-import { SafeAreaView, View, Text, Image, TouchableOpacity } from "react-native";
+import {
+  SafeAreaView,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 import { db } from "../../firebase/firebaseFunctions";
 import Slider from "react-native-slider";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -28,21 +34,21 @@ export default function DiningHallBar(props) {
   }, [props.friendsInHall]);
 
   return (
-    <View style = {styles.DHCard} key={props.title}>
-      <View style = {styles.DHCardRow1}>
-        <Text style = {styles.DHCardHeader}>{props.title}</Text>
+    <View style={styles.DHCard} key={props.title}>
+      <View style={styles.DHCardRow1}>
+        <Text style={styles.DHCardHeader}>{props.title}</Text>
         <MaterialCommunityIcons
           name="clock-time-four"
           color={styles.signinButton.borderColor}
-          size={1.4*(styles.regText.fontSize)}
+          size={1.4 * styles.regText.fontSize}
         />
-        <Text style = {styles.regText}>{props.waitTime} minutes </Text>
+        <Text style={styles.regText}>{props.waitTime} minutes </Text>
       </View>
 
-      <Text style = {styles.regText}>{props.friendsInHall.length} friends</Text>
-      
-      <View style = {styles.DHCardRow3}>{renderFriendImages}</View>
-      
+      <Text style={styles.regText}>{props.friendsInHall.length} friends</Text>
+
+      <View style={styles.DHCardRow3}>{renderFriendImages}</View>
+
       <Slider
         value={props.capacity}
         minimumValue={0}
