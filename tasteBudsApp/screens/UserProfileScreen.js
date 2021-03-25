@@ -73,6 +73,8 @@ export default function UserProfileScreen() {
         //   <Text key={snapshot.toString()}> {snapshot.val()} </Text>
         // ));
       });
+    } else {
+      setDisplayedItems([]);
     }
   }, [list]);
 

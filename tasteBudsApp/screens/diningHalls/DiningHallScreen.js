@@ -88,7 +88,7 @@ export default function DiningHallScreen(props) {
           />
 
           <Text style={styles.IDHNumOfFriends}>
-            {friendsInHall.length} friends
+            {friendsInHall.length} {friendsInHall.length == 1 ? "friend" : "friends"}
           </Text>
           <View style={styles.IDHFriendList}>
             <View>{renderFriendImages}</View>

@@ -46,7 +46,7 @@ export default function DiningHallBar(props) {
         <Text style={styles.timeText}> {props.activityLevel} Activity </Text>
       </View>
 
-      <Text style={styles.regText}>{props.friendsInHall.length} friends</Text>
+      <Text style={styles.regText}>{props.friendsInHall.length} {props.friendsInHall.length == 1 ? "friend" : "friends"}</Text>
 
       <View style={styles.DHCardRow3}>{renderFriendImages}</View>
 

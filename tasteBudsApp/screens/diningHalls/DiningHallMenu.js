@@ -53,6 +53,8 @@ export default function DiningHallMenu(props) {
           );
         })
       );
+    } else {
+      setRenderMenuItems([]);
     }
   }, [menu]);
 
