@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import { AuthContext } from "../../navigation/AuthProvider";
 import styles from "../../styles.js";
 import {
   SafeAreaView,
@@ -13,52 +14,119 @@ import Slider from "react-native-slider";
 import { WebView } from "react-native-webview";
 import DiningHallMenu from "./DiningHallMenu";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { render } from "react-dom";
 
 export default function DiningHallScreen(props) {
+  const { user, logout } = useContext(AuthContext);
   const [renderFriendImages, setRenderFriendImages] = useState([]);
   const [renderFriendNames, setRenderFriendNames] = useState([]);
+  const [numFriends, setNumFriends] = useState(0);
   const {
     hallName,
-    friendsInHall,
-    capacity,
-    activityLevel,
+    // friendsInHall,
+    // capacity,
+    // activityLevel,
   } = props.route.params;
 
-  //render friend images
-  useEffect(() => {
-    Promise.all(
-      friendsInHall.map((session) =>
-        db.ref("users/" + session + "/profilePic").once("value")
-      )
-    ).then((snapshotVals) => {
-      setRenderFriendImages(
-        snapshotVals.map((snapshot) => (
-          <Image
-            style={styles.IDHPic}
-            source={{ uri: snapshot.val() }}
-            key={snapshot.val()}
-          />
-        ))
-      );
-    });
-  }, [friendsInHall]);
+  const [friendList, setFriendList] = useState(null);
+  const [capacities, setCapacities] = useState(null);
+  const [capacity, setCapacity] = useState(0);
+  const [activityLevel, setActivityLevel] = useState("");
 
-  // render friend names
+  // friends list
   useEffect(() => {
-    Promise.all(
-      friendsInHall.map((session) =>
-        db.ref("users/" + session + "/displayName").once("value")
+    let onValueChange = function (querySnapshot) {
+      if (querySnapshot.exists()) {
+        setFriendList(querySnapshot.val());
+      } else {
+        setFriendList(null);
+      }
+    };
+    db.ref("friends/" + user.uid).on("value", onValueChange);
+
+    return () => {
+      db.ref("friends/" + user.uid).off("value", onValueChange);
+    };
+  }, []);
+
+  //setup listener for activityLevels to update
+  useEffect(() => {
+    let onActivityLevelChange = function (snapshot) {
+      if (snapshot.exists()) {
+        setActivityLevel(snapshot.val());
+      } else {
+        setActivityLevel("");
+      }
+    };
+    db.ref("activityLevels/" + hallName).on("value", onActivityLevelChange);
+
+    return () => {
+      db.ref("activityLevels/" + hallName).off("value", onActivityLevelChange);
+    };
+  }, []);
+
+  // update capacities
+  useEffect(() => {
+    let onActivityLevelChange = function (snapshot) {
+      if (snapshot.exists()) {
+        console.log("capacity changed!");
+        setCapacities(snapshot.val());
+        setCapacity(Object.keys(snapshot.val()).length);
+      } else {
+        setCapacities(null);
+        setCapacity(0);
+      }
+    };
+    db.ref("capacities/" + hallName).on("value", onActivityLevelChange);
+
+    return () => {
+      db.ref("capacities/" + hallName).off("value", onActivityLevelChange);
+    };
+  }, []);
+
+  // render friend images - UPDATES AFTER BOTH FRIEND'S CURRHALL AND CAPACITY-HALL-FRIENDUID CHANGES
+  useEffect(() => {
+    if (capacities && friendList) {
+      Promise.all(
+        Object.keys(friendList).map((friend) =>
+          db.ref("users/" + friend).once("value")
+        )
       )
-    ).then((snapshotVals) => {
-      setRenderFriendNames(
-        snapshotVals.map((snapshot, index) => (
-          <Text style={styles.IDHfriends} key={friendsInHall[index]}>
-            {snapshot.val()}
-          </Text>
-        ))
-      );
-    });
-  }, [friendsInHall]);
+      .then((snapshotVals) => {
+        let friends = snapshotVals.filter(snapshot => {
+          return snapshot.val()["currHall"] === hallName;
+        });
+        setRenderFriendImages(
+          friends.map((snapshot) => (
+            <Image
+              style={styles.IDHPic}
+              source={{ uri: snapshot.val()["profilePic"] }}
+              key={snapshot.val()["profilePic"]}
+            />
+          ))
+        );
+        setRenderFriendNames(
+          friends.map((snapshot) => (
+            <Text style={styles.IDHfriends} key={snapshot.val()["profilePic"]}>
+              {snapshot.val()["displayName"]}
+            </Text>
+          ))
+        );
+      });
+    } else {
+      setRenderFriendNames([]);
+      setRenderFriendNames([]);
+    }
+  }, [capacities])
+
+  // update numFriends
+  useEffect(() => {
+    if (renderFriendNames) {
+      setNumFriends(renderFriendNames.length);
+    } else {
+      setNumFriends(0);
+    }
+  }, [renderFriendNames])
 
   return (
     <SafeAreaView style={styles.containerscroll}>
@@ -95,7 +163,7 @@ export default function DiningHallScreen(props) {
           <Text style={styles.IDHViewMenu}>View Menu</Text>
         </TouchableOpacity>
         <Text style={styles.IDHNumOfFriends}>
-          {friendsInHall.length} {friendsInHall.length == 1 ? "friend" : "friends"}
+          {numFriends} {numFriends == 1 ? "friend" : "friends"}
         </Text>
           <View style={styles.IDHFriendList}>
             <View>{renderFriendImages}</View>
