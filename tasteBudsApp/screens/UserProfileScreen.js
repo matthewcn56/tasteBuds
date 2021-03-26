@@ -39,6 +39,10 @@ export default function UserProfileScreen() {
     db.ref("friends/" + user.uid).on("value", onValueChange);
 
     setLoading(false);
+
+    return () => {
+      db.ref("friends/" + user.uid).off("value", onValueChange);
+    };
   }, []);
 
   useEffect(() => {

@@ -37,7 +37,11 @@ export default function DiningHallMenu(props) {
         setMenu(null);
       }
     };
-    db.ref("menus/" + hallName).on("value", onValueChange);
+    db.ref("menus/" + props.hallName).on("value", onValueChange);
+
+    return () => {
+      db.ref("menus/" + props.hallName).off("value", onValueChange);
+    };
   }, []);
 
   // render menu items
@@ -46,10 +50,13 @@ export default function DiningHallMenu(props) {
       setRenderMenuItems(
         Object.entries(menu).map((item, key) => {
           return (
-            <View  key={item[0]}>
-              <Text style = {styles.IDHMeal}>{item[0]}</Text>
+            <View key={item[0]}>
+              <Text style={styles.IDHMeal}>{item[0]}</Text>
               {Object.entries(item[1]).map((dish, key) => (
-                <TouchableOpacity key={dish[0] + key} onPress={() => openURL(dish[1])}>
+                <TouchableOpacity
+                  key={dish[0] + key}
+                  onPress={() => openURL(dish[1])}
+                >
                   <Text style={styles.IDHMenuItem}>{dish[0]}</Text>
                 </TouchableOpacity>
               ))}

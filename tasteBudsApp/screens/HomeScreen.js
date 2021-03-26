@@ -46,6 +46,10 @@ export default function HomeScreen(props) {
       }
     };
     db.ref("friends/" + user.uid).on("value", onValueChange);
+
+    return () => {
+      db.ref("friends/" + user.uid).off("value", onValueChange);
+    };
   }, []);
 
   //setup listener for activityLevels to update
@@ -58,6 +62,10 @@ export default function HomeScreen(props) {
       }
     };
     db.ref("activityLevels/").on("value", onActivityLevelChange);
+
+    return () => {
+      db.ref("activityLevels/").off("value", onActivityLevelChange);
+    };
   }, []);
 
   // setup listener for diningHalls to update
@@ -70,6 +78,10 @@ export default function HomeScreen(props) {
       }
     };
     db.ref("capacities/").on("value", onCapacityChange);
+
+    return () => {
+      db.ref("capacities/").off("value", onCapacityChange);
+    };
   }, []);
 
   //function that uses object destructuring rather than arrays
@@ -142,23 +154,20 @@ export default function HomeScreen(props) {
   }, [diningHalls, capacities]);
 
   const wait = (timeout) => {
-    return new Promise(resolve => setTimeout(resolve, timeout));
-  }
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+  };
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     wait(2000).then(() => setRefreshing(false));
   }, []);
 
-
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scroll}
+      <ScrollView
+        contentContainerStyle={styles.scroll}
         refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-          />
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
         <View style={styles.header}>

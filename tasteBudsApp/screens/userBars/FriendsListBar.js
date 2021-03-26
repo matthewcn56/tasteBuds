@@ -51,6 +51,10 @@ export default function FriendsListBar(props) {
       }
     };
     db.ref("users/" + props.uid).on("value", onValueChange);
+
+    return () => {
+      db.ref("users/" + props.uid).off("value", onValueChange);
+    };
   }, []);
 
   useEffect(() => {
