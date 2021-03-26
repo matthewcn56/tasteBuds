@@ -53,44 +53,44 @@ for item in lateNightMenu:
         print("Invalid Path!")
 
 
-# for mealTime in mealTimes:
-#     for designatedHall in halls:
-#         MEAL_TIME = mealTime
-#         DESIGNATED_HALL = designatedHall
-#         menuItems = get_menu_items_from_time_and_hall(MEAL_TIME, DESIGNATED_HALL)
-#         openHours = get_hall_hours_from_meal_time_and_hall(MEAL_TIME, hours_path_switcher(DESIGNATED_HALL))
-#         # #delete previous menu
-#         firebase_admin.db.reference("menus/" + hall_path_switcher(DESIGNATED_HALL) + "/" + MEAL_TIME).delete()
-#         #delete previous hours
-#         firebase_admin.db.reference("hours/" + hall_path_switcher(DESIGNATED_HALL) + "/" +MEAL_TIME).delete()
+for mealTime in mealTimes:
+    for designatedHall in halls:
+        MEAL_TIME = mealTime
+        DESIGNATED_HALL = designatedHall
+        menuItems = get_menu_items_from_time_and_hall(MEAL_TIME, DESIGNATED_HALL)
+        openHours = get_hall_hours_from_meal_time_and_hall(MEAL_TIME, hours_path_switcher(DESIGNATED_HALL))
+        # #delete previous menu
+        firebase_admin.db.reference("menus/" + hall_path_switcher(DESIGNATED_HALL) + "/" + MEAL_TIME).delete()
+        #delete previous hours
+        firebase_admin.db.reference("hours/" + hall_path_switcher(DESIGNATED_HALL) + "/" +MEAL_TIME).delete()
 
-#         #update the hours
-#         hoursPath = firebase_admin.db.reference("hours/" + hall_path_switcher(DESIGNATED_HALL) +"/" + MEAL_TIME)
-#         if openHours is None:
-#             hoursPath.delete()
-#         else:
-#             hoursPath.set(openHours)
-#         if hoursPath.get() == "":
-#             hoursPath.delete()
+        #update the hours
+        hoursPath = firebase_admin.db.reference("hours/" + hall_path_switcher(DESIGNATED_HALL) +"/" + MEAL_TIME)
+        if openHours is None:
+            hoursPath.delete()
+        else:
+            hoursPath.set(openHours)
+        if hoursPath.get() == "":
+            hoursPath.delete()
 
-#         #add new menu items
-#         for menuItem in menuItems:
-#             #taking care of invalid tokens
-#             for c in ["/", "-", "#", "$", "[", "]", "."]:
-#                 menuItem["itemName"]=  menuItem["itemName"].replace(c, "")
-#             try:  
-#                 path = firebase_admin.db.reference("menus/" +  hall_path_switcher(DESIGNATED_HALL) + "/" + MEAL_TIME + "/"
-#                 +menuItem["itemName"])
-#                 path.set(menuItem["recipeLink"])
-#             except ValueError:
-#                 print("Invalid Path!")
-#             except TypeError:
-#                 print("Invalid Path!")
-#             except firebase_admin.exceptions.FirebaseError:
-#                 print("Invalid Path!")
+        #add new menu items
+        for menuItem in menuItems:
+            #taking care of invalid tokens
+            for c in ["/", "-", "#", "$", "[", "]", "."]:
+                menuItem["itemName"]=  menuItem["itemName"].replace(c, "")
+            try:  
+                path = firebase_admin.db.reference("menus/" +  hall_path_switcher(DESIGNATED_HALL) + "/" + MEAL_TIME + "/"
+                +menuItem["itemName"])
+                path.set(menuItem["recipeLink"])
+            except ValueError:
+                print("Invalid Path!")
+            except TypeError:
+                print("Invalid Path!")
+            except firebase_admin.exceptions.FirebaseError:
+                print("Invalid Path!")
        
-#             firebase_admin.db.reference("menus/" + DESIGNATED_HALL + "/" + MEAL_TIME + "/"
-#             +menuItem["itemName"]).set(menuItem["recipeLink"])
+            firebase_admin.db.reference("menus/" + DESIGNATED_HALL + "/" + MEAL_TIME + "/"
+            +menuItem["itemName"]).set(menuItem["recipeLink"])
         
 
 

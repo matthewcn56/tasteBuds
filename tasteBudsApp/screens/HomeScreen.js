@@ -120,7 +120,7 @@ export default function HomeScreen(props) {
         Object.keys(value[1]).map((person) => {
           // see if that person is a friend
           if (
-            person !== "dummyNode" &&
+            person !== "DummyNode" &&
             friendList &&
             Object.keys(friendList).includes(person)
           ) {
