@@ -73,6 +73,7 @@ void setup()
     // create qrcode
     ledcSetup(0, 392, 8);
     ledcAttachPin(5, 0);
+    pinMode(33, INPUT);
 }
 
 void pushStringToDatabase() {
@@ -87,6 +88,8 @@ void pushStringToDatabase() {
 
 void printToOLED() {
     qrcode.create(ID);
+    display.invertDisplay(true);
+    display.clearDisplay();
     //vTaskDelete(NULL);
 }
 
@@ -116,14 +119,12 @@ void loop()
         capSenseTouched = false;
     }
     if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial()) {
-        /*
         ledcWriteTone(0, 390);
         delay(100);
         ledcWrite(0, 0);
         ledcWriteTone(0, 523);
         delay(75);
         ledcWrite(0, 0);
-        */
         display.clearDisplay();
         display.display();
         lcd.clear();
