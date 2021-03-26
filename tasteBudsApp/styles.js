@@ -377,6 +377,7 @@ export default StyleSheet.create({
     backgroundColor: light,
     alignSelf: "flex-start",
     padding: windowWidth/50,
+    paddingBottom: windowWidth/150,
     borderRadius: windowWidth/50,
     borderWidth: 2,
     borderColor: dark,
