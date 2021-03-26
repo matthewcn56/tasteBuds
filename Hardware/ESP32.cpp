@@ -11,9 +11,9 @@
 #include "secrets.h"
 #define RST_PIN         2
 #define SS_PIN          15
-#define OLED_RESET -1 
-#define SCREEN_WIDTH 128 
-#define SCREEN_HEIGHT 64 
+#define OLED_RESET -1
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 LiquidCrystal lcd(13, 12, 14, 27, 26, 25);
@@ -25,10 +25,14 @@ String ID;
 String diningHall = "De Neve";
 bool capSenseTouched = false;
 bool capSenseEnabled = false;
+int timeInterval = 900000; //Checking activty levels every 15 minutes
+int netPeopleIn = 0;
+int currentTime = 0;
+
 
 void touched() {
     if (capSenseEnabled) {
-        capSenseTouched = true; 
+        capSenseTouched = true;
     }
 }
 
@@ -73,11 +77,12 @@ void setup()
     // create qrcode
     ledcSetup(0, 392, 8);
     ledcAttachPin(5, 0);
+    pinMode(33, INPUT);
 }
 
 void pushStringToDatabase() {
     if (Firebase.setString(fbdo, "/capacities/" + diningHall + "/" + ID + "/", "anonymous")) {
-            
+        
     }
     else {
        Serial.println("ERROR D:");
@@ -87,6 +92,8 @@ void pushStringToDatabase() {
 
 void printToOLED() {
     qrcode.create(ID);
+    display.invertDisplay(true);
+    display.clearDisplay();
     //vTaskDelete(NULL);
 }
 
@@ -107,6 +114,20 @@ String getID(){
 
 void loop()
 {
+    currentTime = millis();
+    if(currentTime >= timeInterval){
+        if(netPeopleIn == 0){
+            Firebase.setString(fbdo, "/activityLevels/" + diningHall + "/", "No");
+        }else if(netPeopleIn < 15){
+            Firebase.setString(fbdo, "/activityLevels/" + diningHall + "/", "Low");
+        }else if(netPeopleIn < 30){
+            Firebase.setString(fbdo, "/activityLevels/" + diningHall + "/", "Medium");
+        }else if(netPeopleIn >=30){
+            Firebase.setString(fbdo, "/activityLevels/" + diningHall + "/", "High");
+        }
+        currentTime = currentTime % timeInterval;
+        netPeopleIn = 0;
+    }
     if (capSenseTouched) {
         Serial.println("Sensed!");
         display.clearDisplay();
@@ -116,14 +137,12 @@ void loop()
         capSenseTouched = false;
     }
     if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial()) {
-        /*
         ledcWriteTone(0, 390);
         delay(100);
         ledcWrite(0, 0);
         ledcWriteTone(0, 523);
         delay(75);
         ledcWrite(0, 0);
-        */
         display.clearDisplay();
         display.display();
         lcd.clear();
@@ -132,6 +151,7 @@ void loop()
         //Check if anonymous user is in dining hall
         if (Firebase.getString(fbdo, "/capacities/" + diningHall + "/" + ID + "/")) {
             Firebase.deleteNode(fbdo, "/capacities/" + diningHall + "/" + ID + "/");
+            netPeopleIn--;
         }
         else {
             //Check if user is in the database
@@ -171,11 +191,13 @@ void loop()
                 if (isPresent) {
                     Firebase.deleteNode(fbdo, "/users/" + key + "/currHall/"); //Change current hall to false
                     Firebase.deleteNode(fbdo, "/capacities/" + diningHall + "/" + key); //Get rid of person from dining hall
+                    netPeopleIn--;
                 }
                 else {
                     //Keep this single threaded for now
                     Firebase.setString(fbdo, "/users/" + key + "/currHall/", diningHall); //Change current hall to De Neve
                     Firebase.setString(fbdo, "/capacities/" + diningHall + "/" + key, value);  //Add user to dining hall
+                    netPeopleIn++;
                     lcd.print("Enjoy your meal");
                     lcd.setCursor(0, 1);
                     String name;
@@ -198,6 +220,7 @@ void loop()
                 xTaskCreatePinnedToCore(printToOLED, "Printing to OLED", 10000, NULL, 1, NULL, 1);
                 xTaskCreatePinnedToCore(printToLCD, "Printing to LCD", 10000, NULL, 1, NULL, 0);
                 */
+                netPeopleIn++;
                 pushStringToDatabase();
                 printToOLED();
                 printToLCD();
