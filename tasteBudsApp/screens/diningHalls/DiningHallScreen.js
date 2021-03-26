@@ -161,6 +161,7 @@ export default function DiningHallScreen(props) {
           return (
             <View style={styles.DHCardRow1}>
               <TouchableOpacity
+                style = {{flex: 1}}
                 key={`${hallName} ${name} Menu`}
                 onPress={() => {
                   props.navigation.navigate("Menu", {
