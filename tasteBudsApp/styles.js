@@ -272,6 +272,17 @@ export default StyleSheet.create({
     borderRadius: windowWidth/50,
     borderColor: dark,
   },
+  permissionDeniedContainter: {
+    justifyContent: "center",
+    alignSelf: "center",
+    width: windowWidth - windowWidth/6,
+    height: windowHeight - windowHeight/10,
+  },
+  permissionDeniedMsg: {
+    fontFamily: textFont,
+    fontSize: windowWidth / 24,
+    textAlign: "center",
+  },
   //Dining hall home page
   DHCard: {
     width: windowWidth - windowWidth / 15,

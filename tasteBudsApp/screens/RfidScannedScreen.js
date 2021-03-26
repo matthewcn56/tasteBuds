@@ -70,29 +70,18 @@ export default function RfidScannedScreen(props) {
           console.error(error);
         });
     }
-
-    // db.ref("rfidTags/" + user.uid).set(data);
-    // alert("Paired With Your Bruin Card!");
-    // db.ref("rfidTags/" + user.uid)
-    //   .once("value")
-    //   .then((snapshot) => {
-    //     // user/uid/displayname
-    //     if (snapshot.exists()) {
-    //       alert(`${snapshot.val()} has been added to your friends list!`);
-    //       // add to database
-    //       var updates = {};
-    //       updates["friends/" + user.uid + "/" + data] = true; //adds the uid to the friends tree
-    //       updates["friends/" + data + "/" + user.uid] = true;
-    //       return db.ref().update(updates);
-    //     } else {
-    //       alert("Invalid QR Code");
-    //     }
-    //   })
-    //   .catch(function (error) {
-    //     console.error(error);
-    //   });
-    //}
   };
+
+  if (hasCameraPermission === null) {
+    return <Text>Requesting for camera permission</Text>;
+  }
+  if (hasCameraPermission === false) {
+    return (
+      <View style={styles.permissionDeniedContainter}>
+        <Text style={styles.permissionDeniedMsg}>To pair your Bruin Card to the app, please go to your device's settings and turn on camera permissions for Expo Go.</Text>
+      </View>
+    );
+  }
 
   return (
     <View>

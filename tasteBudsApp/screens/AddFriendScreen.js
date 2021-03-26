@@ -104,7 +104,11 @@ export default function AddFriendScreen() {
     return <Text>Requesting for camera permission</Text>;
   }
   if (hasCameraPermission === false) {
-    return <Text>No access to camera</Text>;
+    return (
+      <View style={styles.permissionDeniedContainter}>
+        <Text style={styles.permissionDeniedMsg}>To add a friend, please go to your device's settings and turn on camera permissions for Expo Go.</Text>
+      </View>
+    );
   }
 
   return (
