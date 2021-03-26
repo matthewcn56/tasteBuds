@@ -372,12 +372,11 @@ export default StyleSheet.create({
     overflow: "hidden",
     marginTop: windowWidth/40,
   },
-  // IDHMenu:{
-  //   marginTop: windowWidth/20,
-  //   fontFamily: headerFont,
-  //   fontSize: windowWidth/10,
-  //   color: dark,
-  // },
+  IDHMenu:{
+    fontFamily: headerFont,
+    fontSize: windowWidth/20,
+    color: dark,
+  },
   IDHMeal: {
     fontFamily: headerFont,
     fontSize: windowWidth/16,

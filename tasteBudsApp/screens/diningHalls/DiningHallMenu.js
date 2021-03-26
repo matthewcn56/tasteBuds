@@ -15,7 +15,9 @@ export default function DiningHallMenu(props) {
   const [menu, setMenu] = useState(null);
   const [renderMenuItems, setRenderMenuItems] = useState([]);
   const {
-    hallName
+    hallName,
+    currMealName,
+    currMealTimes,
   } = props.route.params;
 
   const openURL = (link) => {
@@ -48,20 +50,22 @@ export default function DiningHallMenu(props) {
   useEffect(() => {
     if (menu) {
       setRenderMenuItems(
-        Object.entries(menu).map((item, key) => {
-          return (
-            <View key={item[0]}>
-              <Text style={styles.IDHMeal}>{item[0]}</Text>
-              {Object.entries(item[1]).map((dish, key) => (
-                <TouchableOpacity
-                  key={dish[0] + key}
-                  onPress={() => openURL(dish[1])}
-                >
-                  <Text style={styles.IDHMenuItem}>{dish[0]}</Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          );
+        currMealTimes.map((currMealTime) => {
+          if (menu[currMealTime]) {
+            return (
+              <View>
+                <Text style={styles.IDHMeal} key={currMealTime}>{currMealTime}</Text>
+                {Object.entries(menu[currMealTime]).map((dish, key) => (
+                  <TouchableOpacity
+                    key={dish[0] + key}
+                    onPress={() => openURL(dish[1])}
+                  >
+                    <Text style={styles.IDHMenuItem}>{dish[0]}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            );
+          }
         })
       );
     } else {

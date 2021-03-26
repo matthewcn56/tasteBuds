@@ -25,7 +25,7 @@ export default function DiningHallStack() {
       <Stack.Screen
         name="Menu"
         component={DiningHallMenu}
-        options={({ route }) => ({ title: `${route.params.hallName} Menu`})}
+        options={({ route }) => ({ title: `${route.params.hallName} ${route.params.currMealName} Menu`})}
       />
     </Stack.Navigator>
   );

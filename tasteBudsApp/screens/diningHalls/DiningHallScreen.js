@@ -8,6 +8,7 @@ import {
   View,
   TouchableOpacity,
   Image,
+  SnapshotViewIOS,
 } from "react-native";
 import { db } from "../../firebase/firebaseFunctions.js";
 import Slider from "react-native-slider";
@@ -32,6 +33,9 @@ export default function DiningHallScreen(props) {
   const [capacities, setCapacities] = useState(null);
   const [capacity, setCapacity] = useState(0);
   const [activityLevel, setActivityLevel] = useState("");
+
+  const [mealTimes, setMealTimes] = useState([]);
+  const [renderMenuButtons, setRenderMenuButtons] = useState([]);
 
   // friends list
   useEffect(() => {
@@ -128,6 +132,54 @@ export default function DiningHallScreen(props) {
     }
   }, [renderFriendNames])
 
+  // update mealTimes
+  useEffect(() => {
+    db.ref("hours/" + hallName).once("value").then((snapshot) => {
+      if (snapshot.exists()) {
+        let mealTimes = [];
+        let order = ["Breakfast", "Lunch", "Dinner", "Late Night"];
+        for (var i = 0; i < order.length; i++)
+          if (Object.keys(snapshot.val()).indexOf(order[i]) > -1)
+            mealTimes.push(order[i]);
+        setMealTimes(mealTimes);
+      } else {
+        setMealTimes([])
+      }
+    })
+  }, [])
+
+  // render menu buttons
+  useEffect(() => {
+    if (mealTimes) {
+      setRenderMenuButtons(
+        mealTimes.map(mealTime => {
+          let name = mealTime;
+          let currMealTimes = [mealTime];
+          if (mealTime === "Lunch") {
+            name = "Lunch/Brunch";
+            currMealTimes.push("Brunch");
+          }
+          return (
+            <TouchableOpacity
+              key={`${hallName} ${name} Menu`}
+              onPress={() => {
+                props.navigation.navigate("Menu", {
+                  hallName: hallName,
+                  currMealName: name,
+                  currMealTimes: currMealTimes,
+                });
+              }}
+            >
+              <Text style={styles.IDHViewMenu}>{name}</Text>
+            </TouchableOpacity>
+          );
+        })
+      )
+    } else {
+      setRenderMenuButtons([]);
+    }
+  }, [mealTimes])
+
   return (
     <SafeAreaView style={styles.containerscroll}>
       <ScrollView contentContainerStyle={styles.scroll} key={hallName}>
@@ -152,16 +204,8 @@ export default function DiningHallScreen(props) {
           maximumTrackTintColor={styles.DHCardSlider.backgroundColor}
           thumbStyle={{ display: "none" }}
         />
-        <TouchableOpacity
-          key={`${hallName} Menu`}
-          onPress={() => {
-            props.navigation.navigate("Menu", {
-              hallName: hallName,
-            });
-          }}
-        >
-          <Text style={styles.IDHViewMenu}>View Menu</Text>
-        </TouchableOpacity>
+        <Text style={styles.IDHMenu}>Menus</Text>
+        {renderMenuButtons}
         <Text style={styles.IDHNumOfFriends}>
           {numFriends} {numFriends == 1 ? "friend" : "friends"}
         </Text>
