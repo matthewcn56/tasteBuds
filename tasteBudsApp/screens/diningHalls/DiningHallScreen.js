@@ -34,7 +34,7 @@ export default function DiningHallScreen(props) {
   const [capacity, setCapacity] = useState(0);
   const [activityLevel, setActivityLevel] = useState("");
 
-  const [mealTimes, setMealTimes] = useState([]);
+  const [mealTimes, setMealTimes] = useState(null);
   const [renderMenuButtons, setRenderMenuButtons] = useState([]);
 
   // friends list
@@ -135,14 +135,14 @@ export default function DiningHallScreen(props) {
   useEffect(() => {
     db.ref("hours/" + hallName).once("value").then((snapshot) => {
       if (snapshot.exists()) {
-        let mealTimes = [];
+        let mealTimes = {};
         let order = ["Breakfast", "Lunch", "Dinner", "Late Night"];
         for (var i = 0; i < order.length; i++)
           if (Object.keys(snapshot.val()).indexOf(order[i]) > -1)
-            mealTimes.push(order[i]);
+            mealTimes[order[i]] = snapshot.val()[order[i]];
         setMealTimes(mealTimes);
       } else {
-        setMealTimes([])
+        setMealTimes(null)
       }
     })
   }, [])
@@ -151,26 +151,29 @@ export default function DiningHallScreen(props) {
   useEffect(() => {
     if (mealTimes) {
       setRenderMenuButtons(
-        mealTimes.map(mealTime => {
-          let name = mealTime;
-          let currMealTimes = [mealTime];
-          if (mealTime === "Lunch") {
+        Object.entries(mealTimes).map((mealTime) => {
+          let name = mealTime[0]
+          let currMealTimes = [mealTime[0]];
+          if (mealTime[0] === "Lunch") {
             name = "Lunch/Brunch";
             currMealTimes.push("Brunch");
           }
           return (
-            <TouchableOpacity
-              key={`${hallName} ${name} Menu`}
-              onPress={() => {
-                props.navigation.navigate("Menu", {
-                  hallName: hallName,
-                  currMealName: name,
-                  currMealTimes: currMealTimes,
-                });
-              }}
-            >
-              <Text style={styles.IDHViewMenu}>{name}</Text>
-            </TouchableOpacity>
+            <View style={styles.DHCardRow1}>
+              <TouchableOpacity
+                key={`${hallName} ${name} Menu`}
+                onPress={() => {
+                  props.navigation.navigate("Menu", {
+                    hallName: hallName,
+                    currMealName: name,
+                    currMealTimes: currMealTimes,
+                  });
+                }}
+              >
+                <Text style={styles.IDHMenuButton}>{name}</Text>
+              </TouchableOpacity>
+              <Text style={styles.IDHMenuHours}>{mealTime[1]}</Text>
+            </View>
           );
         })
       )

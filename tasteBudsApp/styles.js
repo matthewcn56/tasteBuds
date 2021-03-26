@@ -360,7 +360,7 @@ export default StyleSheet.create({
     fontSize: windowWidth/20,
     color: dark,
   },
-  IDHViewMenu: {
+  IDHMenuButton: {
     fontFamily: headerFont,
     fontSize: windowWidth/22,
     backgroundColor: light,
@@ -371,6 +371,12 @@ export default StyleSheet.create({
     borderColor: dark,
     overflow: "hidden",
     marginTop: windowWidth/40,
+  },
+  IDHMenuHours: {
+    fontFamily: textFont,
+    fontSize: windowWidth/24,
+    marginTop: windowWidth/20,
+    marginLeft: windowWidth/50,
   },
   IDHMenu:{
     fontFamily: headerFont,
