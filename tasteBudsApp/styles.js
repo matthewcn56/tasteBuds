@@ -328,7 +328,7 @@ export default StyleSheet.create({
     color: dark,
     fontSize: windowWidth/20,
     fontFamily: headerFont,
-    marginTop: windowWidth/12,
+    marginTop: windowWidth/20,
   },
   IDHHeader: {
   
@@ -360,17 +360,30 @@ export default StyleSheet.create({
     fontSize: windowWidth/20,
     color: dark,
   },
-  IDHMenu:{
-    marginTop: windowWidth/6,
+  IDHViewMenu: {
     fontFamily: headerFont,
-    fontSize: windowWidth/10,
-    color: dark,
+    fontSize: windowWidth/22,
+    backgroundColor: light,
+    alignSelf: "flex-start",
+    padding: windowWidth/50,
+    borderRadius: windowWidth/50,
+    borderWidth: 2,
+    borderColor: dark,
+    overflow: "hidden",
+    marginTop: windowWidth/40,
   },
+  // IDHMenu:{
+  //   marginTop: windowWidth/20,
+  //   fontFamily: headerFont,
+  //   fontSize: windowWidth/10,
+  //   color: dark,
+  // },
   IDHMeal: {
     fontFamily: headerFont,
     fontSize: windowWidth/16,
     color: dark,
     marginTop: windowWidth/16,
+    marginBottom: windowWidth/16, 
   },
   IDHMenuItem:{
     fontFamily: textFont,

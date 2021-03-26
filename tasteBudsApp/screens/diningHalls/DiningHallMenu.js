@@ -6,6 +6,7 @@ import {
   Text,
   Linking,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import { db } from "../../firebase/firebaseFunctions";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -13,6 +14,9 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 export default function DiningHallMenu(props) {
   const [menu, setMenu] = useState(null);
   const [renderMenuItems, setRenderMenuItems] = useState([]);
+  const {
+    hallName
+  } = props.route.params;
 
   const openURL = (link) => {
     Linking.canOpenURL(link).then((supported) => {
@@ -33,7 +37,7 @@ export default function DiningHallMenu(props) {
         setMenu(null);
       }
     };
-    db.ref("menus/" + props.hallName).on("value", onValueChange);
+    db.ref("menus/" + hallName).on("value", onValueChange);
   }, []);
 
   // render menu items
@@ -59,9 +63,12 @@ export default function DiningHallMenu(props) {
   }, [menu]);
 
   return (
-    <View>
-      <Text style = {styles.IDHMenu}>Menu</Text>
-      {renderMenuItems}
-    </View>
+    <SafeAreaView style={styles.containerscroll}>
+    <ScrollView contentContainerStyle={styles.scroll} key={`${hallName} Menu`}>
+      <View style={styles.IDHContainer}>
+        {renderMenuItems}
+      </View>
+    </ScrollView>
+    </SafeAreaView>
   );
 }
