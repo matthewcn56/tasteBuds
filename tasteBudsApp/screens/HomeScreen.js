@@ -47,6 +47,7 @@ export default function HomeScreen(props) {
     db.ref("friends/" + user.uid).on("value", onValueChange);
 
     return () => {
+      console.log("component unmounted!");
       db.ref("friends/" + user.uid).off("value", onValueChange);
     };
   }, []);

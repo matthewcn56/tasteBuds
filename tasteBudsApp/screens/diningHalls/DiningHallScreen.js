@@ -91,9 +91,8 @@ export default function DiningHallScreen(props) {
         Object.keys(friendList).map((friend) =>
           db.ref("users/" + friend).once("value")
         )
-      )
-      .then((snapshotVals) => {
-        let friends = snapshotVals.filter(snapshot => {
+      ).then((snapshotVals) => {
+        let friends = snapshotVals.filter((snapshot) => {
           return snapshot.val()["currHall"] === hallName;
         });
         setRenderFriendImages(
@@ -117,7 +116,7 @@ export default function DiningHallScreen(props) {
       setRenderFriendNames([]);
       setRenderFriendNames([]);
     }
-  }, [capacities])
+  }, [capacities]);
 
   // update numFriends
   useEffect(() => {
@@ -126,51 +125,51 @@ export default function DiningHallScreen(props) {
     } else {
       setNumFriends(0);
     }
-  }, [renderFriendNames])
+  }, [renderFriendNames]);
 
   return (
     <SafeAreaView style={styles.containerscroll}>
       <ScrollView contentContainerStyle={styles.scroll} key={hallName}>
         <View style={styles.IDHContainer}>
-        <View style={styles.IDHTimeRow}>
-          <MaterialCommunityIcons
-            name="clock-time-four"
-            color={styles.signinButton.borderColor}
-            size={1.4 * styles.regText.fontSize}
-          />
-          <Text style={styles.regText}> {activityLevel} Activity </Text>
-        </View>
+          <View style={styles.IDHTimeRow}>
+            <MaterialCommunityIcons
+              name="clock-time-four"
+              color={styles.signinButton.borderColor}
+              size={1.4 * styles.regText.fontSize}
+            />
+            <Text style={styles.regText}> {activityLevel} Activity </Text>
+          </View>
 
-        <Text style={styles.regText}>{capacity} / 900</Text>
-        <Slider
-          style={styles.IDHSlider}
-          value={capacity}
-          minimumValue={0}
-          maximumValue={900}
-          disabled={true}
-          minimumTrackTintColor={styles.DHCardSlider.color}
-          maximumTrackTintColor={styles.DHCardSlider.backgroundColor}
-          thumbStyle={{ display: "none" }}
-        />
-        <TouchableOpacity
-          key={`${hallName} Menu`}
-          onPress={() => {
-            props.navigation.navigate("Menu", {
-              hallName: hallName,
-            });
-          }}
-        >
-          <Text style={styles.IDHViewMenu}>View Menu</Text>
-        </TouchableOpacity>
-        <Text style={styles.IDHNumOfFriends}>
-          {numFriends} {numFriends == 1 ? "friend" : "friends"}
-        </Text>
+          <Text style={styles.regText}>{capacity} / 900</Text>
+          <Slider
+            style={styles.IDHSlider}
+            value={capacity}
+            minimumValue={0}
+            maximumValue={900}
+            disabled={true}
+            minimumTrackTintColor={styles.DHCardSlider.color}
+            maximumTrackTintColor={styles.DHCardSlider.backgroundColor}
+            thumbStyle={{ display: "none" }}
+          />
+          <TouchableOpacity
+            key={`${hallName} Menu`}
+            onPress={() => {
+              props.navigation.navigate("Menu", {
+                hallName: hallName,
+              });
+            }}
+          >
+            <Text style={styles.IDHViewMenu}>View Menu</Text>
+          </TouchableOpacity>
+          <Text style={styles.IDHNumOfFriends}>
+            {numFriends} {numFriends == 1 ? "friend" : "friends"}
+          </Text>
           <View style={styles.IDHFriendList}>
             <View>{renderFriendImages}</View>
             <View>{renderFriendNames}</View>
           </View>
-        {/* <DiningHallMenu hallName={hallName} /> */}
-      </View>
+          {/* <DiningHallMenu hallName={hallName} /> */}
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
