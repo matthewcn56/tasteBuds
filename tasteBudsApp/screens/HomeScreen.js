@@ -8,10 +8,12 @@ import {
   Button,
   Image,
   TouchableOpacity,
+  RefreshControl,
 } from "react-native";
 import { db } from "../firebase/firebaseFunctions";
 import DiningHallBar from "./diningHalls/DiningHallBar.js";
 import { render } from "react-dom";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function HomeScreen(props) {
   const { user, logout } = useContext(AuthContext);
@@ -23,6 +25,7 @@ export default function HomeScreen(props) {
   const [capacities, setCapacities] = useState([]);
   const [renderDiningHalls, setRenderDiningHalls] = useState([]);
   const [activityLevels, setActivityLevels] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
 
   //set userName on mount
   useEffect(() => {
@@ -79,6 +82,7 @@ export default function HomeScreen(props) {
 
   // update capacities
   useEffect(() => {
+    setCapacities([]);
     if (diningHalls) {
       Object.entries(diningHalls).map((value, key) => {
         let currentNum = Object.keys(value[1]).length - 1;
@@ -86,8 +90,6 @@ export default function HomeScreen(props) {
           return [...capacities, currentNum];
         });
       });
-    } else {
-      setCapacities([]);
     }
   }, [diningHalls]);
 
@@ -139,18 +141,37 @@ export default function HomeScreen(props) {
     }
   }, [diningHalls, capacities]);
 
+  const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  }
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
+
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Image
-          style={styles.headerImg}
-          source={require("../assets/TasteBuds.png")}
-        />
-        <Text style={styles.headerTxt}>TasteBuds</Text>
-        <View style={styles.headerImg} />
-      </View>
+      <ScrollView contentContainerStyle={styles.scroll}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
+      >
+        <View style={styles.header}>
+          <Image
+            style={styles.headerImg}
+            source={require("../assets/TasteBuds.png")}
+          />
+          <Text style={styles.headerTxt}>TasteBuds</Text>
+          <View style={styles.headerImg} />
+        </View>
 
-      {renderDiningHalls}
+        {renderDiningHalls}
+      </ScrollView>
     </SafeAreaView>
   );
 }
