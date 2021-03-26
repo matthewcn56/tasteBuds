@@ -25,7 +25,7 @@ String ID;
 String diningHall = "De Neve";
 bool capSenseTouched = false;
 bool capSenseEnabled = false;
-int timeInterval = 900000; //Checking activty levels every 15 minutes
+int timeInterval = 300000; //Checking activty levels every 15 minutes
 int netPeopleIn = 0;
 int currentTime = 0;
 
@@ -120,9 +120,9 @@ void loop()
             Firebase.setString(fbdo, "/activityLevels/" + diningHall + "/", "No");
         }else if(netPeopleIn < 15){
             Firebase.setString(fbdo, "/activityLevels/" + diningHall + "/", "Low");
-        }else if(netPeopleIn < 30){
+        }else if(netPeopleIn < 20){
             Firebase.setString(fbdo, "/activityLevels/" + diningHall + "/", "Medium");
-        }else if(netPeopleIn >=30){
+        }else if(netPeopleIn >=20){
             Firebase.setString(fbdo, "/activityLevels/" + diningHall + "/", "High");
         }
         currentTime = currentTime % timeInterval;
