@@ -22,13 +22,21 @@ export default function DiningHallBar(props) {
       )
     ).then((snapshotVals) => {
       setRenderFriendImages(
-        snapshotVals.map((snapshot) => (
-          <Image
-            style={styles.DHCardPic}
-            source={{ uri: snapshot.val() }}
-            key={snapshot.val()}
-          />
-        ))
+        // add (snapshot, key) and then return only if key is below certain #
+        snapshotVals.map((snapshot, key) => {
+          if (key < 8) {
+            return (
+              <Image
+                style={styles.DHCardPic}
+                source={{ uri: snapshot.val() }}
+                key={snapshot.val()}
+              />
+            );
+          }
+          else if (key == 8) {
+            return (<View key={8}><Text style={styles.DHCardPfpOverflow}>+ {snapshotVals.length - 8}</Text></View>)
+          }
+        })
       );
     });
   }, [props.friendsInHall]);

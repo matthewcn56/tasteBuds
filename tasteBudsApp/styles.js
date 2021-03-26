@@ -314,6 +314,10 @@ export default StyleSheet.create({
     color: dark,
     backgroundColor: mid,
   },
+  DHCardPfpOverflow: {
+    marginTop: windowWidth/50,
+    fontSize: windowWidth/28,
+  },
   //Individual Dining Hall Screen
   IDHContainer: {
     flexDirection: "column",
