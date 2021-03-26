@@ -106,7 +106,7 @@ export default function HomeScreen(props) {
         });
       });
     }
-  }, [diningHalls, capacities]);
+  }, [diningHalls]);
 
   // render dining hall components
   useEffect(() => {

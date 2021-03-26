@@ -37,10 +37,10 @@ export default function DiningHallMenu(props) {
         setMenu(null);
       }
     };
-    db.ref("menus/" + props.hallName).on("value", onValueChange);
+    db.ref("menus/" + hallName).on("value", onValueChange);
 
     return () => {
-      db.ref("menus/" + props.hallName).off("value", onValueChange);
+      db.ref("menus/" + hallName).off("value", onValueChange);
     };
   }, []);
 
