@@ -12,7 +12,6 @@ import {
 } from "react-native";
 import { db } from "../firebase/firebaseFunctions";
 import DiningHallBar from "./diningHalls/DiningHallBar.js";
-import { render } from "react-dom";
 import { ScrollView } from "react-native-gesture-handler";
 
 export default function HomeScreen(props) {
@@ -37,11 +36,11 @@ export default function HomeScreen(props) {
   useEffect(() => {
     let onValueChange = function (querySnapshot) {
       if (querySnapshot.exists()) {
-        console.log("snapshot exists!");
-        console.log(querySnapshot.val());
+        // console.log("snapshot exists!");
+        // console.log(querySnapshot.val());
         setFriendList(querySnapshot.val());
       } else {
-        console.log("snapshot doesn't exist?");
+        //console.log("snapshot doesn't exist?");
         setFriendList(null);
       }
     };
@@ -51,6 +50,10 @@ export default function HomeScreen(props) {
       db.ref("friends/" + user.uid).off("value", onValueChange);
     };
   }, []);
+
+  useEffect(() => {
+    console.log("activity levels changed!");
+  }, [activityLevels]);
 
   //setup listener for activityLevels to update
   useEffect(() => {
@@ -103,7 +106,7 @@ export default function HomeScreen(props) {
         });
       });
     }
-  }, [diningHalls]);
+  }, [diningHalls, capacities]);
 
   // render dining hall components
   useEffect(() => {
@@ -151,7 +154,7 @@ export default function HomeScreen(props) {
         });
       });
     }
-  }, [diningHalls, capacities]);
+  }, [diningHalls, capacities, activityLevels]);
 
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));

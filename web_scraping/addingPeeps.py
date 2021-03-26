@@ -6,8 +6,8 @@ from time import ctime, time
 from menuScraper import get_menu_items_from_time_and_hall
 
 mealTimes = ["Breakfast", "Brunch", "Lunch", "Dinner", "LateNight"]
-halls = ["Covel", "DeNeve", "FeastAtRieber", "BruinPlate"]
-
+halls = ["Covel"]
+#  "DeNeve", "FeastAtRieber", "BruinPlate"
 cred =credentials.Certificate("/Users/matthewdev/CodingProjects/Hackathons/LAHacks2021/tasteBuds/web_scraping/tastebuds.json")
 
 default_app = firebase_admin.initialize_app(cred, {
@@ -27,7 +27,7 @@ def hall_path_switcher(pathName):
     return translatedPath.get(pathName, "ERROR")
 
 for designatedHall in halls:
-    for i in range(200):
+    for i in range(50):
         firebase_admin.db.reference("capacities/" + hall_path_switcher(designatedHall)).push("anonymous")
 
 
