@@ -178,8 +178,8 @@ export default StyleSheet.create({
   //Friends List on User Profile
   FBnum: {
     marginTop: windowWidth / 8,
-    fontFamily: textFont,
-    fontSize: windowWidth / 24,
+    fontFamily: headerFont,
+    fontSize: windowWidth / 20,
     width: windowWidth - windowWidth / 6,
     textAlign: "left",
     color: dark,
@@ -211,7 +211,7 @@ export default StyleSheet.create({
     flexDirection: "column",
   },
   FBCardName: {
-    fontFamily: headerFont,
+    fontFamily: textFont,
     fontSize: windowWidth / 20,
     color: dark,
     marginBottom: -windowWidth / 40,
@@ -219,7 +219,7 @@ export default StyleSheet.create({
   FBCardHall: {
     fontFamily: textFont,
     fontSize: windowWidth / 24,
-    color: dark,
+    color: "gray",
     marginTop: windowWidth / 55,
   },
   FBCardX: {},
@@ -356,7 +356,7 @@ export default StyleSheet.create({
     height: windowWidth/10,
     marginBottom: windowWidth/20,
     paddingTop: windowWidth/80,
-    fontFamily: headerFont,
+    fontFamily: textFont,
     fontSize: windowWidth/20,
     color: dark,
   },
