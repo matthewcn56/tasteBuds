@@ -24,6 +24,12 @@ export default function UserProfileScreen() {
   const [loading, setLoading] = useState(true);
   const [isEnabled, setIsEnabled] = useState(false);
 
+  useEffect(() => {
+    db.ref("users/" + user.uid + "/optIn").once("value").then(snapshot => {
+      setIsEnabled(snapshot.val());
+    })
+  }, [])
+
   const toggleSwitch = () => {
     db.ref("users/" + user.uid + "/optIn").set(!isEnabled);
     setIsEnabled(previousState => !previousState);
