@@ -19,6 +19,7 @@ export default function HomeScreen(props) {
   const [userName, setUserName] = useState("");
   const [profilePic, setProfilePic] = useState(null);
 
+  const [allUsers, setAllUsers] = useState(null);
   const [friendList, setFriendList] = useState(null);
   const [diningHalls, setDiningHalls] = useState(null);
   const [capacities, setCapacities] = useState([]);
@@ -31,6 +32,22 @@ export default function HomeScreen(props) {
     setUserName(user.displayName);
     setProfilePic(user.photoURL);
   }, [user.uid]); //ComponentDidMount
+
+  // allUsers
+  useEffect(() => {
+    let onValueChange = function (querySnapshot) {
+      if (querySnapshot.exists()) {
+        setAllUsers(querySnapshot.val());
+      } else {
+        setAllUsers(null);
+      }
+    };
+    db.ref("users/").on("value", onValueChange);
+
+    return () => {
+      db.ref("users/").off("value", onValueChange);
+    };
+  }, []);
 
   // friends list
   useEffect(() => {
@@ -116,6 +133,7 @@ export default function HomeScreen(props) {
       Object.entries(diningHalls).map((value, key) => {
         // create friendsInHall array
         let friendsInHall = [];
+        let optInVals = [];
         // map through all the people in value (except dummyNode)
         Object.keys(value[1]).map((person) => {
           // see if that person is a friend
@@ -155,7 +173,7 @@ export default function HomeScreen(props) {
         });
       });
     }
-  }, [diningHalls, capacities, activityLevels, friendList]);
+  }, [diningHalls, capacities, activityLevels, friendList, allUsers]);
 
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));

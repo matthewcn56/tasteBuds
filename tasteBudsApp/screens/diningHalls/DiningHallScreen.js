@@ -29,6 +29,7 @@ export default function DiningHallScreen(props) {
     // activityLevel,
   } = props.route.params;
 
+  const [allUsers, setAllUsers] = useState(null);
   const [friendList, setFriendList] = useState(null);
   const [capacities, setCapacities] = useState(null);
   const [capacity, setCapacity] = useState(0);
@@ -36,6 +37,22 @@ export default function DiningHallScreen(props) {
 
   const [mealTimes, setMealTimes] = useState(null);
   const [renderMenuButtons, setRenderMenuButtons] = useState([]);
+
+  // allUsers
+  useEffect(() => {
+    let onValueChange = function (querySnapshot) {
+      if (querySnapshot.exists()) {
+        setAllUsers(querySnapshot.val());
+      } else {
+        setAllUsers(null);
+      }
+    };
+    db.ref("users/").on("value", onValueChange);
+
+    return () => {
+      db.ref("users/").off("value", onValueChange);
+    };
+  }, []);
 
   // friends list
   useEffect(() => {
@@ -104,13 +121,13 @@ export default function DiningHallScreen(props) {
             <Image
               style={styles.IDHPic}
               source={{ uri: snapshot.val()["profilePic"] }}
-              key={snapshot.val()["profilePic"]}
+              key={snapshot.val()["uid"]}
             />
           ))
         );
         setRenderFriendNames(
           friends.map((snapshot) => (
-            <Text style={styles.IDHfriends} key={snapshot.val()["profilePic"]}>
+            <Text style={styles.IDHfriends} key={snapshot.val()["uid"]}>
               {snapshot.val()["displayName"]}
             </Text>
           ))
@@ -120,7 +137,7 @@ export default function DiningHallScreen(props) {
       setRenderFriendNames([]);
       setRenderFriendNames([]);
     }
-  }, [capacities]);
+  }, [capacities, allUsers]);
 
   // update numFriends
   useEffect(() => {
@@ -159,10 +176,9 @@ export default function DiningHallScreen(props) {
             currMealTimes.push("Brunch");
           }
           return (
-            <View style={styles.DHCardRow1}>
+            <View style={styles.DHCardRow1} key={`${hallName} ${name} Menu`}>
               <TouchableOpacity
                 style = {{flex: 1}}
-                key={`${hallName} ${name} Menu`}
                 onPress={() => {
                   props.navigation.navigate("Menu", {
                     hallName: hallName,
