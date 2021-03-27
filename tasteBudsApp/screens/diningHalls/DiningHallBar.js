@@ -18,23 +18,24 @@ export default function DiningHallBar(props) {
   useEffect(() => {
     Promise.all(
       props.friendsInHall.map((session) =>
-        db.ref("users/" + session + "/profilePic").once("value")
+        db.ref("users/" + session).once("value")
       )
     ).then((snapshotVals) => {
+      let visibleFriends = snapshotVals.filter(f => f.val().optIn);
       setRenderFriendImages(
         // add (snapshot, key) and then return only if key is below certain #
-        snapshotVals.map((snapshot, key) => {
-          if (key < 8) {
+        visibleFriends.map((snapshot, key) => {
+          if (key < 8 && snapshot.val()["optIn"]) {
             return (
               <Image
                 style={styles.DHCardPic}
-                source={{ uri: snapshot.val() }}
-                key={snapshot.val()}
+                source={{ uri: snapshot.val()["profilePic"] }}
+                key={snapshot.val()["uid"]}
               />
             );
           }
           else if (key == 8) {
-            return (<View key={8}><Text style={styles.DHCardPfpOverflow}>+ {snapshotVals.length - 8}</Text></View>)
+            return (<View key={8}><Text style={styles.DHCardPfpOverflow}>+ {visibleFriends.length - 8}</Text></View>)
           }
         })
       );
@@ -54,7 +55,7 @@ export default function DiningHallBar(props) {
         <Text style={styles.timeText}> {props.activityLevel} Activity </Text>
       </View>
 
-      <Text style={styles.regText}>{props.friendsInHall.length} {props.friendsInHall.length == 1 ? "friend" : "friends"}</Text>
+      <Text style={styles.regText}>{renderFriendImages.length} {renderFriendImages.length == 1 ? "friend" : "friends"}</Text>
 
       <View style={styles.DHCardRow3}>{renderFriendImages}</View>
 

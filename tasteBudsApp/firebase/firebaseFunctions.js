@@ -74,6 +74,7 @@ function setProfile(result) {
     profilePic: result.user.photoURL,
     displayName: result.user.displayName,
     currHall: false,
+    optIn: false,
   });
 }
 

@@ -97,7 +97,7 @@ export default function DiningHallScreen(props) {
         )
       ).then((snapshotVals) => {
         let friends = snapshotVals.filter((snapshot) => {
-          return snapshot.val()["currHall"] === hallName;
+          return snapshot.val()["currHall"] === hallName && snapshot.val()["optIn"];
         });
         setRenderFriendImages(
           friends.map((snapshot) => (

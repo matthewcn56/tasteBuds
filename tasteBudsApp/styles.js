@@ -175,9 +175,23 @@ export default StyleSheet.create({
     flex: 1,
     width: (3 * windowWidth) / 5,
   },
+  locationSwitchContainer: {
+    alignItems: "center",
+    flexDirection: "row",
+    marginTop: windowWidth/16,
+  },
+  locationSwitchText: {
+    fontFamily: textFont,
+    fontSize: windowWidth/24,
+  },
+  locationSwitch: {
+    borderColor: dark,
+    backgroundColor: mid,
+    color: light,
+  },
   //Friends List on User Profile
   FBnum: {
-    marginTop: windowWidth / 8,
+    marginTop: windowWidth / 16,
     fontFamily: headerFont,
     fontSize: windowWidth / 20,
     width: windowWidth - windowWidth / 6,

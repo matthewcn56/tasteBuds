@@ -60,7 +60,10 @@ export default function FriendsListBar(props) {
   useEffect(() => {
     console.log(friend);
     if (friend) {
-      setCurrHall(friend["currHall"]);
+      if (friend["optIn"])
+        setCurrHall(friend["currHall"]);
+      else 
+        setCurrHall("");
       setUserImage(friend["profilePic"]);
     } else {
       setCurrHall("");

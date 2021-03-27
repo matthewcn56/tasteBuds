@@ -155,7 +155,7 @@ export default function HomeScreen(props) {
         });
       });
     }
-  }, [diningHalls, capacities, activityLevels]);
+  }, [diningHalls, capacities, activityLevels, friendList]);
 
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));

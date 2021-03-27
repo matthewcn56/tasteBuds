@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../navigation/AuthProvider";
 import { db } from "../firebase/firebaseFunctions";
 import styles from "../styles.js";
-import { SafeAreaView, ScrollView, Image, Alert } from "react-native";
+import { SafeAreaView, ScrollView, Image, Alert, Switch } from "react-native";
 import FriendsListBar from "./userBars/FriendsListBar";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -22,6 +22,12 @@ export default function UserProfileScreen() {
   const [list, setList] = React.useState(null);
   const [displayedItems, setDisplayedItems] = React.useState([]);
   const [loading, setLoading] = useState(true);
+  const [isEnabled, setIsEnabled] = useState(false);
+
+  const toggleSwitch = () => {
+    db.ref("users/" + user.uid + "/optIn").set(!isEnabled);
+    setIsEnabled(previousState => !previousState);
+  }
 
   useEffect(() => {
     console.log("user's uid is " + user.uid);
@@ -130,6 +136,16 @@ export default function UserProfileScreen() {
           style={styles.QRCode}
           value={user.uid}
         />
+        <View style={styles.locationSwitchContainer}>
+          <Text style={styles.locationSwitchText}>Share location with friends: </Text>
+          <Switch
+            trackColor={{ false: styles.locationSwitch.borderColor, true: styles.locationSwitch.backgroundColor }}
+            thumbColor="#FFFFFF"
+            ios_backgroundColor={styles.locationSwitch.borderColor}
+            onValueChange={toggleSwitch}
+            value={isEnabled}
+          />
+        </View>
         <Text style={styles.FBnum}>
           {displayedItems.length}{" "}
           {displayedItems.length == 1 ? "Friend" : "Friends"}
