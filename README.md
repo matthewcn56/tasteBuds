@@ -36,6 +36,7 @@ Although many college campuses have some form of capacity tracking or menu infor
 #### Hardware Schematic
 
 ![](./tasteBudsApp/assets/HardwareSchematic.png)
+![](./tasteBudsApp/assets/Box.jpg)
 
 When a user swipes in, our system reads their ID card via an RFID scanner. Then the user scans a QR code generated on the OLED display to pair their bruin card with their TasteBuds profile . After successfully pairing the account, the user simply taps on a piece of foil, and through capacitive touch sensing, the QR code is cleared, preventing others from accessing sensitive RFID information. The information is pushed by the ESP32 system to our database.
 
