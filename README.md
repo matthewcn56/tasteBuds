@@ -3,8 +3,9 @@
 
 Looking forward to eating your next meal but don’t know which dining hall to grab a bite with your friends? Want to go to a dining hall with no wait? Then Tastebuds is the all in one IoT system for you! 
 
-Watch how TasteBuds works here: ***(insert youtube/video link here)***
-Visit our Devpost: ***(insert devpost link here)***
+Watch how TasteBuds works here: https://youtu.be/ZMz_4wQKs1w
+
+Visit our Devpost: https://devpost.com/software/tastebuds
 
 ## The Big Picture
 
@@ -74,4 +75,4 @@ RFID tags are encrypted, so by having access to UCLA’s Bruin Card Database, wh
 
 A significant advantage of TasteBuds is that the functionality is not limited to dining halls at UCLA. With very slight adjustments, we could easily implement a system that works for any college, allowing for rapid expansion. 
 
-**With TasteBuds, we hope to create a not only a more informed, but more connected dining experience.**
+**With TasteBuds, we hope to create not only a more informed, but also a more connected dining experience.**

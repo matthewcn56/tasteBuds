@@ -59,7 +59,7 @@ def hello_pubsub(event, context):
             openHours = get_hall_hours_from_meal_time_and_hall(MEAL_TIME, hours_path_switcher(DESIGNATED_HALL))
 
             #Late Night at De Neve is Special
-            if ( MEAL_TIME ==  "LateNight" and DESIGNATED_HALL == "DeNeve" ):
+            if ( MEAL_TIME ==  "Late Night" and DESIGNATED_HALL == "DeNeve" ):
                 menuItems = get_late_night_menu()
                 openHours = get_hall_hours_from_meal_time_and_hall("Late Night", "De Neve")
 

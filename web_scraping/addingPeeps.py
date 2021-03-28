@@ -1,3 +1,8 @@
+#This Script is Not Used In Production, we had to use it to quickly emulate adding users into a dining hall at once for
+#demonstration purposes, since it is physically impossible to demosntrate using our Hardware during Covid.
+#We used the same logic as the hardware for implementing Activity Level of the dining hall however, to make it as true to 
+#production as possible
+
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
