@@ -74,4 +74,4 @@ RFID tags are encrypted, so by having access to UCLA’s Bruin Card Database, wh
 
 A significant advantage of TasteBuds is that the functionality is not limited to dining halls at UCLA. With very slight adjustments, we could easily implement a system that works for any college, allowing for rapid expansion. 
 
-**With TasteBuds, we hope to create a not only a more informed, but more connected dining experience.**
+**With TasteBuds, we hope to create not only a more informed, but also a more connected dining experience.**
